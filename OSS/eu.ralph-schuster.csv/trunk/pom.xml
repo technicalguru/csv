@@ -18,9 +18,9 @@
 	</properties>
 
 	<scm>
-		<connection>scm:svn:https://h2031995.stratoserver.net/svn/CSV/trunk</connection>
-		<developerConnection>scm:svn:https://h2031995.stratoserver.net/svn/CSV/trunk</developerConnection>
-		<url>https://h2031995.stratoserver.net/svn/CSV/trunk</url>
+		<connection>scm:svn:https://h2031995.stratoserver.net/svn/OSS/eu.ralph-schuster.csv/trunk</connection>
+		<developerConnection>scm:svn:https://h2031995.stratoserver.net/svn/OSS/eu.ralph-schuster.csv/trunk</developerConnection>
+		<url>https://h2031995.stratoserver.net/svn/OSS/eu.ralph-schuster.csv/trunk</url>
 	</scm>
 
 	<issueManagement>
