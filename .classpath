@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/activation.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang-2.5.jar"/>
+	<classpathentry kind="lib" path="lib/jsr173_1.0_api.jar"/>
+	<classpathentry kind="lib" path="lib/poi-3.7-20101029.jar"/>
+	<classpathentry kind="lib" path="lib/poi-ooxml-3.7-20101029.jar"/>
+	<classpathentry kind="lib" path="lib/poi-ooxml-schemas-3.7-20101029.jar"/>
+	<classpathentry kind="lib" path="lib/poi-scratchpad-3.7-20101029.jar"/>
+	<classpathentry kind="lib" path="lib/resolver.jar"/>
+	<classpathentry kind="lib" path="lib/xbean_xpath.jar"/>
+	<classpathentry kind="lib" path="lib/xbean.jar"/>
+	<classpathentry kind="lib" path="lib/xmlbeans-qname.jar"/>
+	<classpathentry kind="lib" path="lib/xmlpublic.jar"/>
+	<classpathentry kind="lib" path="antlib/junit-4.8.2.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

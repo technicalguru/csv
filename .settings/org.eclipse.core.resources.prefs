@@ -1,11 +1,7 @@
-#Wed May 30 14:56:18 CEST 2012
+#Mon Aug 08 20:18:50 CEST 2011
 eclipse.preferences.version=1
-encoding//src/main/filtered-resources=UTF-8
-encoding//src/main/resources=UTF-8
-encoding//src/test/java/csv/impl/CSVWriterReaderTest.java=UTF-8
-encoding//src/test/java/csv/impl/ExcelWriterReaderTest.java=UTF-8
-encoding//src/test/java/csv/impl/FilterTest.java=UTF-8
-encoding//src/test/java/csv/impl/XmlWriterReaderTest.java=UTF-8
-encoding//src/test/java/csv/util/BeanWriterReaderTest.java=UTF-8
-encoding//src/test/resources=UTF-8
-encoding/<project>=UTF-8
+encoding//test/csv/impl/CSVWriterReaderTest.java=UTF-8
+encoding//test/csv/impl/ExcelWriterReaderTest.java=UTF-8
+encoding//test/csv/impl/FilterTest.java=UTF-8
+encoding//test/csv/impl/XmlWriterReaderTest.java=UTF-8
+encoding//test/csv/util/BeanWriterReaderTest.java=UTF-8
