@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Package Description csv.iml.type</title>
+<title>Package Description csv</title>
 <!--
  This file is part of CSV.
 
@@ -22,13 +22,35 @@
 -->
 </head>
 <body>
+Provides two classes for reading CSV streams and producing
+such.
 <p>
-Provides basic classes for conversion of strings to objects and vice versa.
-These converters are used by various reader and writer implementations.
+CSVReader Example:
 </p>
 <p>
-For more information, visit the 
-<a href="http://techblog.ralph-schuster.eu/csv-utility-package-for-java/">CSV/Excel Utility Package Homepage.</a>
+<pre>
+java.io.File f = new java.io.File("csv-test.csv");
+CSVReader in = new CSVReader(new java.io.FileReader(f));
+while (in.hasNext()) {
+    String columns[] = in.next();
+    // Do something here
+}
+in.close();
+</pre>
 </p>
+
+<p>
+CSVWriter Example:
+</p>
+<p>
+<pre>
+java.io.File f = new java.io.File("csv-test.csv");
+CSVWriter out = new CSVWriter(new java.io.FileWriter(f));
+out.printRow(new String[] { "0:0", "0:1", "0:2" });
+out.printRow(new String[] { "1:0", "1:1", "1:2" });
+out.close();
+</pre>
+</p>
+
 </body>
 </html>
