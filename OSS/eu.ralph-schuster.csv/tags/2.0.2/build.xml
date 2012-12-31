@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="CSV" basedir="." default="compile">
+
+	<property name="version" value="2.0.2"/>
+	<property name="my.debug" value="false"/>
+	<property name="ant.build.javac.source" value="1.5"/>
+	<property name="ant.build.javac.target" value="1.5"/>
+	<property name="src.dir" value="src"/>
+	<property name="dst.dir" value="build"/>
+	<property name="lib.dir" value="lib"/>
+	<property name="junit.jar" value="antlib/junit-4.8.2.jar"/>
+	<property name="pub.dir" value="pub"/>
+	<property name="xmlbeans.jar" value="${lib.dir}/xmlbeans-qname.jar:${lib.dir}/xbean.jar:${lib.dir}/xmlpublic.jar:${lib.dir}/jsr173_1.0_api.jar:${lib.dir}/resolver.jar:${lib.dir}/xbean_xpath.jar"/>
+	<property name="activation.jar" value="${lib.dir}/activation.jar"/>
+	<property name="excel.jar" value="${lib.dir}/poi-scratchpad-3.5-FINAL-20090928.jar:${lib.dir}/poi-ooxml-3.5-FINAL-20090928.jar:${lib.dir}/poi-contrib-3.5-FINAL-20090928.jar:${lib.dir}/poi-3.5-FINAL-20090928.jar:${xmlbeans.jar}"/>
+	<property name="version.dir" value="${pub.dir}/csv-${version}"/>
+	<property name="cp" value="${activation.jar}:${excel.jar}"/>
+	
+	<target name="init" description="Initializing">
+		<mkdir dir="${dst.dir}"/>
+	</target>
+
+	<target name="compile" description="Compiling" depends="init">
+		<javac srcdir="${src.dir}" destdir="${dst.dir}" classpath="${cp}:${junit.jar}" deprecation="true" debug="${my.debug}" encoding="UTF-8">
+			<compilerarg value="-Xlint:unchecked"/>
+		</javac>
+		<copy todir="${dst.dir}">
+			<fileset dir="${src.dir}">
+			      <exclude name="**/*.java"/>
+			      <exclude name="**/package.html"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="test" description="JUnit Testing" depends="compile">
+		<junit printsummary="yes" haltonfailure="yes" fork="true" >
+			<jvmarg value="-Dfile.encoding=UTF-8"/>
+			<classpath>
+				<pathelement path="${dst.dir}"/>
+				<pathelement path="${junit.jar}"/>
+			</classpath>
+			
+			<formatter type="plain" usefile="no"/>
+
+			<batchtest fork="yes" todir="${reports.tests}">
+				<fileset dir="${src.dir}">
+					<include name="**/*Test.java"/>
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+	
+	<target name="jar" description="Building JAR file" depends="compile">
+		<mkdir dir="${version.dir}"/>
+		<jar destfile="${version.dir}/csv.jar">
+			<fileset dir="${dst.dir}">		
+				<include name="**/*"/>
+			</fileset>
+		</jar>
+	</target>
+	
+	<target name="javadoc" description="Creating JavaDoc" depends="compile">
+		<mkdir dir="${version.dir}/doc/api"/>
+		<javadoc
+			encoding="UTF-8"
+			packagenames="csv.*"
+			sourcepath="${src.dir}" 
+			classpath="${dst.dir}:${cp}:${junit.jar}" 
+			destdir="${version.dir}/doc/api"
+			author="true"
+			version="true"
+			use="true"
+			windowtitle="CSV Package/${version} Java API"
+		>
+			<doctitle><![CDATA[<h1>CSV - Reading and Writing CSV and Excel Streams</h1><a href="http://techblog.ralph-schuster.eu/csv-utility-package-for-java/">Visit the CSV/Excel Utility Package Homepage</a><br/>]]></doctitle>
+			<bottom><![CDATA[<i>Copyright &#169; 2008-2010 <a href="http://techblog.ralph-schuster.eu/csv-utility-package-for-java/">Ralph Schuster</a>. All Rights Reserved.</i>]]></bottom>
+			<header><![CDATA[<i>Copyright &#169; 2008-2010 <a href="http://techblog.ralph-schuster.eu/csv-utility-package-for-java/">Ralph Schuster</a>. All Rights Reserved.</i>]]></header>
+		</javadoc>
+		<copy todir="${version.dir}/doc/api">
+			<fileset dir="${src.dir}">
+				<include name=".htaccess"/>
+			</fileset>
+		</copy>
+		
+	</target>
+	
+	<target name="clean" description="Cleaning build directory" depends="init">
+		<delete dir="${version.dir}"/>
+		<delete dir="${dst.dir}"/>
+	</target>
+	
+	<target name="publish" description="Publishing CSV" depends="jar,javadoc">
+		<delete file="${pub.dir}/csv-${version}.tar.gz"/>
+		<mkdir dir="${version.dir}/src"/>
+		<copy todir="${version.dir}/src">
+			<fileset dir="${src.dir}">
+			      <exclude name="**/*.class"/>
+			</fileset>
+		</copy>
+		<copy todir="${version.dir}/lib">
+			<fileset dir="${lib.dir}">
+			      <include name="**/*"/>
+			</fileset>
+		</copy>
+		<copy todir="${version.dir}">
+			<fileset dir=".">
+				<include name="ChangeLog"/>
+				<include name="gpl.txt"/>
+				<include name="lgpl.txt"/>
+				<include name="build.xml"/>
+			</fileset>
+		</copy>
+		
+		<tar destfile="${pub.dir}/csv-${version}.tar.gz" compression="gzip" basedir="${pub.dir}" includes="csv-${version}/**" />
+	</target>
+</project>

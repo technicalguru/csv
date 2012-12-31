@@ -1,0 +1,26 @@
+Version 2.0:
+------------
+
+	- Factory pattern added
+	- Package structure refactored
+	- Change #10: Add a callback for comment lines
+	- Change #11: CSVUtils should offer copy methods from CSVReader to CSVWriter 
+	- Change #12: Add some test script for most CSV related issues 
+	- Bug #14: Writing # in CSV streams as first column does not escape it
+	- Change #15: Excel reader/writer added incl. 3rd party libraries
+
+Version 1.0.2:
+--------------
+
+	- New: CSVUtils class
+	- Bug #9: spaces around values
+
+Version 1.0.1:
+--------------
+
+	- Changed: Row Separator is a string now
+	- New: Build system creates tar archive
+	- Bug #2: NullPointerException in CSVReader class
+	- Bug #4: Multiline values fail when a line looks like a comment 
+	- Bug #7: Excel Fix: first column of first row must not start with "ID"
+	- Bug #8: Add row and column count  
