@@ -24,8 +24,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetDecoder;
 
 /**
  * An abstract implementation of TableReader.
@@ -37,7 +35,6 @@ public abstract class AbstractStreamTableReader extends AbstractTableReader {
 
 	private InputStream inputStream;
 	private BufferedReader reader;
-	private CharsetDecoder charsetDecoder = Charset.defaultCharset().newDecoder();
 	
 	/**
 	 * Default Constructor.
@@ -70,7 +67,7 @@ public abstract class AbstractStreamTableReader extends AbstractTableReader {
      * 
      */
     public AbstractStreamTableReader(String file) throws FileNotFoundException {
-        this(new File(file));
+        this(new FileInputStream(file));
     }
     
     
@@ -90,63 +87,11 @@ public abstract class AbstractStreamTableReader extends AbstractTableReader {
      * @return reader object
      */
     protected BufferedReader getReader() {
-    	if (reader == null) reader = createReader();
+    	if (reader == null) reader = new BufferedReader(new InputStreamReader(getInputStream()));
     	return reader;
     }
     
     /**
-     * Creates the buffered reader.
-     * The method will call {@link #createInputStreamReader(InputStream)}
-     * for the creation of the underlying reader.
-     * @return the buffered reader.
-     */
-    protected BufferedReader createReader() {
-    	return new BufferedReader(createInputStreamReader(getInputStream()));
-    }
-    
-    /**
-     * Creates the input stream reader that feeds the buffered reader.
-     * @param stream the original input stream
-     * @return the stream reader
-     */
-    protected InputStreamReader createInputStreamReader(InputStream stream) {
-    	return new InputStreamReader(stream, getCharsetDecoder());
-    }
-    
-    /**
-     * Returns the charset decoder to be used.
-     * @return the charset decoder
-     */
-    public CharsetDecoder getCharsetDecoder() {
-    	return charsetDecoder;
-    }
-    
-    /**
-	 * Sets the charset decoder to be used on the input stream.
-	 * @param charsetDecoder the charset decoder to set
-	 */
-	public void setCharsetDecoder(CharsetDecoder charsetDecoder) {
-		this.charsetDecoder = charsetDecoder;
-	}
-
-    /**
-	 * Sets the charset to be used on the input stream.
-	 * @param charset the charset to set
-	 */
-	public void setCharset(Charset charset) {
-		setCharsetDecoder(charset.newDecoder());
-	}
-
-    /**
-	 * Sets the charset to be used on the input stream.
-	 * @param charset the charset to set
-	 */
-	public void setCharset(String charset) {
-		setCharset(Charset.forName(charset));
-	}
-
-	
-	/**
      * Returns the underlying input stream.
 	 * @return the inputStream
 	 */

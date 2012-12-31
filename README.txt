@@ -31,19 +31,22 @@
 	This project was developed and tested with Java 6 only. Following libraries
 	are required when you use this code:
 	
-	csv-2.4.0.jar			- Main library, required for all kind of tables
+	csv.jar		- Main library, required for all kind of tables
 
-	poi-3.8.jar				- required for Excel Sheets
-	poi-ooxml-3.8.jar		- required for Excel Sheets
-	poi-ooxml-schemas-3.8.jar - required for Excel Sheets
+	poi-3.5-FINAL-20090928.jar				- required for Excel Sheets
+	poi-contrib-3.5-FINAL-20090928.jar		- required for Excel Sheets
+	poi-ooxml-3.5-FINAL-20090928.jar		- required for Excel Sheets
+	poi-scratchpad-3.5-FINAL-20090928.jar	- required for Excel Sheets
 
-	stax-api-1.0.1			- required for OpenOffice Calc Sheets
-	xml-apis-1.0.b2.jar		- required for OpenOffice Calc Sheets
-	xmlbeans-2.3.0.jar		- required for OpenOffice Calc Sheets
+	activation.jar			- required for OpenOffice Calc Sheets
+	jsr173_1.0_api.jar		- required for OpenOffice Calc Sheets
+	resolver.jar			- required for OpenOffice Calc Sheets
+	xbean_xpath.jar			- required for OpenOffice Calc Sheets
+	xbean.jar				- required for OpenOffice Calc Sheets
+	xmlbeans-qname.jar		- required for OpenOffice Calc Sheets
+	xmlpublic.jar			- required for OpenOffice Calc Sheets
 
 	commons-lang-2.5.jar	- required for HtmlWriter and XmlWriter
-	commons-codec-1.5.jar	- required for HtmlWriter and XmlWriter
-	dom4j-1.6.1.jar			- required for HtmlWriter and XmlWriter
 	
 	junit.jar 	- required for testing with JUnit 4 (not delivered)
 	
@@ -51,5 +54,5 @@
 ======================
 
 	Project Homepage: http://techblog.ralph-schuster.eu/csv-utility-package-for-java/
-	Report a Bug or Change: http://jira.ralph-schuster.eu/
+	Report a Bug or Change: http://bugzilla.ralph-schuster.eu/bugzilla/
 	 

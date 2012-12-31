@@ -21,10 +21,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetEncoder;
 
 /**
  * An abstract implementation of TableWriter.
@@ -36,7 +33,6 @@ public abstract class AbstractStreamTableWriter extends AbstractTableWriter {
 
     private PrintWriter writer;
     private OutputStream outputStream;
-    private CharsetEncoder charsetEncoder = Charset.defaultCharset().newEncoder();
     
 	/**
 	 * Default Constructor.
@@ -62,7 +58,7 @@ public abstract class AbstractStreamTableWriter extends AbstractTableWriter {
     public AbstractStreamTableWriter(File file) throws IOException {
         this(new FileOutputStream(file));
     }
-        
+    
     /**
      * Create a new instance froma file name.
      * @param file - file to write data to.
@@ -88,59 +84,8 @@ public abstract class AbstractStreamTableWriter extends AbstractTableWriter {
 	 * @return the writer object
 	 */
 	public PrintWriter getWriter() {
-		if (writer == null) writer = createWriter();
+		if (writer == null) writer = new PrintWriter(outputStream);
 		return writer;
-	}
-
-	/**
-	 * Creates the print writer for the output.
-     * The method will call {@link #createOutputStreamWriter(OutputStream)}
-     * for the creation of the underlying writer.
-	 * @return the output writer
-	 */
-	protected PrintWriter createWriter() {
-		return new PrintWriter(createOutputStreamWriter(getOutputStream()));
-	}
-	
-	/**
-	 * Creates the stream writer for the printer.
-	 * @param out the underlying output stream
-	 * @return the stream writer
-	 */
-	protected OutputStreamWriter createOutputStreamWriter(OutputStream out) {
-		return new OutputStreamWriter(out, getCharsetEncoder());
-	}
-	
-	/**
-	 * Returns the encoder being used for the output.
-	 * @return the encoder being used.
-	 */
-	public CharsetEncoder getCharsetEncoder() {
-		return charsetEncoder;
-	}
-		
-	/**
-	 * Sets the charset encoder being used.
-	 * @param charsetEncoder the charset encoder to set
-	 */
-	public void setCharsetEncoder(CharsetEncoder charsetEncoder) {
-		this.charsetEncoder = charsetEncoder;
-	}
-
-	/**
-	 * Sets the charset being used for output.
-	 * @param charset the charset to set
-	 */
-	public void setCharset(Charset charset) {
-		setCharsetEncoder(charset.newEncoder());
-	}
-
-	/**
-	 * Sets the charset being used for output.
-	 * @param charset the charset to set
-	 */
-	public void setCharset(String charset) {
-		setCharset(Charset.forName(charset));
 	}
 
 	/**

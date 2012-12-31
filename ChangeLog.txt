@@ -1,10 +1,3 @@
-Version 2.4.0:
---------------
-
-	- Change CSV-25: Update Issue Management link to JIRA 
-	- Change CSV-24: Provide support for charsets on streams 
-	- Change #30: Provide support for String separators 
-
 Version 2.3:
 ------------
 
