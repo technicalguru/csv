@@ -12,12 +12,37 @@
 	<packaging>jar</packaging>
 	<url>http://techblog.ralph-schuster.eu/csv-utility-package-for-java/</url>
 	<name>CSV/Excel Utility Package</name>
-
+	<description>A library for easily accessing CSV, Excel and and other table-like data from Java</description>
+	
 	<scm>
 		<connection>scm:svn:https://h2031995.stratoserver.net/svn/OSS/eu.ralph-schuster.csv/trunk</connection>
 		<developerConnection>scm:svn:https://h2031995.stratoserver.net/svn/OSS/eu.ralph-schuster.csv/trunk</developerConnection>
 		<url>https://h2031995.stratoserver.net/svn/OSS/eu.ralph-schuster.csv/trunk</url>
 	</scm>
+
+	<distributionManagement>
+		<site>
+			<id>strato-server</id>
+			<url>scp://h2031995.stratoserver.net/var/www/vhosts/ralph-schuster.eu/download/${project.groupId}.${project.artifactId}/${project.version}</url>
+		</site>
+	</distributionManagement>
+
+	<issueManagement>
+		<system>Jira</system>
+		<url>http://jira.ralph-schuster.eu/browse/CSV</url>
+	</issueManagement>
+
+	<ciManagement>
+		<system>bamboo</system>
+		<url>http://bamboo.ralph-schuster.eu/browse/CSV</url>
+	</ciManagement>
+
+	<developers>
+		<developer>
+			<id>ralph</id>
+			<name>Ralph Schuster</name>
+		</developer>
+	</developers>
 
 	<dependencies>
 		<dependency>
