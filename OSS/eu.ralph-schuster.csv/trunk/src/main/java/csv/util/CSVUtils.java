@@ -187,8 +187,8 @@ public class CSVUtils {
 	 */
 	public static int copy(Object arr[][], TableWriter writer) throws IOException {
 		int rc = 0;
-		for (Object row[] : arr) {
-			writer.printRow(row);
+		for (Object row : arr) {
+			writer.printRow((Object[])row);
 			rc++;
 		}
 		return rc;
