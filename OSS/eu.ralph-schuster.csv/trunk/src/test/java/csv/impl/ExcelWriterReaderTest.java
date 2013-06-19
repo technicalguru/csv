@@ -44,6 +44,7 @@ public class ExcelWriterReaderTest {
 	private static final String FILE_NAME= "excel-test.xls";
 	private static final String FILE_MULTISHEET_XLS = "multisheet.xls";
 	private static final String FILE_SKIPPEDLINES_XLSX = "skippedlines.xlsx";
+	private static final String FILE_EXTERNAL_SHEET_REF = "external_sheet_ref.xls";
 
 	private static final String TEST_HEADER[] = new String[] {
 		"Column-0", "Column-1", "Column-2", "Column-3"
@@ -65,6 +66,7 @@ public class ExcelWriterReaderTest {
 	private File fFile;
 	private URL multisheetUrl;
 	private URL skippedLinesUrl;
+	private URL externalSheetRefUrl;
 
 	/**
 	 * Initializes file.
@@ -74,6 +76,7 @@ public class ExcelWriterReaderTest {
 		fFile= new File(FILE_NAME);
 		multisheetUrl = FileFinder.find(FILE_MULTISHEET_XLS);
 		skippedLinesUrl = FileFinder.find(FILE_SKIPPEDLINES_XLSX);
+		externalSheetRefUrl = FileFinder.find(FILE_EXTERNAL_SHEET_REF);
 	}
 
 	/**
@@ -206,6 +209,19 @@ public class ExcelWriterReaderTest {
 		assertTrue(in.hasNext()); testRow(new String[]{null,      null    }, in.next());
 		assertTrue(in.hasNext()); testRow(new String[]{"val1",    null    }, in.next());
 		assertTrue(in.hasNext()); testRow(new String[]{"val2",    "val2-2"}, in.next());
+		assertFalse(in.hasNext());
+	}
+
+	/**
+	 * This method checks that when we have external sheet references in our formulas, for example,
+	 * we can avoid formula evaluation and just use the cached value.
+	 */
+	@Test
+	public void testEvaluateFormulasFalse() throws IOException {
+		ExcelReader in = new ExcelReader(externalSheetRefUrl.openStream());
+		in.setEvaluateFormulas(false);
+
+		assertTrue(in.hasNext()); testRow(new Double[]{99945.0}, in.next());
 		assertFalse(in.hasNext());
 	}
 }

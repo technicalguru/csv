@@ -64,6 +64,8 @@ public class ExcelReader extends AbstractStreamTableReader {
 	private Workbook workbook;
 	/** The evaluator for cell formulas */
 	private FormulaEvaluator formulaEvaluator = null;
+	/** Whether formulas shall be evaluated or not (default is <code>true</code> = yes) */
+	private boolean evaluateFormulas = true;
 	/** The sheet we are dealing with */
 	private Sheet sheet;
 	/** The current row we are reading */
@@ -158,6 +160,7 @@ public class ExcelReader extends AbstractStreamTableReader {
 	public void setSkipBlankRows(boolean skipBlankRows) {
 		this.skipBlankRows = skipBlankRows;
 	}
+
 
 	/**
 	 * Computes the max row length of any rows in this sheet.
@@ -341,7 +344,12 @@ public class ExcelReader extends AbstractStreamTableReader {
 	public Object getValue(Cell cell) {
 		if (cell == null) return null;
 
-		switch (cell.getCellType()) {
+		int cellType = cell.getCellType();
+		if (cellType == Cell.CELL_TYPE_FORMULA && !isEvaluateFormulas()) {
+			cellType = cell.getCachedFormulaResultType();
+		}
+		
+		switch (cellType) {
 		case Cell.CELL_TYPE_STRING:
 			return cell.getStringCellValue();
 		case Cell.CELL_TYPE_NUMERIC:
@@ -404,6 +412,23 @@ public class ExcelReader extends AbstractStreamTableReader {
 		return formulaEvaluator;
 	}
 
+
+	/**
+	 * Returns whether formulas shall be evaluated or not (default is <code>true</code>).
+	 * @return <code>true</code> when formulas are evaluated
+	 */
+	public boolean isEvaluateFormulas() {
+		return evaluateFormulas;
+	}
+
+	/**
+	 * Sets whether formulas shall be evaluated or not (default is <code>true</code>).
+	 * @param evaluateFormulas <code>true</code> or <code>false</code>
+	 */
+	public void setEvaluateFormulas(boolean evaluateFormulas) {
+		this.evaluateFormulas = evaluateFormulas;
+	}
+
 	/**
 	 * Reads the header row from next line.
 	 * @see csv.impl.AbstractTableReader#readHeaderRow()
@@ -448,7 +473,7 @@ public class ExcelReader extends AbstractStreamTableReader {
 			}
 		}
 		return blank;
-		
+
 	}
 
 	/**
