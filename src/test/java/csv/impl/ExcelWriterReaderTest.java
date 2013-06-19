@@ -221,7 +221,8 @@ public class ExcelWriterReaderTest {
 		ExcelReader in = new ExcelReader(externalSheetRefUrl.openStream());
 		in.setEvaluateFormulas(false);
 
-		assertTrue(in.hasNext()); testRow(new Double[]{99945.0}, in.next());
+		assertTrue(in.hasNext()); 
+		testRow(new Double[]{99945.0}, in.next());
 		assertFalse(in.hasNext());
 	}
 }
