@@ -18,16 +18,22 @@
 package csv.impl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
 
+import org.apache.poi.ss.usermodel.Row;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import rs.baselib.io.FileFinder;
 
 /**
  * JUnit Test for Excel.
@@ -36,11 +42,13 @@ import org.junit.Test;
  */
 public class ExcelWriterReaderTest {
 	private static final String FILE_NAME= "excel-test.xls";
+	private static final String FILE_MULTISHEET_XLS = "multisheet.xls";
+	private static final String FILE_SKIPPEDLINES_XLSX = "skippedlines.xlsx";
 
 	private static final String TEST_HEADER[] = new String[] {
 		"Column-0", "Column-1", "Column-2", "Column-3"
 	};
-	
+
 	private static final String TEST_VALUES[][]= new String[][]{
 		// normal row
 		{"0:0", "0:1", "0:2", "0:3"},
@@ -55,6 +63,8 @@ public class ExcelWriterReaderTest {
 			"абвгдеёжзийклмно прстуфхцчшчьыъэюя АБВГДЕЁЖЗИЙ КЛМНОПРСТУФ ХЦЧШЩЬЫЪЭЮЯ", "Ў ў Є є Ґ ґ", "Ђ Љ Њ Ћ Џ ђ љ њ ћ џ"}};
 
 	private File fFile;
+	private URL multisheetUrl;
+	private URL skippedLinesUrl;
 
 	/**
 	 * Initializes file.
@@ -62,6 +72,8 @@ public class ExcelWriterReaderTest {
 	@Before
 	public void init() {
 		fFile= new File(FILE_NAME);
+		multisheetUrl = FileFinder.find(FILE_MULTISHEET_XLS);
+		skippedLinesUrl = FileFinder.find(FILE_SKIPPEDLINES_XLSX);
 	}
 
 	/**
@@ -71,7 +83,7 @@ public class ExcelWriterReaderTest {
 	public void done() {
 		if ((fFile != null) && fFile.exists()) fFile.deleteOnExit();
 	}
-	
+
 	/**
 	 * The test method writes a CSV file.
 	 * Test {@link #testWrittenValues()} will
@@ -82,7 +94,7 @@ public class ExcelWriterReaderTest {
 		testWriteFile(false);
 		testWrittenValues(false);
 	}
-	
+
 	/**
 	 * Writes the test file.
 	 * @param withHeader whether header shall be written.
@@ -113,19 +125,19 @@ public class ExcelWriterReaderTest {
 			in = new ExcelReader(fFile);
 			in.setHasHeaderRow(withHeader);
 			int row = 0;
-			
+
 			// Test the header
 			if (withHeader) {
 				Object header[] = in.getHeaderRow();
 				testRow(TEST_HEADER, header);
 			}
-			
+
 			// Test the data
 			while (in.hasNext()) {
 				Object columns[]= in.next();
 
 				testRow(TEST_VALUES[row], columns);
-				
+
 				row++;
 			}
 
@@ -157,7 +169,7 @@ public class ExcelWriterReaderTest {
 			assertEquals(master[col], copy[col]);
 		}
 	}
-	
+
 	/**
 	 * This method checks if a header can be written and read.
 	 */
@@ -166,5 +178,34 @@ public class ExcelWriterReaderTest {
 		testWriteFile(true);
 		testWrittenValues(true);
 	}
-	
+
+	/**
+	 * This method checks that a blank sheet with no rows and a row range from 0 to 1 can be read.
+	 */
+	@Test
+	public void testBlankTab_DoesNotNPEInhasNext() throws IOException {
+		ExcelReader in = new ExcelReader(multisheetUrl.openStream());
+		in.selectSheet(2);
+		assertFalse("Sheet index 3 does not have a next row", in.hasNext());
+	}
+
+	/**
+	 * This method checks that a sheet with blank lines can be read.
+	 */
+	@Test
+	public void testBlankLines_DoesNotNPEAndDummiesUpLinesWhenAsked() throws IOException {
+		ExcelReader in = new ExcelReader(skippedLinesUrl.openStream());
+
+		in.getWorkbook().setMissingCellPolicy(Row.CREATE_NULL_AS_BLANK);
+		in.setSkipBlankRows(false);
+		in.setMinimumColumnCount(in.computeMaxColumnCount());
+		assertEquals(in.getMinimumColumnCount(), 2);
+
+		assertTrue(in.hasNext()); testRow(new String[]{"header", "header2"}, in.next());
+		assertTrue(in.hasNext()); testRow(new String[]{null,      null    }, in.next());
+		assertTrue(in.hasNext()); testRow(new String[]{null,      null    }, in.next());
+		assertTrue(in.hasNext()); testRow(new String[]{"val1",    null    }, in.next());
+		assertTrue(in.hasNext()); testRow(new String[]{"val2",    "val2-2"}, in.next());
+		assertFalse(in.hasNext());
+	}
 }

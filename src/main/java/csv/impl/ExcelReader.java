@@ -60,15 +60,25 @@ in.close();
  */
 public class ExcelReader extends AbstractStreamTableReader {
 
+	/** The workbook */
 	private Workbook workbook;
+	/** The evaluator for cell formulas */
 	private FormulaEvaluator formulaEvaluator = null;
+	/** The sheet we are dealing with */
 	private Sheet sheet;
+	/** The current row we are reading */
 	private Row currentRow;
+	/** The row that was delivered by {@link #next()}. */
 	private Row lastDeliveredRow;
+	/** Index of first row */
 	private int firstRow;
+	/** Index of last row */
 	private int lastRow;
+	/** The row currently to read next */
 	private int rowNum;
-	
+	/** Whether to skip blank rows (not deliver them) */
+	private boolean skipBlankRows = true;
+
 	/**
 	 * Default constructor.
 	 */
@@ -132,8 +142,36 @@ public class ExcelReader extends AbstractStreamTableReader {
 		if (workbook == null) open();
 		return workbook;
 	}
-	
-	
+
+	/**
+	 * Returns whether blank rows will be skipped or not while reading.
+	 * @return <code>true</code> when blank rows are skipped (default), <code>false</code> otherwise
+	 */
+	public boolean isSkipBlankRows() {
+		return skipBlankRows;
+	}
+
+	/**
+	 * Sets whether blank rows will be skipped or not while reading.
+	 * @param skipBlankRows <code>true</code> when blank rows are skipped (default), <code>false</code> otherwise
+	 */
+	public void setSkipBlankRows(boolean skipBlankRows) {
+		this.skipBlankRows = skipBlankRows;
+	}
+
+	/**
+	 * Computes the max row length of any rows in this sheet.
+	 * @return int length
+	 */
+	public int computeMaxColumnCount() {
+		int maxColumnCount = 0;
+		for (java.util.Iterator<Row> i = sheet.rowIterator(); i.hasNext();) {
+			int length = i.next().getLastCellNum();
+			if (length > maxColumnCount) maxColumnCount = length;
+		}
+		return maxColumnCount;
+	}
+
 	/**
 	 * Select the given sheet to be read from.
 	 * @param name name of sheet
@@ -142,7 +180,7 @@ public class ExcelReader extends AbstractStreamTableReader {
 	public Sheet selectSheet(String name) {
 		return selectSheet(workbook.getSheet(name));
 	}
-	
+
 	/**
 	 * Select the given sheet to be read from.
 	 * @param sheet sheet to be selected
@@ -158,7 +196,7 @@ public class ExcelReader extends AbstractStreamTableReader {
 		}
 		return this.sheet;
 	}
-	
+
 	/**
 	 * Select the given sheet to be read from.
 	 * @param index index of sheet
@@ -167,7 +205,7 @@ public class ExcelReader extends AbstractStreamTableReader {
 	public Sheet selectSheet(int index) {
 		return selectSheet(workbook.getSheetAt(index));
 	}
-	
+
 	/**
 	 * Returns the current sheet.
 	 * @return the current sheet.
@@ -175,7 +213,7 @@ public class ExcelReader extends AbstractStreamTableReader {
 	public Sheet getSheet() {
 		return sheet;
 	}
-	
+
 	/**
 	 * Returns the last delivered row.
 	 * This is the row delivered by last call to {@link #next()}.
@@ -184,7 +222,7 @@ public class ExcelReader extends AbstractStreamTableReader {
 	public Row getLastExcelRow() {
 		return lastDeliveredRow;
 	}
-	
+
 	/**
 	 * Resets the reader by resetting the current row index 
 	 * @see csv.impl.AbstractStreamTableReader#reset()
@@ -227,7 +265,7 @@ public class ExcelReader extends AbstractStreamTableReader {
 			Object row[] = getValues(currentRow);
 			lastDeliveredRow = currentRow;
 			currentRow = null;
-			
+
 			incrementLineCount();
 			incrementRowCount();
 			return row;
@@ -246,7 +284,7 @@ public class ExcelReader extends AbstractStreamTableReader {
 		Row row = getSheet().getRow(rowNum);
 		return getValues(row);
 	}
-	
+
 	/**
 	 * Returns the row as Java objects.
 	 * Values in the array are Java objects depending on the cell type. If the cell contained
@@ -262,10 +300,10 @@ public class ExcelReader extends AbstractStreamTableReader {
 			Cell cell = row.getCell(col);
 			columns.add(getValue(cell));
 		}
-		
+
 		return CSVUtils.convertList(columns, getMinimumColumnCount());
 	}
-	
+
 	/**
 	 * Returns the value of the specified cell.
 	 * If the cell contained
@@ -278,7 +316,7 @@ public class ExcelReader extends AbstractStreamTableReader {
 		Row row = getSheet().getRow(rowNum);
 		return getValue(row, cellNum);
 	}
-	
+
 	/**
 	 * Returns the value of the specified cell.
 	 * If the cell contained
@@ -292,7 +330,7 @@ public class ExcelReader extends AbstractStreamTableReader {
 		Cell cell = row.getCell(cellNum);
 		return getValue(cell);
 	}
-	
+
 	/**
 	 * Returns the value of the specified cell.
 	 * If the cell contained
@@ -302,7 +340,7 @@ public class ExcelReader extends AbstractStreamTableReader {
 	 */
 	public Object getValue(Cell cell) {
 		if (cell == null) return null;
-		
+
 		switch (cell.getCellType()) {
 		case Cell.CELL_TYPE_STRING:
 			return cell.getStringCellValue();
@@ -323,7 +361,7 @@ public class ExcelReader extends AbstractStreamTableReader {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Returns the evaluated cell content.
 	 * This assumes the cell contains a formula.
@@ -353,7 +391,7 @@ public class ExcelReader extends AbstractStreamTableReader {
 		}
 		return cell.getCellFormula();
 	}
-	
+
 	/**
 	 * Returns a formula evaluator for the current workbook.
 	 * This is for convinience.
@@ -365,9 +403,9 @@ public class ExcelReader extends AbstractStreamTableReader {
 		}
 		return formulaEvaluator;
 	}
-	
-    /**
-     * Reads the header row from next line.
+
+	/**
+	 * Reads the header row from next line.
 	 * @see csv.impl.AbstractTableReader#readHeaderRow()
 	 */
 	@Override
@@ -380,21 +418,50 @@ public class ExcelReader extends AbstractStreamTableReader {
 	/**
 	 * Retrieves the next row from the current sheet.
 	 * The row is then internally stored for evaluation of {@link #hasNext()}
-	 * and {@link #next()}. Blank rows are skipped.
+	 * and {@link #next()}. Blank rows are skipped when {@linkplain #isSkipBlankRows()} 
+	 * return <code>true</code>.
 	 */
 	protected void retrieveNextRow() {
 		while (rowNum <= lastRow) {
-			currentRow = sheet.getRow(rowNum);
-			boolean blank = true;
-			for (Cell cell: currentRow) {
-				if (cell.getCellType() != Cell.CELL_TYPE_BLANK) {
-					blank = false;
-					break;
-				}
+			currentRow = getOrCreateRow(rowNum++);
+			if (currentRow == null) continue;
+			if (isSkipBlankRows() && rowHasOnlyBlankCells(currentRow)) {
+				currentRow = null;
+			} else {
+				break;
 			}
-			rowNum++;
-			if (!blank) break;
-			currentRow = null;
 		}
 	}
+
+	/**
+	 * Checks whether row has only blank cells.
+	 * The method is called from
+	 * {@link #retrieveNextRow()}.
+	 * @return boolean when the row has only blank cells
+	 */
+	protected boolean rowHasOnlyBlankCells(Row row) {
+		boolean blank = true;
+		for (Cell cell: row) {
+			if (cell.getCellType() != Cell.CELL_TYPE_BLANK) {
+				blank = false;
+				break;
+			}
+		}
+		return blank;
+		
+	}
+
+	/**
+	 * Ensures that the sheet contains a row at the given index.
+	 * @param rowNum index of row
+	 * @return the row from the sheet or a new blank row
+	 */
+	protected Row getOrCreateRow(int rowNum) {
+		Row row = sheet.getRow(rowNum);
+		if (!isSkipBlankRows() && (row == null)) {
+			row = sheet.createRow(rowNum);
+		}
+		return row;
+	}
+
 }
