@@ -44,6 +44,15 @@
 		</developer>
 	</developers>
 
+	<contributors>
+		<contributor>
+			<name>eldn</name>
+		</contributor>
+		<contributor>
+			<name>Andrej Czapszys</name>
+		</contributor>
+	</contributors>
+	
 	<dependencies>
 		<dependency>
 			<groupId>eu.ralph-schuster</groupId>
