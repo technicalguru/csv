@@ -18,6 +18,8 @@
 package csv;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * Introduces an interface for other implementations
@@ -34,6 +36,31 @@ public interface TableWriter {
 	 */
 	public void printRow(Object[] columns) throws IOException;
 	
+    /**
+     * Prints a single row into the CSV stream.
+     * The columns are written to the CSV stream as the are delivered by
+     * the collection's iterator.
+     * @param columns collection of column values. An iterator will be used to retrieve values from the collection.
+     */
+    public void printRow(Collection<?> columns) throws IOException;
+    
+    /**
+     * Prints a single row into the CSV stream.
+     * The columns are written to the CSV stream as delivered by
+     * the iterator.
+     * @param columns iterator that returns column values.
+     * @param size number of values to retrieve from iterator. Method will abort at this size.
+     */
+    public void printRow(Iterator<?> columns, int size) throws IOException;
+    
+    /**
+     * Prints a new row into the CSV stream.
+     * The columns are written to the CSV stream as delivered by
+     * the iterator.
+     * @param columns iterator that returns column values.
+     */
+    public void printRow(Iterator<?> columns) throws IOException;
+    
     /**
      * Prints a comment into the stream.
      * Note that not all implementations support comments.
