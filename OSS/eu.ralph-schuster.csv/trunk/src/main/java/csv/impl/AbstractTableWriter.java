@@ -18,7 +18,10 @@
 package csv.impl;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import csv.TableWriter;
@@ -158,6 +161,42 @@ public abstract class AbstractTableWriter implements TableWriter {
     	if (handler != null) return handler.toString(value);
     	
     	return value.toString();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void printRow(Collection<?> columns) throws IOException {
+        printRow(columns.iterator(), columns.size());
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void printRow(Iterator<?> columns, int size) throws IOException {
+        Object o[] = new Object[size];
+        int i = 0;
+        
+        while (columns.hasNext() && (i < size)) {
+            o[i] = columns.next();
+            i++;
+        }
+        
+        printRow(o);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void printRow(Iterator<?> columns) throws IOException {
+        ArrayList<Object> o = new ArrayList<Object>();
+        while (columns.hasNext()) {
+            o.add(columns.next());
+        }
+        printRow(o.toArray());
     }
     
 

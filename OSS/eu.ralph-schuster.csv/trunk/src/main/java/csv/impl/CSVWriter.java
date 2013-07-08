@@ -22,9 +22,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * Implements functionality for writing CSV streams.
@@ -362,49 +359,6 @@ public class CSVWriter extends AbstractStreamTableWriter {
             s = s.replaceAll(columnDelimiter, columnDelimiter+columnDelimiter);
         }
         return s;
-    }
-    
-    /**
-     * Prints a single row into the CSV stream.
-     * The columns are written to the CSV stream as the are delivered by
-     * the collection's iterator.
-     * @param columns collection of column values. An iterator will be used to retrieve values from the collection.
-     */
-    public void printRow(Collection<?> columns) throws IOException {
-        printRow(columns.iterator(), columns.size());
-    }
-    
-    /**
-     * Prints a single row into the CSV stream.
-     * The columns are written to the CSV stream as delivered by
-     * the iterator.
-     * @param columns iterator that returns column values.
-     * @param size number of values to retrieve from iterator. Method will abort at this size.
-     */
-    public void printRow(Iterator<?> columns, int size) throws IOException {
-        Object o[] = new Object[size];
-        int i = 0;
-        
-        while (columns.hasNext() && (i < size)) {
-            o[i] = columns.next();
-            i++;
-        }
-        
-        printRow(o);
-    }
-    
-    /**
-     * Prints a new row into the CSV stream.
-     * The columns are written to the CSV stream as delivered by
-     * the iterator.
-     * @param columns iterator that returns column values.
-     */
-    public void printRow(Iterator<?> columns) throws IOException {
-        ArrayList<Object> o = new ArrayList<Object>();
-        while (columns.hasNext()) {
-            o.add(columns.next());
-        }
-        printRow(o.toArray());
     }
     
 	/**
