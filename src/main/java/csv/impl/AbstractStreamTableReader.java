@@ -27,6 +27,8 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 
+import csv.util.CSVUtils;
+
 /**
  * An abstract implementation of TableReader.
  * This implementation takes care of simple stream handling.
@@ -37,7 +39,7 @@ public abstract class AbstractStreamTableReader extends AbstractTableReader {
 
 	private InputStream inputStream;
 	private BufferedReader reader;
-	private CharsetDecoder charsetDecoder = Charset.defaultCharset().newDecoder();
+	private CharsetDecoder charsetDecoder = CSVUtils.getDefaultCharset().newDecoder();
 	
 	/**
 	 * Default Constructor.

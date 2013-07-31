@@ -18,6 +18,7 @@
 package csv.util;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.Collection;
@@ -42,6 +43,33 @@ import csv.impl.JdbcReader;
  *
  */
 public class CSVUtils {
+
+	/** The default charset to be used in the JVM for table streams. */
+	private static Charset defaultCharset = Charset.defaultCharset();
+	
+	/**
+	 * Returns the {@link #defaultCharset}.
+	 * @return the defaultCharset
+	 */
+	public static Charset getDefaultCharset() {
+		return defaultCharset;
+	}
+
+	/**
+	 * Sets the {@link #defaultCharset}.
+	 * @param defaultCharset the defaultCharset to set
+	 */
+	public static void setDefaultCharset(Charset defaultCharset) {
+		CSVUtils.defaultCharset = defaultCharset;
+	}
+
+	/**
+	 * Sets the {@link #defaultCharset}.
+	 * @param defaultCharset the defaultCharset to set
+	 */
+	public static void setDefaultCharset(String defaultCharset) {
+		setDefaultCharset(Charset.forName(defaultCharset));
+	}
 
 	/**
 	 * Copies the header of the JDBC result set into the table writer.
@@ -202,7 +230,7 @@ public class CSVUtils {
 	 * @return number of rows written
 	 * @throws IOException when there is a problem with the writer.
 	 */
-	public static int copyBeans(Collection<? extends Object> collection, TableWriter writer) throws IOException {
+	public static <T> int copyBeans(Collection<T> collection, TableWriter writer) throws IOException {
 		return copyBeans(collection.iterator(), writer);
 	}
 	
@@ -214,8 +242,8 @@ public class CSVUtils {
 	 * @return number of rows written
 	 * @throws IOException when there is a problem with the writer.
 	 */
-	public static int copyBeans(Iterator<? extends Object> i, TableWriter writer) throws IOException {
-		BeanWriter w = new BeanWriter(writer, true);
+	public static <T> int copyBeans(Iterator<T> i, TableWriter writer) throws IOException {
+		BeanWriter<T> w = new BeanWriter<T>(writer, true);
 		int rc = w.writeBeans(i);
 		w.close();
 		return rc;
@@ -229,8 +257,8 @@ public class CSVUtils {
 	 * @return number of rows written
 	 * @throws IOException when there is a problem with the writer.
 	 */
-	public static int copyBeans(Object arr[], TableWriter writer) throws IOException {
-		BeanWriter w = new BeanWriter(writer, true);
+	public static <T> int copyBeans(T arr[], TableWriter writer) throws IOException {
+		BeanWriter<T> w = new BeanWriter<T>(writer, true);
 		int rc = w.writeBeans(arr);
 		w.close();
 		return rc;

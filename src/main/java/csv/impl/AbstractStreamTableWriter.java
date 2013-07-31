@@ -26,6 +26,8 @@ import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 
+import csv.util.CSVUtils;
+
 /**
  * An abstract implementation of TableWriter.
  * This implementation is dedicated for I/O streams as underlying medium.
@@ -36,7 +38,7 @@ public abstract class AbstractStreamTableWriter extends AbstractTableWriter {
 
     private PrintWriter writer;
     private OutputStream outputStream;
-    private CharsetEncoder charsetEncoder = Charset.defaultCharset().newEncoder();
+    private CharsetEncoder charsetEncoder = CSVUtils.getDefaultCharset().newEncoder();
     
 	/**
 	 * Default Constructor.
