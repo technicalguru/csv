@@ -24,8 +24,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.junit.Assert;
-
 import rs.baselib.lang.LangUtils;
 import csv.TableReader;
 
@@ -128,7 +126,9 @@ public class BeanReader<T> implements Iterator<T> {
 			// try to find the parameter class
 			beanClass = (Class<T>)LangUtils.getTypeArguments(BeanReader.class, getClass()).get(0);
 		}
-		Assert.assertNotNull("The parameter class is unknown. See http://download.ralph-schuster.eu/eu.ralph-schuster.csv/STABLE/apidocs/csv/util/BeanReader.html", beanClass);
+		if (beanClass == null) {
+			throw new IllegalArgumentException("The parameter class is unknown. See http://download.ralph-schuster.eu/eu.ralph-schuster.csv/STABLE/apidocs/csv/util/BeanReader.html");
+		}
 		this.beanClass = beanClass;
 	}
 
