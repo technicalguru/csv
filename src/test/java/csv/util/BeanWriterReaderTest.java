@@ -76,12 +76,12 @@ public class BeanWriterReaderTest {
 	 * compare the results with the original values.
 	 */
 	public void testWriteFile() {
-		BeanWriter out= null;
+		BeanWriter<TestBean> out= null;
 		try {
 			// Write the file
 			XmlWriter xmlWriter = new XmlWriter(fFile, true);
 			//xmlWriter.setUseColumnNameTags(true);
-			out= new BeanWriter(xmlWriter, true);
+			out= new BeanWriter<TestBean>(xmlWriter, true);
 			for (int row= 0; row < TEST_BEANS.length; row++) {
 				out.writeBean(TEST_BEANS[row]);
 			}
@@ -97,15 +97,15 @@ public class BeanWriterReaderTest {
 	 * This method compares the results of read with the original values.
 	 */
 	public void testWrittenValues() {
-		BeanReader in= null;
+		BeanReader<TestBean> in= null;
 		try {
 			// Reader
 			XmlReader xmlReader = new XmlReader(fFile);
-			in = new BeanReader(TestBean.class, xmlReader);
+			in = new BeanReader<TestBean>(TestBean.class, xmlReader);
 
 			int row= 0;
 			while (in.hasNext()) {
-				TestBean bean = (TestBean)in.next();
+				TestBean bean = in.next();
 
 				// compare size of columns
 				assertEquals(TEST_BEANS[row], bean);
@@ -120,7 +120,7 @@ public class BeanWriterReaderTest {
 			e.printStackTrace();
 			fail("May be a previous test has failed: " + e.getMessage());
 		} finally {
-			in.close();
+			if (in != null) in.close();
 		}
 	}
 

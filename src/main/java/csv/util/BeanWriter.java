@@ -34,10 +34,13 @@ import csv.TableWriter;
  * Writes beans to an underlying table writer.
  * The attributes written are either determined by inspection of first bean to be written
  * or by explicitely setting them through special methods.
+ * 
+ * @param <T> Type of bean to be written
+ * 
  * @author ralph
  *
  */
-public class BeanWriter {
+public class BeanWriter<T> {
 
 	private TableWriter writer = null;
 	private List<String> attributes = null;
@@ -53,7 +56,6 @@ public class BeanWriter {
 	public BeanWriter(TableWriter writer, boolean writeHeaderRow) {
 		setWriter(writer);
 		setWriteHeaderRow(writeHeaderRow);
-		
 	}
 
 	/**
@@ -80,8 +82,9 @@ public class BeanWriter {
 	 * @see TableWriter#printRow(Object[])
 	 * @see #convertToColumns(Object)
 	 */
-	public void writeBean(Object bean) throws IOException {
-		if (attributes == null) createAttributeList(bean.getClass());
+	@SuppressWarnings("unchecked")
+	public void writeBean(T bean) throws IOException {
+		if (attributes == null) createAttributeList((Class<T>)bean.getClass());
 		if (isWriteHeaderRow() && !headerRowWritten) {
 			writeHeaderRow();
 		}
@@ -116,8 +119,9 @@ public class BeanWriter {
 	 * @param bean bean to be converted
 	 * @return object array with attribute values
 	 */
-	public Object[] convertToColumns(Object bean) {
-		if (attributes == null) createAttributeList(bean.getClass());
+	@SuppressWarnings("unchecked")
+	public Object[] convertToColumns(T bean) {
+		if (attributes == null) createAttributeList((Class<T>)bean.getClass());
 		Object rc[] = new Object[attributes.size()];
 		for (int i=0; i<rc.length; i++) {
 			rc[i] = getAttribute(i, bean);
@@ -131,8 +135,9 @@ public class BeanWriter {
 	 * @param bean bean object
 	 * @return value in column
 	 */
-	protected Object getAttribute(int index, Object bean) {
-		if (attributes == null) createAttributeList(bean.getClass());
+	@SuppressWarnings("unchecked")
+	protected Object getAttribute(int index, T bean) {
+		if (attributes == null) createAttributeList((Class<T>)bean.getClass());
 		if ((index < 0) || (index >= attributes.size())) return null;
 		String attribute = attributes.get(index);
 		return getAttribute(attribute, bean);
@@ -144,9 +149,10 @@ public class BeanWriter {
 	 * @param bean bean object
 	 * @return value of attribute
 	 */
-	protected Object getAttribute(String attribute, Object bean) {
+	@SuppressWarnings("unchecked")
+	protected Object getAttribute(String attribute, T bean) {
 		if (attribute == null) return null;
-		if (attributes == null) createAttributeList(bean.getClass());
+		if (attributes == null) createAttributeList((Class<T>)bean.getClass());
 		Method method = methods.get(attribute);
 		return getAttribute(method, bean);
 	}
@@ -157,7 +163,7 @@ public class BeanWriter {
 	 * @param bean bean object
 	 * @return value of attribute
 	 */
-	protected Object getAttribute(Method method, Object bean) {
+	protected Object getAttribute(Method method, T bean) {
 		if (bean == null) return null;
 		if (method == null) return null;
 		try {
@@ -175,7 +181,7 @@ public class BeanWriter {
 	 * @param clazz Class to introspect
 	 * @param attributes list of attributes 
 	 */
-	protected void createAttributeList(Class<?> clazz, List<String> attributes) {
+	protected void createAttributeList(Class<T> clazz, List<String> attributes) {
 		for (String attr : attributes) addGetter(clazz, attr);
 	}
 	
@@ -185,7 +191,7 @@ public class BeanWriter {
 	 * @param clazz Class to introspect
 	 * @param attributes list of attributes 
 	 */
-	protected void createAttributeList(Class<?> clazz, String attributes[]) {
+	protected void createAttributeList(Class<T> clazz, String attributes[]) {
 		for (String attr : attributes) addGetter(clazz, attr);
 	}
 	
@@ -194,7 +200,7 @@ public class BeanWriter {
 	 * All JavaBean getter methods will be taken over.
 	 * @param clazz Class to introspect
 	 */
-	protected void createAttributeList(Class<?> clazz) {
+	protected void createAttributeList(Class<T> clazz) {
 		Method methods[] = clazz.getMethods();
 		for (Method m : methods) {
 			if (!isValidGetterMethod(m)) continue;
@@ -213,7 +219,7 @@ public class BeanWriter {
 	 * @param clazz Class to introspect
 	 * @param attribute name of attribute
 	 */
-	protected void addGetter(Class<?> clazz, String attribute) {
+	protected void addGetter(Class<T> clazz, String attribute) {
 		// What is the name of the getter?
 		String mName = "get"+attribute.substring(0, 1).toUpperCase()+attribute.substring(1);
 		try {
@@ -302,7 +308,7 @@ public class BeanWriter {
 	 * @return number of rows written
 	 * @throws IOException when there is a problem with the writer.
 	 */
-	public int writeBeans(Collection<? extends Object> collection) throws IOException {
+	public int writeBeans(Collection<? extends T> collection) throws IOException {
 		return writeBeans(collection.iterator());
 	}
 
@@ -312,7 +318,7 @@ public class BeanWriter {
 	 * @return number of rows written
 	 * @throws IOException when there is a problem with the writer.
 	 */
-	public int writeBeans(Iterator<? extends Object> i) throws IOException {
+	public int writeBeans(Iterator<? extends T> i) throws IOException {
 		int rc = 0;
 		while (i.hasNext()) {
 			writeBean(i.next());
@@ -327,10 +333,11 @@ public class BeanWriter {
 	 * @return number of rows written
 	 * @throws IOException when there is a problem with the writer.
 	 */
+	@SuppressWarnings("unchecked")
 	public int writeBeans(Object arr[]) throws IOException {
 		int rc = 0;
 		for (Object bean : arr) {
-			writeBean(bean);
+			writeBean((T)bean);
 			rc++;
 		}
 		return rc;
