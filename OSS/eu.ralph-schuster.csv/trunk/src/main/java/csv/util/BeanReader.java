@@ -24,54 +24,111 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.junit.Assert;
+
+import rs.baselib.lang.LangUtils;
 import csv.TableReader;
 
 /**
  * Reads beans from the underlying table stream.
+ * <p>
+ * Please notice that you need to explicitely pass the bean class to the constructor when you create a 
+ * parameterized BeanReader inline:
+ * <pre>
+ *   // Error: Invalid usage
+ *   BeanReader&lt;TestBean&gt; beanReader = new BeanReader&lt;TestBean&gt;(tableReader);
+ *   
+ *   // Correct usage
+ *   BeanReader&lt;TestBean&gt; beanReader = new BeanReader&lt;TestBean&gt;(<b>TestBean.class,</b> tableReader);
+ * </pre>
+ * </p>
+ * <p>
+ * You can omit the class argument in constructors when your BeanReader was explicitely defined as a class:
+ * <pre>
+ * public class MyBeanReader extends BeanReader&lt;TestBean&gt; {
+ *    ...
+ * }
+ * 
+ * // Ok here 
+ * BeanReader&lt;TestBean&gt; = new MyBeanReader(tableReader);
+ * </pre>
+ * </p>
+ * <p>
+ * The reason for this is the lack of class parameter inspection for in-line parameters at runtime.
+ * </p>
+ * @param <T> Type of bean to be read
+ * 
  * @author ralph
  *
  */
-public class BeanReader implements Iterator<Object> {
+public class BeanReader<T> implements Iterator<T> {
 
 	private TableReader reader;
 	private boolean evaluateHeaderRow = false;
 	private String attributes[] = null;
 	private Map<String, Method> methods = new HashMap<String, Method>();
-	private Class<?> beanClass;
+	private Class<T> beanClass;
 	
 	/**
 	 * Constructor.
 	 * Use this constructor when underlying reader will deliver the attribute names in
 	 * first record.
-	 * @param beanClass the beanClass
+	 * @param beanClass class of bean - reflection does not guarantee to find out the correct class.
 	 * @param reader the underlying reader to read bean properties from
 	 */
-	public BeanReader(Class<?> beanClass, TableReader reader) {
+	public BeanReader(Class<T> beanClass, TableReader reader) {
 		this(beanClass, reader, true, null);
 	}
 
 	/**
 	 * Constructor.
-	 * Use this constructor if underlying reader does NOT deliver attribute names.
-	 * @param beanClass the beanClass
+	 * Use this constructor when underlying reader will deliver the attribute names in
+	 * first record and you created a specific parameterized class for the reader.
+	 * @param beanClass class of bean - reflection does not guarantee to find out the correct class.
+	 * @param reader the underlying reader to read bean properties from
+	 */
+	public BeanReader(TableReader reader) {
+		this(null, reader, true, null);
+	}
+
+	/**
+	 * Constructor.
+	 * Use this constructor if underlying reader does NOT deliver attribute names and you created
+	 * a specific parameterized class for the reader.
 	 * @param reader the underlying reader to read bean properties from
 	 * @param attributes list of attribute names that will be used to create the beans
 	 */
-	public BeanReader(Class<?> beanClass, TableReader reader, String attributes[]) {
+	public BeanReader(TableReader reader, String attributes[]) {
+		this(null, reader, false, attributes);
+	}
+	/**
+	 * Constructor.
+	 * Use this constructor if underlying reader does NOT deliver attribute names.
+	 * @param beanClass class of bean - reflection does not guarantee to find out the correct class.
+	 * @param reader the underlying reader to read bean properties from
+	 * @param attributes list of attribute names that will be used to create the beans
+	 */
+	public BeanReader(Class<T> beanClass, TableReader reader, String attributes[]) {
 		this(beanClass, reader, false, attributes);
 	}
 
 	/**
 	 * Internal Constructor.
-	 * @param beanClass the beanClass
+	 * @param beanClass class of bean - reflection does not guarantee to find out the correct class.
 	 * @param reader the underlying reader to read bean properties from
 	 * @param attributes list of attribute names that will be used to create the beans
 	 * @param evaluateHeaderRow whether header row will be delivered by reader
 	 */
-	protected BeanReader(Class<?> beanClass, TableReader reader, boolean evaluateHeaderRow, String attributes[]) {
+	@SuppressWarnings("unchecked")
+	protected BeanReader(Class<T> beanClass, TableReader reader, boolean evaluateHeaderRow, String attributes[]) {
 		this.reader = reader;
 		this.evaluateHeaderRow = evaluateHeaderRow;
 		if (!evaluateHeaderRow) setAttributes(attributes);
+		if (beanClass == null) {
+			// try to find the parameter class
+			beanClass = (Class<T>)LangUtils.getTypeArguments(BeanReader.class, getClass()).get(0);
+		}
+		Assert.assertNotNull("The parameter class is unknown. See http://download.ralph-schuster.eu/eu.ralph-schuster.csv/STABLE/apidocs/csv/util/BeanReader.html", beanClass);
 		this.beanClass = beanClass;
 	}
 
@@ -96,7 +153,7 @@ public class BeanReader implements Iterator<Object> {
 	 * @see #convertToBean(Object[])
 	 */
 	@Override
-	public Object next() {
+	public T next() {
 		if (!hasNext()) throw new IllegalStateException("End of stream");
 		return convertToBean(reader.next());
 	}
@@ -120,11 +177,11 @@ public class BeanReader implements Iterator<Object> {
 	 * @param columns attribute values
 	 * @return new bean
 	 */
-	public Object convertToBean(Object columns[]) {
+	public T convertToBean(Object columns[]) {
 		// Create new bean
 		String attribute = null;
 		try {
-			Object rc = beanClass.newInstance();
+			T rc = beanClass.newInstance();
 			for (int i=0; i<columns.length; i++) {
 				attribute = getAttributeName(i);
 				// Ignore attribute if not known
