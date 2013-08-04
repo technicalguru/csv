@@ -132,7 +132,6 @@ public abstract class AbstractTableReader implements TableReader {
 	 * @param row row of values
 	 * @return value in row for specified column.
 	 */
-	@Override
 	public Object get(String name, Object row[]) {
 		if (row == null) return null;
 		int column = getColumnIndex(name);
