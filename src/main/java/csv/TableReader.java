@@ -51,14 +51,6 @@ public interface TableReader extends Iterator<Object[]>{
 	public Object[] getHeaderRow();
 	
 	/**
-	 * Returns the value in column with specified name
-	 * @param name name of column (from header row)
-	 * @param row row of values
-	 * @return value in row for specified column.
-	 */
-	public Object get(String name, Object row[]);
-
-	/**
 	 * Returns the column index of given column name.
 	 * The first column with given name will be returned.
 	 * @param name name of column

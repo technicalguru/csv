@@ -61,11 +61,13 @@ public abstract class AbstractRowFilter implements TableReader {
 
 	/**
 	 * Forwarded to underlying reader.
-	 * @see csv.TableReader#get(java.lang.String, java.lang.Object[])
+	 * @see AbstractTableReader#get(String, Object[])
 	 */
-	@Override
 	public Object get(String name, Object[] row) {
-		return getReader().get(name, row);
+		if (getReader() instanceof AbstractTableReader) {
+			return ((AbstractTableReader)getReader()).get(name, row);
+		}
+		return null;
 	}
 
 	/**
