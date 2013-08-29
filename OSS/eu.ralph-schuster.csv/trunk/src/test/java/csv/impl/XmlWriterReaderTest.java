@@ -80,7 +80,7 @@ public class XmlWriterReaderTest {
 	
 	/**
 	 * The test method writes a XML file.
-	 * Test {@link #testWrittenValues()} will
+	 * Test {@link #testWrittenValues(boolean)} will
 	 * compare the results with the original values.
 	 */
 	@Test
