@@ -89,7 +89,7 @@ public class ExcelWriterReaderTest {
 
 	/**
 	 * The test method writes a CSV file.
-	 * Test {@link #testWrittenValues()} will
+	 * Test {@link #testWrittenValues(boolean)} will
 	 * compare the results with the original values.
 	 */
 	@Test
