@@ -51,7 +51,13 @@ public class ReaderTest {
 	private static Logger log = LoggerFactory.getLogger(ReaderTest.class);
 	private static NumberFormat FORMATTER = new DecimalFormat("#0.00");
 	private static String testClasses[] = {
-		CsvExcelUtilityReader.class.getName()
+		CsvExcelUtilityReader.class.getName(),
+		CommonsCsvReader.class.getName(),
+		GenJavaCsvReader.class.getName(),
+		JavaCsvReader.class.getName(),
+		OpenCsvReader.class.getName(),
+		SkifeCsvReader.class.getName(),
+		SuperCsvReader.class.getName()
 	};
 	private static Map<String, Long> testResults;
 	private static File file;
