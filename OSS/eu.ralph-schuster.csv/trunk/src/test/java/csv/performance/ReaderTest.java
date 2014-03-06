@@ -129,6 +129,7 @@ public class ReaderTest {
 	public static void cleanup() {
 		// compute medium and max run time
 		long totalTime = 0;
+		long avgTime = 0;
 		long maxTime = 0;
 		long mediumTime = 0;
 		int count = 0;
@@ -140,13 +141,17 @@ public class ReaderTest {
 				count++;
 			}
 		}
-		if (count > 0) mediumTime = totalTime / count;
+		if (count > 0) {
+			mediumTime = maxTime / 2;
+			avgTime = totalTime / count;
+		}
 		
 		// Calculate the KPI steps
 		// Medium is 5.0 by default, maximum time is 1.0
 		long kpiStep = mediumTime / 5;
 		
 		// Calculate KPI and print it for each result
+		log.info("AVG(all)="+avgTime+"ms");
 		for (Map.Entry<String, Long> entry : testResults.entrySet()) {
 			long time = entry.getValue();
 			if (time > 0) {
