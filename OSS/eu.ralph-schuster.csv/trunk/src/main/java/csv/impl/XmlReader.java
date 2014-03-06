@@ -33,6 +33,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.ext.DefaultHandler2;
 
+import csv.CsvException;
+
 /**
  * Reads from a XML file.
  * @author ralph
@@ -129,7 +131,7 @@ public class XmlReader extends AbstractStreamTableReader {
 	@Override
 	public Object[] next() {
 		if (nextRow == null) readNextRow();
-		if (nextRow == null) throw new IllegalStateException("End of XML stream reached");
+		if (nextRow == null) throw new CsvException("End of XML stream reached");
 		
 		// Before delivering make sure that comments are delivered
 		deliverComments();
@@ -293,7 +295,7 @@ public class XmlReader extends AbstractStreamTableReader {
 	private class ParserThread extends Thread {
 		
 		private SAXParser parser = null;
-		private IllegalStateException parsingError = null;
+		private CsvException parsingError = null;
 		private List<Object[]> availableObjects = new ArrayList<Object[]>();
 		private String columnNames[] = null;
 		private boolean parsingStopped = false;
@@ -314,7 +316,7 @@ public class XmlReader extends AbstractStreamTableReader {
 				parser.setProperty ("http://xml.org/sax/properties/lexical-handler", handler);
 				parser.parse(getInputStream(), handler);
 			} catch (Exception e) {
-				parsingError = new IllegalStateException(e);
+				parsingError = new CsvException(e);
 			}
 
 		}
@@ -344,7 +346,7 @@ public class XmlReader extends AbstractStreamTableReader {
 		 * Returns the parsing exception that occurred.
 		 * @return parsing exception
 		 */
-		public IllegalStateException getParsingError() {
+		public CsvException getParsingError() {
 			return parsingError;
 		}
 		

@@ -24,6 +24,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
+import csv.CsvException;
 import csv.util.CSVUtils;
 
 /**
@@ -96,7 +97,7 @@ public class JTableReader extends AbstractTableReader {
 	 */
 	@Override
 	public Object[] next() {
-		if (!hasNext()) throw new IllegalStateException("No more rows");
+		if (!hasNext()) throw new CsvException("No more rows");
 		currentRowIndex++;
 		
 		int rowIndex = currentRowIndex;
@@ -119,7 +120,7 @@ public class JTableReader extends AbstractTableReader {
 	 */
 	@Override
 	public void remove() {
-		throw new IllegalStateException("remove is not supprted");
+		throw new CsvException("remove is not supprted");
 	}
 
 	/**

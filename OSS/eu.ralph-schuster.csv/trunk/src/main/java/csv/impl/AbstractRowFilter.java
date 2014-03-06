@@ -18,6 +18,7 @@
 package csv.impl;
 
 import csv.CommentCallback;
+import csv.CsvException;
 import csv.TableReader;
 
 /**
@@ -231,7 +232,7 @@ public abstract class AbstractRowFilter implements TableReader {
 	 */
 	@Override
 	public Object[] next() {
-		if (!hasNext()) throw new IllegalStateException("No more rows available");
+		if (!hasNext()) throw new CsvException("No more rows available");
 		rowIndex++;
 		Object rc[] = nextRow;
 		nextRow = null;

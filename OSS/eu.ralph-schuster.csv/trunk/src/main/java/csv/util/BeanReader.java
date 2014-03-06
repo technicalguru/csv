@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import rs.baselib.lang.LangUtils;
+import csv.CsvException;
 import csv.TableReader;
 
 /**
@@ -127,7 +128,7 @@ public class BeanReader<T> implements Iterator<T> {
 			beanClass = (Class<T>)LangUtils.getTypeArguments(BeanReader.class, getClass()).get(0);
 		}
 		if (beanClass == null) {
-			throw new IllegalArgumentException("The parameter class is unknown. See http://download.ralph-schuster.eu/eu.ralph-schuster.csv/STABLE/apidocs/csv/util/BeanReader.html");
+			throw new CsvException("The parameter class is unknown. See http://download.ralph-schuster.eu/eu.ralph-schuster.csv/STABLE/apidocs/csv/util/BeanReader.html");
 		}
 		this.beanClass = beanClass;
 	}
@@ -154,7 +155,7 @@ public class BeanReader<T> implements Iterator<T> {
 	 */
 	@Override
 	public T next() {
-		if (!hasNext()) throw new IllegalStateException("End of stream");
+		if (!hasNext()) throw new CsvException("End of stream");
 		return convertToBean(reader.next());
 	}
 
@@ -194,11 +195,11 @@ public class BeanReader<T> implements Iterator<T> {
 			
 			return rc;
 		} catch (InvocationTargetException e) {
-			throw new IllegalStateException("Cannot set attribute: "+attribute, e);
+			throw new CsvException("Cannot set attribute: "+attribute, e);
 		} catch (InstantiationException e) {
-			throw new IllegalStateException("Cannot create JavaBean", e);
+			throw new CsvException("Cannot create JavaBean", e);
 		} catch (IllegalAccessException e) {
-			throw new IllegalStateException("Cannot create JavaBean", e);
+			throw new CsvException("Cannot create JavaBean", e);
 		}
 	}
 	
@@ -208,7 +209,7 @@ public class BeanReader<T> implements Iterator<T> {
 	 */
 	@Override
 	public void remove() {
-		throw new IllegalStateException("Remove not supported");
+		throw new CsvException("Remove not supported");
 	}
 
 	/**
@@ -233,7 +234,7 @@ public class BeanReader<T> implements Iterator<T> {
 	 */
 	protected void setAttributes(String attributes[]) {
 		if (attributes == null) {
-			throw new IllegalArgumentException("attribute names cannot be null");
+			throw new CsvException("attribute names cannot be null");
 		}
 		this.attributes = attributes;
 	}
@@ -284,7 +285,7 @@ public class BeanReader<T> implements Iterator<T> {
 			}
 			
 			if (rc == null) {
-				throw new IllegalArgumentException("No setter found for: "+attribute);
+				throw new CsvException("No setter found for: "+attribute);
 			}
 			
 			methods.put(attribute, rc);

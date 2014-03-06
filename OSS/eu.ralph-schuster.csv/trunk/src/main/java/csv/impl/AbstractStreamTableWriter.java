@@ -26,6 +26,7 @@ import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 
+import csv.CsvException;
 import csv.util.CSVUtils;
 
 /**
@@ -80,7 +81,7 @@ public abstract class AbstractStreamTableWriter extends AbstractTableWriter {
 	 * @param out the output stream to be used
 	 */
 	public void setOutputStream(OutputStream out) {
-		if (outputStream != null) throw new IllegalArgumentException("Output stream already set");
+		if (outputStream != null) throw new CsvException("Output stream already set");
 		this.outputStream = out;
 	}
 
@@ -167,7 +168,7 @@ public abstract class AbstractStreamTableWriter extends AbstractTableWriter {
 				getOutputStream().close();
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new CsvException("Cannot close writer", e);
 		}
 		super.close();
 	}

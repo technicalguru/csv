@@ -27,6 +27,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 
+import csv.CsvException;
 import csv.util.CSVUtils;
 
 /**
@@ -82,7 +83,7 @@ public abstract class AbstractStreamTableReader extends AbstractTableReader {
 	 * @param in the stream to set
 	 */
 	public void setInputStream(InputStream in) {
-    	if (inputStream != null) throw new IllegalStateException("InputStream already set");
+    	if (inputStream != null) throw new CsvException("InputStream already set");
     	inputStream = in;
     	open();
 	}
@@ -165,7 +166,7 @@ public abstract class AbstractStreamTableReader extends AbstractTableReader {
             if (getInputStream() != null) getInputStream().reset();
             if (reader != null) reader.reset();
         } catch (IOException e) {
-            throw new IllegalStateException(e.toString(), e);
+            throw new CsvException(e.toString(), e);
         }
     	super.reset();
     }
@@ -176,7 +177,7 @@ public abstract class AbstractStreamTableReader extends AbstractTableReader {
 	 */
 	@Override
 	public void remove() {
-		throw new UnsupportedOperationException("Operation not supported for CSV streams");
+		throw new CsvException("Operation not supported for CSV streams");
 	}
 
 	/**
@@ -188,7 +189,7 @@ public abstract class AbstractStreamTableReader extends AbstractTableReader {
         	if (inputStream != null) inputStream.close();
             if (reader != null) reader.close();
         } catch (Exception e) {
-            throw new IllegalStateException(e.toString());
+            throw new CsvException(e.toString(), e);
         }
         super.close();
     }

@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import csv.CommentCallback;
+import csv.CsvException;
 import csv.TableReader;
 import csv.TypeConversionHandler;
 import csv.impl.type.BooleanConversionHandler;
@@ -147,9 +148,9 @@ public abstract class AbstractTableReader implements TableReader {
 	 */
 	@Override
 	public int getColumnIndex(String name) {
-		if (!hasHeaderRow()) throw new IllegalStateException("TableReader has no header row (property hasHeaderRow is false)");
+		if (!hasHeaderRow()) throw new CsvException("TableReader has no header row (property hasHeaderRow is false)");
 		readHeaderRow();
-		if (getHeaderRow() == null) throw new IllegalArgumentException("Stream is empty");
+		if (getHeaderRow() == null) throw new CsvException("Stream is empty");
 		for (int i=0; i<headerRow.length; i++) {
 			if ((headerRow[i] != null) && headerRow[i].toString().equalsIgnoreCase(name)) return i;
 		}
