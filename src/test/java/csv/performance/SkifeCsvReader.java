@@ -18,6 +18,12 @@
 package csv.performance;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+
+import org.skife.csv.CSVReader;
+import org.skife.csv.ReaderCallback;
+import org.skife.csv.SimpleReader;
 
 /**
  * Reader for Skife CSV.
@@ -45,8 +51,19 @@ public class SkifeCsvReader implements IReader {
 	 */
 	@Override
 	public int read(File file, String charset) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		CSVReader reader = new SimpleReader();
+
+		InputStream in = new FileInputStream(file);
+
+		final int[] count = {0};
+		reader.parse(in, new ReaderCallback() {
+			public void onRow(String[] fields) {
+				count[0]++;
+			}
+		});
+		in.close();
+		
+		return count[0];
 	}
 
 }

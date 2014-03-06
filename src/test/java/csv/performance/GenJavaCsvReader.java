@@ -18,6 +18,9 @@
 package csv.performance;
 
 import java.io.File;
+import java.io.FileReader;
+
+import com.generationjava.io.CsvReader;
 
 /**
  * Reader for GenJava CSV.
@@ -45,8 +48,13 @@ public class GenJavaCsvReader implements IReader {
 	 */
 	@Override
 	public int read(File file, String charset) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		CsvReader reader = new CsvReader(new FileReader(file));
+		int count = 0;
+		while (reader.readLine() != null) {
+			count++;
+		}
+		reader.close();
+		return count;
 	}
 
 }

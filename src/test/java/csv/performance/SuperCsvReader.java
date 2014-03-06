@@ -18,9 +18,18 @@
 package csv.performance;
 
 import java.io.File;
+import java.io.FileReader;
+
+import org.supercsv.cellprocessor.Optional;
+import org.supercsv.cellprocessor.ift.CellProcessor;
+import org.supercsv.io.CsvListReader;
+import org.supercsv.io.ICsvListReader;
+import org.supercsv.prefs.CsvPreference;
 
 /**
  * Reader for SuperCsv.
+ * <p>Attention</p> SuperCsv is not able to read the original test file correctly. This might
+ * be a mis-configuration only and needs to be revisited. There is no KPI figure at the moment.
  * @author ralph
  *
  */
@@ -45,8 +54,32 @@ public class SuperCsvReader implements IReader {
 	 */
 	@Override
 	public int read(File file, String charset) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		ICsvListReader listReader = new CsvListReader(new FileReader(file), CsvPreference.STANDARD_PREFERENCE);
+
+		listReader.getHeader(true); // skip the header (can't be used with CsvListReader)
+		final CellProcessor[] processors = getProcessors();
+
+		int count = 0;
+		while (listReader.read(processors) != null) {
+			count++;
+		}
+
+		listReader.close();
+		return count;
 	}
 
+	private static CellProcessor[] getProcessors() {
+
+		final CellProcessor[] processors = new CellProcessor[] { 
+				new Optional(),
+				new Optional(),
+				new Optional(),
+				new Optional(),
+				new Optional(),
+				new Optional(),
+				new Optional(),
+		};
+
+		return processors;
+	}
 }

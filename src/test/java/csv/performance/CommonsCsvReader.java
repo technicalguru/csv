@@ -18,6 +18,12 @@
 package csv.performance;
 
 import java.io.File;
+import java.io.FileReader;
+import java.util.Iterator;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 
 /**
  * Reader for Commons CSV.
@@ -45,8 +51,15 @@ public class CommonsCsvReader implements IReader {
 	 */
 	@Override
 	public int read(File file, String charset) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		CSVParser parser = CSVFormat.RFC4180.parse(new FileReader(file));
+		int count = 0;
+		Iterator<CSVRecord> i = parser.iterator();
+		while (i.hasNext()) {
+			i.next();
+			count++;
+		}
+		parser.close();
+		return count;
 	}
 
 }
