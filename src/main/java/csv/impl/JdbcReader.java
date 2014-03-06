@@ -22,6 +22,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import csv.CsvException;
 import csv.util.CSVUtils;
 
 /**
@@ -79,7 +80,7 @@ public class JdbcReader extends AbstractTableReader {
 		try {
 			if (!resultSet.isClosed() && isCloseResultSet()) resultSet.close();
 		} catch (SQLException e) {
-			throw new RuntimeException("Error while closing result set", e);
+			throw new CsvException("Error while closing result set", e);
 		}
 		super.close();
 	}
@@ -104,7 +105,7 @@ public class JdbcReader extends AbstractTableReader {
 		try {
 			resultSet.beforeFirst();
 		} catch (SQLException e) {
-			throw new RuntimeException("Cannot relocate cursor", e);
+			throw new CsvException("Cannot relocate cursor", e);
 		}
 		nextRow = null;
 		columnCount = 0;
@@ -125,7 +126,7 @@ public class JdbcReader extends AbstractTableReader {
 			}
 			setHeaderRow(CSVUtils.extendArray(l, getMinimumColumnCount()));
 		} catch (SQLException e) {
-			throw new RuntimeException("Cannot read column names", e);
+			throw new CsvException("Cannot read column names", e);
 		}
 	}
 
@@ -139,7 +140,7 @@ public class JdbcReader extends AbstractTableReader {
 				ResultSetMetaData meta = resultSet.getMetaData();
 				columnCount = meta.getColumnCount();
 			} catch (SQLException e) {
-				throw new RuntimeException("Cannot read column names", e);
+				throw new CsvException("Cannot read column names", e);
 			}
 		}
 		return columnCount;
@@ -186,7 +187,7 @@ public class JdbcReader extends AbstractTableReader {
 				}
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException("Cannot read next row", e);
+			throw new CsvException("Cannot read next row", e);
 		}
 	}
 	
@@ -199,7 +200,7 @@ public class JdbcReader extends AbstractTableReader {
 		try {
 			resultSet.deleteRow();
 		} catch (SQLException e) {
-			throw new RuntimeException("Cannot delete row", e);
+			throw new CsvException("Cannot delete row", e);
 		}
 	}
 

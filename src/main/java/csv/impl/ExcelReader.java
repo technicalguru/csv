@@ -32,6 +32,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
+import csv.CsvException;
 import csv.util.CSVUtils;
 
 /**
@@ -132,7 +133,7 @@ public class ExcelReader extends AbstractStreamTableReader {
 			workbook = WorkbookFactory.create(getInputStream());
 			selectSheet(0);
 		} catch (Exception e) {
-			throw new IllegalStateException("Cannot create Excel workbook", e);
+			throw new CsvException("Cannot create Excel workbook", e);
 		}
 	}
 
@@ -273,7 +274,7 @@ public class ExcelReader extends AbstractStreamTableReader {
 			incrementRowCount();
 			return row;
 		}
-		throw new IllegalStateException("No more rows");
+		throw new CsvException("No more rows");
 	}
 
 	/**

@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import csv.CsvException;
 import csv.TableWriter;
 
 /**
@@ -169,9 +170,9 @@ public class BeanWriter<T> {
 		try {
 			return method.invoke(bean);
 		} catch (InvocationTargetException e) {
-			throw new IllegalStateException("Cannot call method", e);
+			throw new CsvException("Cannot call method", e);
 		} catch (IllegalAccessException e) {
-			throw new IllegalStateException("Cannot call method", e);
+			throw new CsvException("Cannot call method", e);
 		}
 	}
 	
@@ -224,10 +225,10 @@ public class BeanWriter<T> {
 		String mName = "get"+attribute.substring(0, 1).toUpperCase()+attribute.substring(1);
 		try {
 			Method m = clazz.getMethod(mName, (Class<?>[])null);
-			if (!isValidGetterMethod(m)) throw new IllegalStateException("No JavaBean attribute: "+attribute);
+			if (!isValidGetterMethod(m)) throw new CsvException("No JavaBean attribute: "+attribute);
 			addGetter(attribute, m);
 		} catch (NoSuchMethodException e) {
-			throw new IllegalStateException("No such attribute", e);
+			throw new CsvException("No such attribute", e);
 		}
 	}
 	
@@ -285,7 +286,7 @@ public class BeanWriter<T> {
 		try {
 			getWriter().printRow(row);
 		} catch (IOException e) {
-			throw new IllegalStateException("Header row failed:", e);
+			throw new CsvException("Header row failed:", e);
 		}
 		headerRowWritten = true;
 	}

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import csv.CsvException;
 import csv.util.CSVUtils;
 
 /**
@@ -125,7 +126,7 @@ public class CSVReader extends AbstractStreamTableReader {
 		if (argReader != null) try {
 			argReader.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new CsvException("Cannot close reader", e);
 		}
 		super.close();
 	}
@@ -149,7 +150,7 @@ public class CSVReader extends AbstractStreamTableReader {
 		if (argReader != null) try {
 			argReader.reset();
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new CsvException("Cannot reset reader", e);
 		}
 		super.reset();
 	}
@@ -542,7 +543,9 @@ public class CSVReader extends AbstractStreamTableReader {
             			}
             		}
             	}
-            } catch (IOException e) { }
+            } catch (IOException e) {
+            	throw new CsvException("Cannot read from stream:", e);
+            }
             
             if (lineBuffer.size() > 0) return true;
             return false;
@@ -560,7 +563,7 @@ public class CSVReader extends AbstractStreamTableReader {
         	Object o[] = null;
         	StringBuffer s = new StringBuffer();
         	while (o == null) {
-        		if (!internalHasNext()) throw new IllegalStateException("No more rows");
+        		if (!internalHasNext()) throw new CsvException("No more rows");
         		String line = lineBuffer.remove(0);
         		//System.out.println("foo=["+line+"], s is now: ["+s+"]");
         		
@@ -583,7 +586,7 @@ public class CSVReader extends AbstractStreamTableReader {
          * Not suported.
          */
         public void remove() {
-            throw new UnsupportedOperationException("Remove is not supported.");
+            throw new CsvException("Remove is not supported.");
         }
         
     }

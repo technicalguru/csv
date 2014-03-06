@@ -117,7 +117,7 @@ public class CSVFactory {
 	 */
 	public TableReader getReader(File file) throws IOException {
 		String mimeType = getMimeType(file);
-		if (mimeType == null) throw new IllegalArgumentException("No MIME type found: "+file.getAbsolutePath());
+		if (mimeType == null) throw new CsvException("No MIME type found: "+file.getAbsolutePath());
 		AbstractStreamTableReader reader = getMimeTypeReader(mimeType);
 		reader.setInputStream(new FileInputStream(file));
 		return reader;
@@ -129,14 +129,14 @@ public class CSVFactory {
 	 * @return reader to be used
 	 */
 	public AbstractStreamTableReader getMimeTypeReader(String mimeType) {
-		if (mimeType == null) throw new IllegalArgumentException("NULL MIME type");
+		if (mimeType == null) throw new CsvException("NULL MIME type");
 		Class<? extends AbstractStreamTableReader> readerClass = readers.get(mimeType);
-		if (readerClass == null) throw new IllegalArgumentException("Cannot find reader class for: "+mimeType);
+		if (readerClass == null) throw new CsvException("Cannot find reader class for: "+mimeType);
 		try {
 			AbstractStreamTableReader reader = readerClass.newInstance();
 			return reader;
 		} catch (Exception e) {
-			throw new IllegalStateException("Cannot create reader instance: ", e);
+			throw new CsvException("Cannot create reader instance: ", e);
 		}		
 	}
 	
@@ -156,7 +156,7 @@ public class CSVFactory {
 	 */
 	public AbstractStreamTableWriter getWriter(File file) throws IOException {
 		String mimeType = getMimeType(file);
-		if (mimeType == null) throw new IllegalArgumentException("No MIME type found: "+file.getAbsolutePath());
+		if (mimeType == null) throw new CsvException("No MIME type found: "+file.getAbsolutePath());
 		AbstractStreamTableWriter writer = getMimeTypeWriter(mimeType);
 		writer.setOutputStream(new FileOutputStream(file));
 		return writer;
@@ -168,14 +168,14 @@ public class CSVFactory {
 	 * @return writer to be used
 	 */
 	public AbstractStreamTableWriter getMimeTypeWriter(String mimeType) {
-		if (mimeType == null) throw new IllegalArgumentException("NULL MIME type");
+		if (mimeType == null) throw new CsvException("NULL MIME type");
 		Class<? extends AbstractStreamTableWriter> writerClass = writers.get(mimeType);
-		if (writerClass == null) throw new IllegalArgumentException("Cannot find writer class for: "+mimeType);
+		if (writerClass == null) throw new CsvException("Cannot find writer class for: "+mimeType);
 		try {
 			AbstractStreamTableWriter writer = writerClass.newInstance();
 			return writer;
 		} catch (Exception e) {
-			throw new IllegalStateException("Cannot create writer instance: ", e);
+			throw new CsvException("Cannot create writer instance: ", e);
 		}		
 	}
 	
