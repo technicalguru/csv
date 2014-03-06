@@ -76,7 +76,6 @@ public class ReaderTest {
 	public static Collection<Object[]> data() throws Exception {
 		Collection<Object[]> data = new ArrayList<Object[]>();
 		for (String className : testClasses) {
-			System.out.println(className);
 			Class<? extends IReader> clazz = (Class<? extends IReader>) Class.forName(className);
 			data.add(new Object[] { clazz.newInstance() });
 		}
