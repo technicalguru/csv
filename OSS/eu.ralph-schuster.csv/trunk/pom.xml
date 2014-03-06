@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>eu.ralph-schuster</groupId>
@@ -13,7 +14,7 @@
 	<url>http://techblog.ralph-schuster.eu/csv-utility-package-for-java/</url>
 	<name>CSV/Excel Utility Package</name>
 	<description>A library for easily accessing CSV, Excel and and other table-like data from Java</description>
-	
+
 	<scm>
 		<connection>scm:svn:https://h2031995.stratoserver.net/svn/OSS/eu.ralph-schuster.csv/trunk</connection>
 		<developerConnection>scm:svn:https://h2031995.stratoserver.net/svn/OSS/eu.ralph-schuster.csv/trunk</developerConnection>
@@ -52,7 +53,7 @@
 			<name>Andrej Czapszys</name>
 		</contributor>
 	</contributors>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>eu.ralph-schuster</groupId>
@@ -74,8 +75,59 @@
 			<artifactId>commons-lang</artifactId>
 			<version>2.5</version>
 		</dependency>
+		<!-- Test dependencies -->
+		<dependency>
+			<groupId>net.sourceforge.javacsv</groupId>
+			<artifactId>javacsv</artifactId>
+			<version>2.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.supercsv</groupId>
+			<artifactId>super-csv</artifactId>
+			<version>2.0.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>2.3</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>genjava</groupId>
+			<artifactId>gj-csv</artifactId>
+			<version>1.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-csv</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	
+	<repositories>
+		<repository>
+			<id>apache</id>
+			<name>Apache Repository</name>
+			<releases>
+				<enabled>false</enabled>
+				<updatePolicy>never</updatePolicy>
+				<checksumPolicy>warn</checksumPolicy>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>warn</checksumPolicy>
+			</snapshots>
+			<url>https://repository.apache.org/content/repositories/snapshots</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+	
+
 	<build>
 		<plugins>
 			<plugin>
