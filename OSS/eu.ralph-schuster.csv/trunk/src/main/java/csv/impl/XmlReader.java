@@ -448,7 +448,7 @@ public class XmlReader extends AbstractStreamTableReader {
 		private ParserThread thread = null;
 		private boolean isRow = false;
 		private boolean isCollectingChars = false;
-		private StringBuffer charBuf = new StringBuffer();
+		private StringBuilder charBuf = new StringBuilder();
 		private String columnName = null;
 		private String columnType = null;
 		private List<String> columnNames;
@@ -481,7 +481,7 @@ public class XmlReader extends AbstractStreamTableReader {
 				
 				// start collecting chars 
 				isCollectingChars = true;
-				charBuf = new StringBuffer();
+				charBuf = new StringBuilder();
 			} else if (qName.equals(getRowTagName())){
 				// Row starts
 				isRow = true;

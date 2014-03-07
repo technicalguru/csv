@@ -916,7 +916,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		 */
 		@Override
 		public String toString() {
-			StringBuffer rc = new StringBuffer();
+			StringBuilder rc = new StringBuilder();
 			rc.append(getFgColor()); rc.append(':');
 			rc.append(getFillPattern()); rc.append(':');
 			rc.append(getBgColor()); rc.append(':');

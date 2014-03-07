@@ -160,7 +160,7 @@ public class XmlWriter extends AbstractStreamTableWriter {
 	protected String getColumnStartTag(int column, Object value) {
 		String tagName = getColumnTagName(column);
 		String attributes = getColumnTagAttributes(column, value);
-		StringBuffer rc = new StringBuffer();
+		StringBuilder rc = new StringBuilder();
 		rc.append('<');
 		rc.append(tagName);
 		if (attributes != null) rc.append(attributes);
@@ -176,7 +176,7 @@ public class XmlWriter extends AbstractStreamTableWriter {
 	 */
 	protected String getColumnEndTag(int column) {
 		String tagName = getColumnTagName(column);
-		StringBuffer rc = new StringBuffer();
+		StringBuilder rc = new StringBuilder();
 		rc.append("</");
 		rc.append(tagName);
 		rc.append('>');
@@ -201,7 +201,7 @@ public class XmlWriter extends AbstractStreamTableWriter {
 	 * @return all attributes
 	 */
 	protected String getColumnTagAttributes(int column, Object value) {
-		StringBuffer rc = new StringBuffer();
+		StringBuilder rc = new StringBuilder();
 		
 		// Name of column
 		if (!isUseColumnNameTags()) {

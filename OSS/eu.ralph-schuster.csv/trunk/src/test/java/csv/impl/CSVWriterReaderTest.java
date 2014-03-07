@@ -163,7 +163,7 @@ public class CSVWriterReaderTest {
 	 */
 	protected void testRow(Object master[], Object copy[], int lineNo) {
 		// compare size of columns
-		StringBuffer s = new StringBuffer(); CommonUtils.debugObject(s, copy);
+		StringBuilder s = new StringBuilder(); CommonUtils.debugObject(s, copy);
 		assertEquals("Line "+lineNo+": array length check - "+s.toString(), master.length, copy.length);
 		for (int col=0; col<copy.length; col++) {
 			if ((master[col] != null)) {
