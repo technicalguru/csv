@@ -238,7 +238,7 @@ public class CSVWriter extends AbstractStreamTableWriter {
 	 */
 	public String prepareRow(Object columns[]) {
         int i;
-        StringBuffer rc = new StringBuffer();
+        StringBuilder rc = new StringBuilder();
         
         for (i=0; i<columns.length; i++) {
             Object o = columns[i];
@@ -271,7 +271,7 @@ public class CSVWriter extends AbstractStreamTableWriter {
      * @return string ready to be written to CSV
      */
     public String prepareComment(String comment ) {
-    	StringBuffer s = new StringBuffer();
+    	StringBuilder s = new StringBuilder();
     	s.append(getCommentChar());
     	s.append(' ');
     	s.append(comment);

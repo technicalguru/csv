@@ -155,7 +155,7 @@ public class ReaderTest {
 		for (Map.Entry<String, Long> entry : testResults.entrySet()) {
 			long time = entry.getValue();
 			if (time > 0) {
-				double kpi = (maxTime-time)/kpiStep+1;
+				double kpi = (double)(maxTime-time)/(double)kpiStep+(double)1;
 				log.info("KPI("+entry.getKey()+")="+FORMATTER.format(kpi));
 			}
 		}
