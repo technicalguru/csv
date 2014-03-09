@@ -83,7 +83,6 @@ public class BeanReader<T> implements Iterator<T> {
 	 * Constructor.
 	 * Use this constructor when underlying reader will deliver the attribute names in
 	 * first record and you created a specific parameterized class for the reader.
-	 * @param beanClass class of bean - reflection does not guarantee to find out the correct class.
 	 * @param reader the underlying reader to read bean properties from
 	 */
 	public BeanReader(TableReader reader) {
