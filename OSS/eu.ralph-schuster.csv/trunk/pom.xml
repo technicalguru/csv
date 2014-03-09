@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>eu.ralph-schuster</groupId>
 		<artifactId>pom-oss</artifactId>
-		<version>1.3.3</version>
+		<version>1.4.1</version>
 	</parent>
 
 	<groupId>eu.ralph-schuster</groupId>
@@ -63,12 +63,12 @@
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
-			<version>3.8</version>
+			<version>3.10-FINAL</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
-			<version>3.8</version>
+			<version>3.10-FINAL</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
@@ -150,5 +150,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

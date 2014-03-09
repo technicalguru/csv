@@ -1,0 +1,43 @@
+ ------
+ Performance Tests
+ ------
+ Ralph Schuster
+ ------
+ 2014-03-09
+ ------
+
+Performance Tests
+
+* Hardware and Software Conditions
+
+  The following hardware was used to test performance:
+
+	* ThinkPad T410
+	
+	* Intel(R) 4 Core(TM) i5 CPU M 430 @ 2.27GHz
+	
+	* Ubuntu 12.04.4 LTS
+	
+	* 2 GB memory
+	
+	* SSD hard disk
+
+* Test Results
+
+*--------------*-------------------*-----------------*
+| CSV Library  | Read Test (in ms) | Read KPI (1-10) |
+*--------------+-------------------:-----------------:
+| JavaCSV / V2.0 | 4,620     | 7.37       |
+*--------------+-------------------:-----------------:
+| OpenCSV /V2.3 | 5,261     | 6.86       |
+*--------------+-------------------:-----------------:
+| SkifeCSV / V1.0 | 5,687    | 6.53      |
+*--------------+-------------------:-----------------:
+| Apache Commons CSV / V1.0-SNAPSHOT | 5,757     | 6.47      |
+*--------------+-------------------:-----------------:
+| CSV/Excel Utility Package / V1.7.0 | 6,756     | 5.68       |
+*--------------+-------------------:-----------------:
+| GenJava CSV / V1.0 | 12,704     | 1.00       |
+*--------------+-------------------:-----------------:
+| SuperCSV / V2.0.0 | (failed)     | (failed)       |
+*--------------+-------------------:-----------------:
