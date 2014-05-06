@@ -614,7 +614,8 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		return value instanceof String;
 	}
 	
-	protected class StyleDescription {
+	/** Describes a style for a cell. */
+	protected static class StyleDescription {
 		
 		private Short format;
 		private Short fgColor;
@@ -632,10 +633,16 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		private Short bottomBorderThickness;
 		private boolean textWrap;
 		
+		/**
+		 * Constructor.
+		 */
 		public StyleDescription() {
 			this (null, null, null, null, null, null, null, null, null, null, null, null, null, null, false);
 		}
 
+		/**
+		 * Constructor.
+		 */
 		public StyleDescription(Short format, Short fgColor, Short fillPattern,
 				Short bgColor, Font font, Short alignment,
 				Short topBorderColor, Short topBorderThickness,
@@ -662,6 +669,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Returns the format.
 		 * @return the format
 		 */
 		public Short getFormat() {
@@ -669,6 +677,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Sets the format.
 		 * @param format the format to set
 		 */
 		public void setFormat(Short format) {
@@ -676,6 +685,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Returns the foreground color.
 		 * @return the fgColor
 		 */
 		public Short getFgColor() {
@@ -683,6 +693,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Sets the foreground color.
 		 * @param fgColor the fgColor to set
 		 */
 		public void setFgColor(Short fgColor) {
@@ -690,6 +701,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Returns the fill pattern.
 		 * @return the fillPattern
 		 */
 		public Short getFillPattern() {
@@ -697,6 +709,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Sets the fill pattern.
 		 * @param fillPattern the fillPattern to set
 		 */
 		public void setFillPattern(Short fillPattern) {
@@ -704,6 +717,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Returns the background color.
 		 * @return the bgColor
 		 */
 		public Short getBgColor() {
@@ -711,6 +725,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Sets the background color.
 		 * @param bgColor the bgColor to set
 		 */
 		public void setBgColor(Short bgColor) {
@@ -718,6 +733,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Returns the text font.
 		 * @return the font
 		 */
 		public Font getFont() {
@@ -725,6 +741,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Sets the text font.
 		 * @param font the font to set
 		 */
 		public void setFont(Font font) {
@@ -732,6 +749,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Returns the alignment.
 		 * @return the alignment
 		 */
 		public Short getAlignment() {
@@ -739,6 +757,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Sets the alignment.
 		 * @param alignment the alignment to set
 		 */
 		public void setAlignment(Short alignment) {
@@ -746,6 +765,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Returns the color of the top border.
 		 * @return the topBorderColor
 		 */
 		public Short getTopBorderColor() {
@@ -753,6 +773,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Sets the color of the top border.
 		 * @param topBorderColor the topBorderColor to set
 		 */
 		public void setTopBorderColor(Short topBorderColor) {
@@ -760,6 +781,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Returns the thickness of the top border.
 		 * @return the topBorderThickness
 		 */
 		public Short getTopBorderThickness() {
@@ -767,6 +789,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Sets the thickness of the top border.
 		 * @param topBorderThickness the topBorderThickness to set
 		 */
 		public void setTopBorderThickness(Short topBorderThickness) {
@@ -774,6 +797,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Returns the color of the left border.
 		 * @return the leftBorderColor
 		 */
 		public Short getLeftBorderColor() {
@@ -781,6 +805,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Sets the color of the left border.
 		 * @param leftBorderColor the leftBorderColor to set
 		 */
 		public void setLeftBorderColor(Short leftBorderColor) {
@@ -788,6 +813,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Returns the thickness of the left border.
 		 * @return the leftBorderThickness
 		 */
 		public Short getLeftBorderThickness() {
@@ -795,6 +821,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Sets the thickness of the left border.
 		 * @param leftBorderThickness the leftBorderThickness to set
 		 */
 		public void setLeftBorderThickness(Short leftBorderThickness) {
@@ -802,6 +829,8 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Sets the color of the right border.
+		 * Returns the color of the right border.
 		 * @return the rightBorderColor
 		 */
 		public Short getRightBorderColor() {
@@ -816,6 +845,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Returns the thickness of the right border.
 		 * @return the rightBorderThickness
 		 */
 		public Short getRightBorderThickness() {
@@ -823,6 +853,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Sets the thickness of the right border.
 		 * @param rightBorderThickness the rightBorderThickness to set
 		 */
 		public void setRightBorderThickness(Short rightBorderThickness) {
@@ -830,6 +861,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Returns the color of the bottom border.
 		 * @return the bottomBorderColor
 		 */
 		public Short getBottomBorderColor() {
@@ -837,6 +869,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Sets the color of the bottom border.
 		 * @param bottomBorderColor the bottomBorderColor to set
 		 */
 		public void setBottomBorderColor(Short bottomBorderColor) {
@@ -844,6 +877,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Returns the thickness of the bottom border.
 		 * @return the bottomBorderThickness
 		 */
 		public Short getBottomBorderThickness() {
@@ -851,6 +885,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Sets the thickness of the bottom border.
 		 * @param bottomBorderThickness the bottomBorderThickness to set
 		 */
 		public void setBottomBorderThickness(Short bottomBorderThickness) {
@@ -859,6 +894,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 
 		
 		/**
+		 * Returns whether text is wrapped in cell.
 		 * @return the textWrap
 		 */
 		public boolean isTextWrap() {
@@ -866,12 +902,17 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 
 		/**
+		 * Sets whether text is wrapped in cell.
 		 * @param textWrap the textWrap to set
 		 */
 		public void setTextWrap(boolean textWrap) {
 			this.textWrap = textWrap;
 		}
 
+		/**
+		 * Applies the style to the cell.
+		 * @param style the style to be set from this description
+		 */
 		public void applyStyle(CellStyle style) {
 			if (format != null) style.setDataFormat(format);
 
