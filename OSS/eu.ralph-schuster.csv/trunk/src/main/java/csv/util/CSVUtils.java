@@ -327,7 +327,7 @@ public class CSVUtils {
         int colcount = minLength > 0 ? minLength : 0;
         if (columns != null) colcount = columns.size();
         Object rc[] = new Object[Math.max(colcount, minLength)];
-        if (colcount > 0) {
+        if ((columns != null) && (colcount > 0)) {
             for (int i=0; i<colcount; i++) {
             	rc[i] = columns.get(i);
             }
