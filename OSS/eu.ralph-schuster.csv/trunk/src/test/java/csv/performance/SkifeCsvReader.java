@@ -53,16 +53,19 @@ public class SkifeCsvReader implements IReader {
 	public int read(File file, String charset) throws Exception {
 		CSVReader reader = new SimpleReader();
 
-		InputStream in = new FileInputStream(file);
-
+		InputStream in = null;
 		final int[] count = {0};
-		reader.parse(in, new ReaderCallback() {
-			public void onRow(String[] fields) {
-				count[0]++;
-			}
-		});
-		in.close();
-		
+		try {
+			in = new FileInputStream(file);
+
+			reader.parse(in, new ReaderCallback() {
+				public void onRow(String[] fields) {
+					count[0]++;
+				}
+			});
+		} finally {
+			in.close();
+		}
 		return count[0];
 	}
 
