@@ -19,7 +19,9 @@ package csv.performance;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.Charset;
 
 import org.skife.csv.CSVReader;
 import org.skife.csv.ReaderCallback;
@@ -52,11 +54,12 @@ public class SkifeCsvReader implements IReader {
 	@Override
 	public int read(File file, String charset) throws Exception {
 		CSVReader reader = new SimpleReader();
+		if (charset == null) charset = Charset.defaultCharset().name();
 
-		InputStream in = null;
+		Reader in = null;
 		final int[] count = {0};
 		try {
-			in = new FileInputStream(file);
+			in = new InputStreamReader(new FileInputStream(file), charset);
 
 			reader.parse(in, new ReaderCallback() {
 				public void onRow(String[] fields) {

@@ -18,7 +18,9 @@
 package csv.performance;
 
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 
 import org.supercsv.cellprocessor.Optional;
 import org.supercsv.cellprocessor.ift.CellProcessor;
@@ -54,7 +56,8 @@ public class SuperCsvReader implements IReader {
 	 */
 	@Override
 	public int read(File file, String charset) throws Exception {
-		ICsvListReader listReader = new CsvListReader(new FileReader(file), CsvPreference.STANDARD_PREFERENCE);
+		if (charset == null) charset = Charset.defaultCharset().name();
+		ICsvListReader listReader = new CsvListReader(new InputStreamReader(new FileInputStream(file), charset), CsvPreference.STANDARD_PREFERENCE);
 
 		listReader.getHeader(true); // skip the header (can't be used with CsvListReader)
 		final CellProcessor[] processors = getProcessors();
