@@ -323,7 +323,7 @@ public class CSVUtils {
      * @param columns minimum columns
      * @return array with at least minimum number of columns defined.
      */
-	public static Object[] convertList(List<Object> columns, int minLength) {
+	public static Object[] convertList(List<?> columns, int minLength) {
         int colcount = minLength > 0 ? minLength : 0;
         if (columns != null) colcount = columns.size();
         Object rc[] = new Object[Math.max(colcount, minLength)];
