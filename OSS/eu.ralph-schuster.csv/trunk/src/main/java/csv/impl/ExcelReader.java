@@ -380,6 +380,7 @@ public class ExcelReader extends AbstractStreamTableReader {
 	public Object evaluateCellValue(Cell cell) {
 		FormulaEvaluator evaluator = getFormulaEvaluator();
 		CellValue value = evaluator.evaluate(cell);
+		if (value == null) return null;
 		switch (value.getCellType()) {
 		case Cell.CELL_TYPE_STRING:
 			return value.getStringValue();
