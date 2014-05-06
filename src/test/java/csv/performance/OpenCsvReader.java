@@ -18,7 +18,9 @@
 package csv.performance;
 
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 
 import au.com.bytecode.opencsv.CSVReader;
 
@@ -48,7 +50,8 @@ public class OpenCsvReader implements IReader {
 	 */
 	@Override
 	public int read(File file, String charset) throws Exception {
-		CSVReader reader = new CSVReader(new FileReader(file));
+		if (charset == null) charset = Charset.defaultCharset().name();
+		CSVReader reader = new CSVReader(new InputStreamReader(new FileInputStream(file), charset));
 		int count = 0;
 		while (reader.readNext() != null) {
 			count++;

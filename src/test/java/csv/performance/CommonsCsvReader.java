@@ -18,7 +18,9 @@
 package csv.performance;
 
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.Iterator;
 
 import org.apache.commons.csv.CSVFormat;
@@ -51,7 +53,8 @@ public class CommonsCsvReader implements IReader {
 	 */
 	@Override
 	public int read(File file, String charset) throws Exception {
-		CSVParser parser = CSVFormat.RFC4180.parse(new FileReader(file));
+		if (charset == null) charset = Charset.defaultCharset().name();
+		CSVParser parser = CSVFormat.RFC4180.parse(new InputStreamReader(new FileInputStream(file), charset));
 		int count = 0;
 		Iterator<CSVRecord> i = parser.iterator();
 		while (i.hasNext()) {

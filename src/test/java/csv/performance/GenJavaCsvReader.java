@@ -18,7 +18,9 @@
 package csv.performance;
 
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 
 import com.generationjava.io.CsvReader;
 
@@ -48,7 +50,8 @@ public class GenJavaCsvReader implements IReader {
 	 */
 	@Override
 	public int read(File file, String charset) throws Exception {
-		CsvReader reader = new CsvReader(new FileReader(file));
+		if (charset == null) charset = Charset.defaultCharset().name();
+		CsvReader reader = new CsvReader(new InputStreamReader(new FileInputStream(file), charset));
 		int count = 0;
 		while (reader.readLine() != null) {
 			count++;
