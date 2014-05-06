@@ -359,10 +359,10 @@ public class XmlReader extends AbstractStreamTableReader {
 			if (rowIndex == END_OF_FILE_INDEX) {
 				// Deliver all comments
 				List<String> rc = new ArrayList<String>();
-				Set<Integer> keys = comments.keySet();
-				for (Integer key : keys) {
-					rc.addAll(comments.remove(key));
+				for (Map.Entry<Integer, List<String>> entry : comments.entrySet()) {
+					rc.addAll(entry.getValue());
 				}
+				comments.clear();
 				if (rc.size() > 0) return rc;
 				return null;
 			}
