@@ -384,7 +384,7 @@ public abstract class AbstractTableReader implements TableReader {
      * @return arrray with column values
      */
     protected Object[] convertArray(List<String> columns) {
-        int colcount = columns.size();
+        int colcount = columns != null ? columns.size() : 0;
         Object rc[] = new Object[Math.max(colcount, getMinimumColumnCount())];
         if ((columns != null) && (colcount > 0)) {
             for (int i=0; i<colcount; i++) {
