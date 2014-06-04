@@ -6,7 +6,6 @@
 		<version>1.4.1</version>
 	</parent>
 
-	<groupId>eu.ralph-schuster</groupId>
 	<artifactId>csv</artifactId>
 	<version>2.7.2-SNAPSHOT</version>
 	<packaging>bundle</packaging>
@@ -15,15 +14,15 @@
 	<description>A library for easily accessing CSV, Excel and and other table-like data from Java</description>
 
 	<scm>
-		<connection>scm:svn:https://h2031995.stratoserver.net/svn/OSS/eu.ralph-schuster.csv/trunk</connection>
-		<developerConnection>scm:svn:https://h2031995.stratoserver.net/svn/OSS/eu.ralph-schuster.csv/trunk</developerConnection>
-		<url>https://h2031995.stratoserver.net/svn/OSS/eu.ralph-schuster.csv/trunk</url>
+		<connection>scm:svn:https://svn.ralph-schuster.eu/svn/OSS/eu.ralph-schuster.csv/trunk</connection>
+		<developerConnection>scm:svn:https://svn.ralph-schuster.eu/svn/OSS/eu.ralph-schuster.csv/trunk</developerConnection>
+		<url>https://svn.ralph-schuster.eu/svn/OSS/eu.ralph-schuster.csv/trunk</url>
 	</scm>
 
 	<distributionManagement>
 		<site>
 			<id>strato-server</id>
-			<url>scp://h2031995.stratoserver.net/var/www/vhosts/ralph-schuster.eu/download/${project.groupId}.${project.artifactId}/${project.version}</url>
+			<url>scp://download.ralph-schuster.eu/var/www/vhosts/ralph-schuster.eu/download/${project.groupId}.${project.artifactId}/${project.version}</url>
 		</site>
 	</distributionManagement>
 
