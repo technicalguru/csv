@@ -22,7 +22,7 @@
 	<distributionManagement>
 		<site>
 			<id>strato-server</id>
-			<url>scp://download.ralph-schuster.eu/var/www/vhosts/ralph-schuster.eu/download/${project.groupId}.${project.artifactId}/${project.version}</url>
+			<url>scp://download.ralph-schuster.eu/var/www/ralph-schuster.eu/download/${project.groupId}.${project.artifactId}/${project.version}</url>
 		</site>
 	</distributionManagement>
 
