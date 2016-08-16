@@ -37,14 +37,15 @@ import csv.util.CSVUtils;
 
 /**
  * Implements Excel reading.
+ * <p>
  * This class reads Excel sheets like a stream, meaning
  * delivering rows one by one from the current sheet.
- *  * Use this reader if you want to load an Excel file by creating a {@link java.io.File}
+ * Use this reader if you want to load an Excel file by creating a {@link java.io.File}
  * and passing it to the constructor.
+ * </p>
  * <p>
  * Example:
  * </p>
- * <p>
  * <pre>
 java.io.File f = new java.io.File("excel-test.xls");
 ExcelReader in = new ExcelReader(f);
@@ -54,7 +55,6 @@ while (in.hasNext()) {
 }
 in.close();
 </pre>
- * </p>
  * @author RalphSchuster
  * @see #selectSheet(int)
  * @see #selectSheet(String)
@@ -462,8 +462,8 @@ public class ExcelReader extends AbstractStreamTableReader {
 
 	/**
 	 * Checks whether row has only blank cells.
-	 * The method is called from
-	 * {@link #retrieveNextRow()}.
+	 * The method is called from {@link #retrieveNextRow()}.
+	 * @param row the row to check
 	 * @return boolean when the row has only blank cells
 	 */
 	protected boolean rowHasOnlyBlankCells(Row row) {

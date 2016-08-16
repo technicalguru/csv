@@ -98,7 +98,7 @@ public class HtmlWriter extends AbstractStreamTableWriter {
 
 	/**
 	 * @param file output file
-	 * @throws IOException
+	 * @throws IOException when the file cannot be written
 	 */
 	public HtmlWriter(File file) throws IOException {
 		super(file);
@@ -106,7 +106,7 @@ public class HtmlWriter extends AbstractStreamTableWriter {
 
 	/**
 	 * @param file output filename
-	 * @throws IOException
+	 * @throws IOException when the file cannot be written
 	 */
 	public HtmlWriter(String file) throws IOException {
 		super(file);
@@ -161,7 +161,6 @@ public class HtmlWriter extends AbstractStreamTableWriter {
 	/**
 	 * Prints the header row into the stream.
 	 * @param columns columns to be written
-	 * @throws IOException
 	 */
 	public void printHeaderRow(Object columns[]) {
 		printTableHeadRowHeader();

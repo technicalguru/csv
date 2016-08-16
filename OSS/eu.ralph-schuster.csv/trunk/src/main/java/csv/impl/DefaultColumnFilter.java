@@ -32,6 +32,7 @@ public class DefaultColumnFilter extends AbstractColumnFilter {
 	/**
 	 * Default Constructor
 	 * @param reader underlying reader to be filtered.
+	 * @param indexOrder array of column indices to be returned from underlying reader
 	 */
 	public DefaultColumnFilter(TableReader reader, int indexOrder[]) {
 		super(reader);
@@ -39,7 +40,7 @@ public class DefaultColumnFilter extends AbstractColumnFilter {
 	}
 
 	/**
-	 * @see csv.impl.AbstractColumnFilter#getFilteredIndex(int)
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected int getFilteredIndex(int originalIndex) {

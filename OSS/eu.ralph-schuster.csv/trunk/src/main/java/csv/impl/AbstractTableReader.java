@@ -341,7 +341,7 @@ public abstract class AbstractTableReader implements TableReader {
 
 	/**
 	 * Increments the row Count.
-	 * Row count is the number of netto rows (<= line count) meaning rows
+	 * Row count is the number of netto rows (&lt;= line count) meaning rows
 	 * delivered by {@link TableReader#next()}.
 	 * @return rows delivered so far
 	 */
@@ -352,7 +352,7 @@ public abstract class AbstractTableReader implements TableReader {
     
     /**
      * Returns the row count.
-	 * Row count is the number of netto rows (<= line count) meaning rows
+	 * Row count is the number of netto rows (&lt;= line count) meaning rows
 	 * delivered by {@link TableReader#next()}.
 	 * @return rows delivered so far
 	 */

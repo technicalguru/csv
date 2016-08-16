@@ -51,11 +51,8 @@ public abstract class AbstractRowFilter implements TableReader {
 		return reader;
 	}
 
-
-
 	/**
-	 * Forwarded to underlying reader.
-	 * @see csv.TableReader#close()
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void close() {
@@ -64,6 +61,9 @@ public abstract class AbstractRowFilter implements TableReader {
 
 	/**
 	 * Forwarded to underlying reader.
+	 * @param name name of column (from header row)
+	 * @param row row of values	 
+	 * @return the value in the respective column
 	 * @see AbstractTableReader#get(String, Object[])
 	 */
 	public Object get(String name, Object[] row) {
@@ -74,8 +74,7 @@ public abstract class AbstractRowFilter implements TableReader {
 	}
 
 	/**
-	 * Forwarded to underlying reader.
-	 * @see csv.TableReader#getColumnIndex(java.lang.String)
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getColumnIndex(String name) {
@@ -83,8 +82,7 @@ public abstract class AbstractRowFilter implements TableReader {
 	}
 
 	/**
-	 * Forwarded to underlying reader.
-	 * @see csv.TableReader#getHeaderRow()
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Object[] getHeaderRow() {
@@ -92,8 +90,7 @@ public abstract class AbstractRowFilter implements TableReader {
 	}
 
 	/**
-	 * Forwarded to underlying reader.
-	 * @see csv.TableReader#getMinimumColumnCount()
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getMinimumColumnCount() {
@@ -101,8 +98,7 @@ public abstract class AbstractRowFilter implements TableReader {
 	}
 
 	/**
-	 * Forwarded to underlying reader.
-	 * @see csv.TableReader#hasHeaderRow()
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean hasHeaderRow() {
@@ -110,8 +106,7 @@ public abstract class AbstractRowFilter implements TableReader {
 	}
 
 	/**
-	 * Opens this reader.
-	 * @see csv.TableReader#open()
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void open() {
@@ -121,7 +116,6 @@ public abstract class AbstractRowFilter implements TableReader {
 		rowIndex = 0;
 	}
 
-	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -131,8 +125,7 @@ public abstract class AbstractRowFilter implements TableReader {
 	}
 
 	/**
-	 * Forwarded to underlying reader.
-	 * @see csv.TableReader#registerCommentCallBack(csv.CommentCallback)
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void registerCommentCallBack(CommentCallback callback) {
@@ -140,8 +133,7 @@ public abstract class AbstractRowFilter implements TableReader {
 	}
 
 	/**
-	 * Resets the reader.
-	 * @see csv.TableReader#reset()
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void reset() {
@@ -152,8 +144,7 @@ public abstract class AbstractRowFilter implements TableReader {
 	}
 
 	/**
-	 * Forwarded to underlying reader.
-	 * @see csv.TableReader#setHasHeaderRow(boolean)
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setHasHeaderRow(boolean hasHeaderRow) {
@@ -161,8 +152,7 @@ public abstract class AbstractRowFilter implements TableReader {
 	}
 
 	/**
-	 * Forwarded to underlying reader.
-	 * @see csv.TableReader#setMinimumColumnCount(int)
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setMinimumColumnCount(int length) {
@@ -170,8 +160,7 @@ public abstract class AbstractRowFilter implements TableReader {
 	}
 
 	/**
-	 * Forwarded to underlying reader.
-	 * @see csv.TableReader#unregisterCommentCallBack(csv.CommentCallback)
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void unregisterCommentCallBack(CommentCallback callback) {
@@ -179,9 +168,7 @@ public abstract class AbstractRowFilter implements TableReader {
 	}
 
 	/**
-	 * Checks whether there is another row to be delivered
-	 * that is not filtered.
-	 * @see java.util.Iterator#hasNext()
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean hasNext() {
@@ -238,8 +225,7 @@ public abstract class AbstractRowFilter implements TableReader {
 	}
 
 	/**
-	 * Delivers next row.
-	 * @see java.util.Iterator#next()
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Object[] next() {
@@ -251,8 +237,7 @@ public abstract class AbstractRowFilter implements TableReader {
 	}
 
 	/**
-	 * Forwarded to underlying reader.
-	 * @see java.util.Iterator#remove()
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void remove() {

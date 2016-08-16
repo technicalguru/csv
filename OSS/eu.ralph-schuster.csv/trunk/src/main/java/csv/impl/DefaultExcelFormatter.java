@@ -642,6 +642,21 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 
 		/**
 		 * Constructor.
+		 * @param format - ID of format
+		 * @param fgColor - ID of foreground color
+		 * @param fillPattern - ID of fill pattern
+		 * @param bgColor - ID of background color
+		 * @param font - ID of font
+		 * @param alignment - ID of alignment
+		 * @param topBorderColor - ID of color for top border
+		 * @param topBorderThickness - ID of thickness for top border
+		 * @param leftBorderColor - ID of color for left border
+		 * @param leftBorderThickness - ID of thickness for left border
+		 * @param rightBorderColor - ID of color for right border
+		 * @param rightBorderThickness - ID of thickness for right border
+		 * @param bottomBorderColor - ID of color for bottom border
+		 * @param bottomBorderThickness - ID of thickness for bottom border
+		 * @param textWrap - ID of wrapping style
 		 */
 		public StyleDescription(Short format, Short fgColor, Short fillPattern,
 				Short bgColor, Font font, Short alignment,
