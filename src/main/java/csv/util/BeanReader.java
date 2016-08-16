@@ -24,9 +24,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import rs.baselib.lang.LangUtils;
 import csv.CsvException;
 import csv.TableReader;
+import rs.baselib.lang.ReflectionUtils;
 
 /**
  * Reads beans from the underlying table stream.
@@ -124,7 +124,7 @@ public class BeanReader<T> implements Iterator<T> {
 		if (!evaluateHeaderRow) setAttributes(attributes);
 		if (beanClass == null) {
 			// try to find the parameter class
-			beanClass = (Class<T>)LangUtils.getTypeArguments(BeanReader.class, getClass()).get(0);
+			beanClass = (Class<T>)ReflectionUtils.getTypeArguments(BeanReader.class, getClass()).get(0);
 		}
 		if (beanClass == null) {
 			throw new CsvException("The parameter class is unknown. See http://download.ralph-schuster.eu/eu.ralph-schuster.csv/STABLE/apidocs/csv/util/BeanReader.html");

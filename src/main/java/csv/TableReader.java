@@ -28,7 +28,7 @@ import java.util.Iterator;
  * @author RalphSchuster
  *
  */
-public interface TableReader extends Iterator<Object[]>{
+public interface TableReader extends Iterator<Object[]>, Iterable<Object[]> {
 
 	/**
 	 * Tells the reader whether the underlying stream will treat
