@@ -62,6 +62,10 @@ public abstract class AbstractColumnFilter implements TableReader {
 
 	/**
 	 * Forwarded to underlying reader.
+	 * @param name name of column (from header row)
+	 * @param row row of values	 
+	 * @return the value in the respective column
+	 * 
 	 * @see AbstractTableReader#get(String, Object[])
 	 */
 	public Object get(String name, Object[] row) {
@@ -72,9 +76,7 @@ public abstract class AbstractColumnFilter implements TableReader {
 	}
 
 	/**
-	 * Returns the translated column index.
-	 * @see #getFilteredIndex(int)
-	 * @see csv.TableReader#getColumnIndex(java.lang.String)
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getColumnIndex(String name) {
@@ -82,8 +84,7 @@ public abstract class AbstractColumnFilter implements TableReader {
 	}
 
 	/**
-	 * Returns the header row filtered.
-	 * @see csv.TableReader#getHeaderRow()
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Object[] getHeaderRow() {
@@ -91,8 +92,7 @@ public abstract class AbstractColumnFilter implements TableReader {
 	}
 
 	/**
-	 * Forwarded to underlying reader.
-	 * @see csv.TableReader#getMinimumColumnCount()
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getMinimumColumnCount() {
@@ -100,8 +100,7 @@ public abstract class AbstractColumnFilter implements TableReader {
 	}
 
 	/**
-	 * Forwarded to underlying reader.
-	 * @see csv.TableReader#hasHeaderRow()
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean hasHeaderRow() {
@@ -109,8 +108,7 @@ public abstract class AbstractColumnFilter implements TableReader {
 	}
 
 	/**
-	 * Forwarded to underlying reader.
-	 * @see csv.TableReader#open()
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void open() {
@@ -127,8 +125,7 @@ public abstract class AbstractColumnFilter implements TableReader {
 	}
 
 	/**
-	 * Forwarded to underlying reader.
-	 * @see csv.TableReader#registerCommentCallBack(csv.CommentCallback)
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void registerCommentCallBack(CommentCallback callback) {
@@ -136,8 +133,7 @@ public abstract class AbstractColumnFilter implements TableReader {
 	}
 
 	/**
-	 * Forwarded to underlying reader.
-	 * @see csv.TableReader#reset()
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void reset() {
@@ -146,8 +142,7 @@ public abstract class AbstractColumnFilter implements TableReader {
 	}
 
 	/**
-	 * Forwarded to underlying reader.
-	 * @see csv.TableReader#setHasHeaderRow(boolean)
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setHasHeaderRow(boolean hasHeaderRow) {
@@ -155,8 +150,7 @@ public abstract class AbstractColumnFilter implements TableReader {
 	}
 
 	/**
-	 * Forwarded to underlying reader.
-	 * @see csv.TableReader#setMinimumColumnCount(int)
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setMinimumColumnCount(int length) {
@@ -164,8 +158,7 @@ public abstract class AbstractColumnFilter implements TableReader {
 	}
 
 	/**
-	 * Forwarded to underlying reader.
-	 * @see csv.TableReader#unregisterCommentCallBack(csv.CommentCallback)
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void unregisterCommentCallBack(CommentCallback callback) {
@@ -173,8 +166,7 @@ public abstract class AbstractColumnFilter implements TableReader {
 	}
 
 	/**
-	 * Forwarded to underlying reader.
-	 * @see java.util.Iterator#hasNext()
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean hasNext() {
@@ -190,9 +182,7 @@ public abstract class AbstractColumnFilter implements TableReader {
 	}
 
 	/**
-	 * Returns the row returned by underlying reader and reshuffles according to definition.
-	 * @see #getFilteredIndex(int)
-	 * @see java.util.Iterator#next()
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Object[] next() {
@@ -227,8 +217,7 @@ public abstract class AbstractColumnFilter implements TableReader {
 	protected abstract int getFilteredIndex(int originalIndex);
 	
 	/**
-	 * Forwarded to underlying reader.
-	 * @see java.util.Iterator#remove()
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void remove() {

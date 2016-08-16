@@ -33,6 +33,7 @@ import rs.baselib.lang.ReflectionUtils;
  * <p>
  * Please notice that you need to explicitely pass the bean class to the constructor when you create a 
  * parameterized BeanReader inline:
+ * </p>
  * <pre>
  *   // Error: Invalid usage
  *   BeanReader&lt;TestBean&gt; beanReader = new BeanReader&lt;TestBean&gt;(tableReader);
@@ -40,9 +41,9 @@ import rs.baselib.lang.ReflectionUtils;
  *   // Correct usage
  *   BeanReader&lt;TestBean&gt; beanReader = new BeanReader&lt;TestBean&gt;(<b>TestBean.class,</b> tableReader);
  * </pre>
- * </p>
  * <p>
  * You can omit the class argument in constructors when your BeanReader was explicitely defined as a class:
+ * </p>
  * <pre>
  * public class MyBeanReader extends BeanReader&lt;TestBean&gt; {
  *    ...
@@ -51,7 +52,6 @@ import rs.baselib.lang.ReflectionUtils;
  * // Ok here 
  * BeanReader&lt;TestBean&gt; = new MyBeanReader(tableReader);
  * </pre>
- * </p>
  * <p>
  * The reason for this is the lack of class parameter inspection for in-line parameters at runtime.
  * </p>

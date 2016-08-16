@@ -32,12 +32,13 @@ import csv.util.CSVUtils;
 
 /**
  * Reads from CSV like streams.
+ * <p>
  * Use this reader if you want to load a CSV file by creating a {@link java.io.File}
  * and passing it to the constructor.
+ * </p>
  * <p>
  * Example:
  * </p>
- * <p>
  * <pre>
 java.io.File f = new java.io.File("csv-test.csv");
 CSVReader in = new CSVReader(f);
@@ -47,7 +48,6 @@ while (in.hasNext()) {
 }
 in.close();
 </pre>
- * </p>
  * @author RalphSchuster
  */
 public class CSVReader extends AbstractStreamTableReader {

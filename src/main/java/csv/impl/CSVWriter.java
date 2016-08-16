@@ -25,8 +25,9 @@ import java.io.Writer;
 
 /**
  * Implements functionality for writing CSV streams.
- * Example:
  * <p>
+ * Example:
+ * </p>
 <pre>
 java.io.File f = new java.io.File("csv-test.csv");
 CSVWriter out = new CSVWriter(f);
@@ -34,7 +35,6 @@ out.printRow(new Object[] { "0:0", "0:1", "0:2" });
 out.printRow(new Object[] { "1:0", "1:1", "1:2" });
 out.close();
 </pre>
- * </p>
  * @author RalphSchuster
  */
 public class CSVWriter extends AbstractStreamTableWriter {
@@ -65,7 +65,6 @@ public class CSVWriter extends AbstractStreamTableWriter {
     /**
      * Constructor for writing into a stream.
      * @param out output stream
-     * @throws IOException when an exception occurs
      */
 	public CSVWriter(OutputStream out) {
 		super(out);
@@ -88,6 +87,7 @@ public class CSVWriter extends AbstractStreamTableWriter {
 	/**
 	 * For backwards compatibility only.
 	 * @param out out writer
+	 * @param flush has no influence and is for compatibility reasons only
 	 * @deprecated
 	 */
 	public CSVWriter(Writer out, boolean flush) {

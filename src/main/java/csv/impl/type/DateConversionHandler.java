@@ -141,6 +141,7 @@ public class DateConversionHandler implements TypeConversionHandler {
 	 * This pre-selection is required due to some unexpected
 	 * results when it comes to parsing (e.g. 2 digits are excepted
 	 * by parsers when 4 were required).
+	 * @param s the string to analyze
 	 * @return array of formatters to be used (never null!)
 	 */
 	protected DateFormat[] getParsingFormatters(String s) {

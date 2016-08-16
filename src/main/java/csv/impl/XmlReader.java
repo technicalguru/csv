@@ -70,7 +70,7 @@ public class XmlReader extends AbstractStreamTableReader {
 	/**
 	 * Constructor.
 	 * @param file fiel to read
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException when the file cannot be found
 	 */
 	public XmlReader(File file) throws FileNotFoundException {
 		super(file);
@@ -80,7 +80,7 @@ public class XmlReader extends AbstractStreamTableReader {
 	/**
 	 * Constructor.
 	 * @param file file to read
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException when the file cannot be found
 	 */
 	public XmlReader(String file) throws FileNotFoundException {
 		super(file);
@@ -188,6 +188,7 @@ public class XmlReader extends AbstractStreamTableReader {
 	
 	/**
 	 * Handles all comments that were registered for current row.
+	 * @param rowIndex the index of the row to be processed
 	 */
 	protected void deliverComments(int rowIndex) {
 		List<String> comments = parserThread.deliverComments(rowIndex);

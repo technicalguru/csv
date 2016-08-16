@@ -105,6 +105,7 @@ public class CSVFactory {
 	 * Returns the correct reader for the given file.
 	 * @param file filename
 	 * @return reader class instance to be used
+	 * @throws IOException when the file cannot be read
 	 */
 	public TableReader getReader(String file)  throws IOException {
 		return getReader(new File(file));
@@ -114,6 +115,7 @@ public class CSVFactory {
 	 * Returns the correct reader for the given file.
 	 * @param file file
 	 * @return reader class instance to be used
+	 * @throws IOException when the file cannot be read
 	 */
 	public TableReader getReader(File file) throws IOException {
 		String mimeType = getMimeType(file);
@@ -144,6 +146,7 @@ public class CSVFactory {
 	 * Returns the correct reader for the given file.
 	 * @param file filename
 	 * @return reader class instance to be used
+	 * @throws IOException when the file cannot be written
 	 */
 	public AbstractStreamTableWriter getWriter(String file) throws IOException {
 		return getWriter(new File(file));
@@ -153,6 +156,7 @@ public class CSVFactory {
 	 * Returns the correct reader for the given file.
 	 * @param file file
 	 * @return reader class instance to be used
+	 * @throws IOException when the file cannot be written
 	 */
 	public AbstractStreamTableWriter getWriter(File file) throws IOException {
 		String mimeType = getMimeType(file);

@@ -41,6 +41,7 @@ public interface TableWriter {
      * The columns are written to the CSV stream as the are delivered by
      * the collection's iterator.
      * @param columns collection of column values. An iterator will be used to retrieve values from the collection.
+	 * @throws IOException when an exception occurs
      */
     public void printRow(Collection<?> columns) throws IOException;
     
@@ -50,6 +51,7 @@ public interface TableWriter {
      * the iterator.
      * @param columns iterator that returns column values.
      * @param size number of values to retrieve from iterator. Method will abort at this size.
+	 * @throws IOException when an exception occurs
      */
     public void printRow(Iterator<?> columns, int size) throws IOException;
     
@@ -58,6 +60,7 @@ public interface TableWriter {
      * The columns are written to the CSV stream as delivered by
      * the iterator.
      * @param columns iterator that returns column values.
+	 * @throws IOException when an exception occurs
      */
     public void printRow(Iterator<?> columns) throws IOException;
     

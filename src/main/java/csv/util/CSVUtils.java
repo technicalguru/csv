@@ -225,6 +225,7 @@ public class CSVUtils {
 	/**
 	 * Copies the beans from the collection to the stream.
 	 * The method will use {@link BeanWriter}
+	 * @param <T> The type of bean in the collection
 	 * @param collection collection that contains JavaBeans
 	 * @param writer writer to write rows to
 	 * @return number of rows written
@@ -237,6 +238,7 @@ public class CSVUtils {
 	/**
 	 * Copies the beans from the collection to the stream.
 	 * The method will use {@link BeanWriter}
+	 * @param <T> The type of bean in the collection
 	 * @param i iterator that delivers JavaBeans
 	 * @param writer writer to write rows to
 	 * @return number of rows written
@@ -252,6 +254,7 @@ public class CSVUtils {
 	/**
 	 * Copies the beans from the array to the stream.
 	 * The method will use {@link BeanWriter}
+	 * @param <T> The type of bean in the array
 	 * @param arr array of JavaBeans
 	 * @param writer writer to write rows to
 	 * @return number of rows written
@@ -286,7 +289,8 @@ public class CSVUtils {
 
     /**
      * Trims array to correct length of minimum column count.
-     * @param columns minimum columns
+     * @param columns columns array
+     * @param minLength minimum number of columns
      * @return array with at least minimum number of columns defined.
      */
 	public static Object[] extendArray(Object columns[], int minLength) {
@@ -303,7 +307,8 @@ public class CSVUtils {
 
     /**
      * Trims array to correct length of minimum column count.
-     * @param columns minimum columns
+     * @param columns columns array
+     * @param minLength minimum number of columns
      * @return array with at least minimum number of columns defined.
      */
 	public static String[] extendArray(String columns[], int minLength) {
@@ -320,7 +325,8 @@ public class CSVUtils {
 
     /**
      * Trims array to correct length of minimum column count.
-     * @param columns minimum columns
+     * @param columns columns list
+     * @param minLength minimum number of columns
      * @return array with at least minimum number of columns defined.
      */
 	public static Object[] convertList(List<?> columns, int minLength) {

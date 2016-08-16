@@ -32,11 +32,12 @@ import org.apache.poi.ss.usermodel.Workbook;
 
 /**
  * Provides ability to write Excel files.
+ * <p>
  * The Excel will be written with a call to {@link #close()} only!
  * Please notice that this implementation does not support writing formulas into
  * cells, yet.
  * Example:
- * <p>
+ * </p>
 <pre>
 java.io.File f = new java.io.File("excel-test.xls");
 ExcelWriter out = new ExcelWriter(f);
@@ -44,7 +45,6 @@ out.printRow(new Object[] { "0:0", new Integer(3), new Date() });
 out.printRow(new Object[] { "1:0", new Double(), "another String value" });
 out.close();
 </pre>
- * </p>
  * @see #close()
  * @author RalphSchuster
  *
@@ -162,6 +162,7 @@ public class ExcelWriter extends AbstractStreamTableWriter {
 	 * when writing to an existing workbook.
 	 * @param columns values to be written to the Excel sheet
 	 * @param rowNum index of row to be written
+	 * @throws IOException when an error occurs while writing
 	 * @see #printRow(Object[])
 	 */
 	public void printRow(Object[] columns, int rowNum) throws IOException {

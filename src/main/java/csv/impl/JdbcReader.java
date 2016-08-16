@@ -49,6 +49,7 @@ public class JdbcReader extends AbstractTableReader {
 	/**
 	 * Default constructor.
 	 * @param statement JDBC statement ready to be executed
+	 * @throws SQLException when the statement cannot be used
 	 */
 	public JdbcReader(Statement statement) throws SQLException {
 		this(statement.getResultSet());
