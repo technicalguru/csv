@@ -1,3 +1,57 @@
+Version 2.7.2:
+--------------
+
+    - Bug    CSV-59: Division by ZERO possible in unit test
+	- Change CSV-57: Supporting Iterable interface
+	- Change CSV-56: Update SVN Repository and Doc Server information
+    - Maintenance Release: Upgraded dependencies, Java8 compatibility
+
+Version 2.7.1:
+--------------
+
+    - Bug    CSV-38: Dereference after null check
+    - Bug    CSV-39: Dereference after null check
+    - Bug    CSV-40: Dereference after null check
+    - Bug    CSV-41: Dereference after null check
+    - Bug    CSV-42: Dereference after null check
+    - Bug    CSV-43: Using invalid iterator
+    - Bug    CSV-44: Dereference null return value
+    - Bug    CSV-45: Resource leak on an exceptional path
+    - Bug    CSV-46: NP: Null pointer dereference
+    - Bug    CSV-47: SIC: Inner class could be made static
+    - Bug    CSV-48: Dm: Dubious method used
+    - Bug    CSV-49: Dm: Dubious method used
+    - Bug    CSV-50: Dm: Dubious method used
+    - Bug    CSV-51: Dm: Dubious method used
+    - Bug    CSV-52: Dm: Dubious method used
+
+Version 2.7.0:
+--------------
+
+    - Bug    CSV-36: Throw a CSV specific exception from all classes
+    - Change CSV-35: Add Performance Test
+    - Change CSV-37: Improve Performance
+
+Version 2.6.1:
+--------------
+
+    - Bug    CSV-34: get(columnName, valueArray[])
+
+Version 2.6.0:
+--------------
+
+    - Change CSV-31: Add printRow() to TableWriter interface
+    - Change CSV-32: Parameterize BeanReader and BeanWriter
+    - Change CSV-33: Add default character encoding for table streams
+
+Version 2.5.0:
+--------------
+
+    - Change CSV-27: Provide as OSGI bundle
+    - Change CSV-26: Support buildDate in ReleaseInformation
+    - Change CSV-28: Add capability to copy Excel sheets without skipping missing rows and cells
+    - Change CSV-29: Add ability to read Excel sheets without re-evaluating formulas
+    
 Version 2.4.0:
 --------------
 
