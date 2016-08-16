@@ -19,6 +19,7 @@ package csv.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -238,6 +239,15 @@ public abstract class AbstractTableReader implements TableReader {
     }
     
     /**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Iterator<Object[]> iterator() {
+		return this;
+	}
+
+
+	/**
      * Notifies all comment callbacks about a comment.
      * @param s the comment to notify about
      * @param row row number

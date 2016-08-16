@@ -17,6 +17,8 @@
  */
 package csv.impl;
 
+import java.util.Iterator;
+
 import csv.CommentCallback;
 import csv.CsvException;
 import csv.TableReader;
@@ -117,6 +119,15 @@ public abstract class AbstractRowFilter implements TableReader {
 		nextRow = null;
 		rawRowIndex = 0;
 		rowIndex = 0;
+	}
+
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Iterator<Object[]> iterator() {
+		return this;
 	}
 
 	/**
