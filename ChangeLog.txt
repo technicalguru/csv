@@ -5,6 +5,7 @@ Version 2.7.2:
 	- Change CSV-57: Supporting Iterable interface
 	- Change CSV-56: Update SVN Repository and Doc Server information
     - Maintenance Release: Upgraded dependencies, Java8 compatibility
+    - Moving to GitHub repository
 
 Version 2.7.1:
 --------------
