@@ -14,9 +14,9 @@
 	<description>A library for easily accessing CSV, Excel and and other table-like data from Java</description>
 
 	<scm>
-		<connection>scm:svn:https://svn.ralph-schuster.eu/svn/OSS/eu.ralph-schuster.csv/trunk</connection>
-		<developerConnection>scm:svn:https://svn.ralph-schuster.eu/svn/OSS/eu.ralph-schuster.csv/trunk</developerConnection>
-		<url>https://svn.ralph-schuster.eu/svn/OSS/eu.ralph-schuster.csv/trunk</url>
+		<connection>scm:git:https://github.com/technicalguru/csv.git</connection>
+		<developerConnection>scm:git:https://github.com/technicalguru/csv.git</developerConnection>
+		<url>https://github.com/technicalguru/csv</url>
 	</scm>
 
 	<distributionManagement>
