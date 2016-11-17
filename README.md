@@ -12,19 +12,18 @@ and separator characters in case you need to adopt some other versions of CSV. T
 conforms to the Excel style of CSV.
 
 The Excel tools conform to the same way that CSV tools behave (see below). Therefore, two new interfaces 
-<a href="http://download.ralph-schuster.eu/eu.ralph-schuster.csv/STABLE/apidocs/csv/TableReader.html">TableReader</a> 
-and <a href="http://download.ralph-schuster.eu/eu.ralph-schuster.csv/STABLE/apidocs/csv/TableWriter.html">TableWriter</a>
+[TableReader](https://download.ralph-schuster.eu/eu.ralph-schuster.csv/STABLE/apidocs/csv/TableReader.html) 
+and [TableWriter](https://download.ralph-schuster.eu/eu.ralph-schuster.csv/STABLE/apidocs/csv/TableWriter.html)
 were introduced to reflect the common functions. The new 
-<a href="http://download.ralph-schuster.eu/eu.ralph-schuster.csv/STABLE/apidocs/csv/impl/ExcelWriter.html">ExcelWriter</a>
+[ExcelWriter](https://download.ralph-schuster.eu/eu.ralph-schuster.csv/STABLE/apidocs/csv/impl/ExcelWriter.html)
 allows you to easily create Excel files while still having the flexibility of formatting issues (see 
-<a href="http://download.ralph-schuster.eu/eu.ralph-schuster.csv/STABLE/apidocs/csv/impl/ExcelFormatter.html">ExcelFormatter</a>
-interface). The implementation is based on 
-<a href="http://poi.apache.org/">Apache’s POI library</a>.
+[ExcelFormatter](https://download.ralph-schuster.eu/eu.ralph-schuster.csv/STABLE/apidocs/csv/impl/ExcelFormatter.html)
+interface). The implementation is based on [Apache’s POI library](http://poi.apache.org/).
 
 Since this CSV/Excel package uses streams, you are able to read from any stream. And, of course, you can 
 write to any stream. You could even synchronize within your application by applying the 
-<a href="http://techblog.ralph-schuster.eu/2008/08/09/synchronizing-reader-and-writer-threads/">reader/writer 
-synchronization</a> described in one of my articles.
+[reader/writer synchronization](https://techblog.ralph-schuster.eu/2008/08/09/synchronizing-reader-and-writer-threads/)
+described in one of my articles.
 
 Please notice that some methods are deprecated since V2.0 and CSVReader and CSVWriter classes are moved into 
 other packages in favour of readability and structuring of the classes.
@@ -33,19 +32,19 @@ Excel functionality is available since version 2.0.
 
 ## Code Examples
 
- * <a href="http://download.ralph-schuster.eu/eu.ralph-schuster.csv/STABLE/apidocs/csv/impl/CSVReader.html">Reading a CSV file</a>
- * <a href="http://download.ralph-schuster.eu/eu.ralph-schuster.csv/STABLE/apidocs/csv/impl/ExcelReader.html">Reading an Excel file</a>
- * <a href="http://download.ralph-schuster.eu/eu.ralph-schuster.csv/STABLE/apidocs/csv/impl/CSVWriter.html">Writing a CSV file</a>
- * <a href="http://download.ralph-schuster.eu/eu.ralph-schuster.csv/STABLE/apidocs/csv/impl/ExcelWriter.html">Writing an Excel file</a>
+ * <a href="https://download.ralph-schuster.eu/eu.ralph-schuster.csv/STABLE/apidocs/csv/impl/CSVReader.html">Reading a CSV file</a>
+ * <a href="https://download.ralph-schuster.eu/eu.ralph-schuster.csv/STABLE/apidocs/csv/impl/ExcelReader.html">Reading an Excel file</a>
+ * <a href="https://download.ralph-schuster.eu/eu.ralph-schuster.csv/STABLE/apidocs/csv/impl/CSVWriter.html">Writing a CSV file</a>
+ * <a href="https://download.ralph-schuster.eu/eu.ralph-schuster.csv/STABLE/apidocs/csv/impl/ExcelWriter.html">Writing an Excel file</a>
 
 ## API Reference
 
-Javadoc API for latest stable version can be accessed <a href="http://download.ralph-schuster.eu/eu.ralph-schuster.csv/STABLE/apidocs/index.html">here</a>
+Javadoc API for latest stable version can be accessed [here](https://download.ralph-schuster.eu/eu.ralph-schuster.csv/STABLE/apidocs/index.html).
 
-## Contributors
+## Contributions
 
- * <a href="https://techblog.ralph-schuster.eu/csv-utility-package-for-java/">Project Homepage</a>
- * <a href="http://jira.ralph-schuster.eu/">Issue Tracker</a>
+ * [Project Homepage](https://techblog.ralph-schuster.eu/csv-utility-package-for-java/)
+ * [Issue Tracker](http://jira.ralph-schuster.eu/)
   
 ## License
 
