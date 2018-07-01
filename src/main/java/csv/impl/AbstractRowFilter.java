@@ -38,6 +38,7 @@ public abstract class AbstractRowFilter implements TableReader {
 	
 	/**
 	 * Constructor.
+	 * @param reader the reader this filter shall process
 	 */
 	public AbstractRowFilter(TableReader reader) {
 		this.reader = reader;

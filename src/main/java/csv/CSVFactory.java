@@ -135,7 +135,7 @@ public class CSVFactory {
 		Class<? extends AbstractStreamTableReader> readerClass = readers.get(mimeType);
 		if (readerClass == null) throw new CsvException("Cannot find reader class for: "+mimeType);
 		try {
-			AbstractStreamTableReader reader = readerClass.newInstance();
+			AbstractStreamTableReader reader = readerClass.getConstructor().newInstance();
 			return reader;
 		} catch (Exception e) {
 			throw new CsvException("Cannot create reader instance: ", e);
@@ -176,7 +176,7 @@ public class CSVFactory {
 		Class<? extends AbstractStreamTableWriter> writerClass = writers.get(mimeType);
 		if (writerClass == null) throw new CsvException("Cannot find writer class for: "+mimeType);
 		try {
-			AbstractStreamTableWriter writer = writerClass.newInstance();
+			AbstractStreamTableWriter writer = writerClass.getConstructor().newInstance();
 			return writer;
 		} catch (Exception e) {
 			throw new CsvException("Cannot create writer instance: ", e);

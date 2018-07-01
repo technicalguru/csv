@@ -29,7 +29,7 @@ Delivered implementations are CSV, Excel, XML, Jdbc, JTable object.
 <p>
 CSVReader Example:
 </p>
-<p>
+
 <pre>
 java.io.File f = new java.io.File("csv-test.csv");
 CSVReader in = new CSVReader(new java.io.FileReader(f));
@@ -39,12 +39,12 @@ while (in.hasNext()) {
 }
 in.close();
 </pre>
-</p>
+
 
 <p>
 CSVWriter Example:
 </p>
-<p>
+
 <pre>
 java.io.File f = new java.io.File("csv-test.csv");
 CSVWriter out = new CSVWriter(new java.io.FileWriter(f));
@@ -52,7 +52,7 @@ out.printRow(new Object[] { "0:0", "0:1", "0:2" });
 out.printRow(new Object[] { "1:0", "1:1", "1:2" });
 out.close();
 </pre>
-</p>
+
 
 </body>
 </html>

@@ -75,6 +75,7 @@ public class CSVWriter extends AbstractStreamTableWriter {
 	 * @param out out writer
 	 * @deprecated Use {@link #CSVWriter(OutputStream)} instead.
 	 */
+	@Deprecated
 	public CSVWriter(Writer out) {
 		super();
 		if (out instanceof PrintWriter) {
@@ -90,6 +91,7 @@ public class CSVWriter extends AbstractStreamTableWriter {
 	 * @param flush has no influence and is for compatibility reasons only
 	 * @deprecated
 	 */
+	@Deprecated
 	public CSVWriter(Writer out, boolean flush) {
 		this(out);
 	}

@@ -95,6 +95,7 @@ public class CSVUtils {
 	 * @throws Exception if an exception occurs
 	 * @deprecated Use {@link JdbcReader} and {@link #copy(TableReader, TableWriter, boolean)}
 	 */
+	@Deprecated
 	public static void copy(ResultSet resultSet, TableWriter writer, boolean writeHeaderRow) throws Exception {
 		JdbcReader reader = new JdbcReader(resultSet);
 		copy(reader, writer, writeHeaderRow);
@@ -127,6 +128,7 @@ public class CSVUtils {
 	 * @throws Exception when an exception occurs
 	 * @deprecated Use {@link JTableReader} and {@link #copy(TableReader, TableWriter, boolean)}
 	 */
+	@Deprecated
 	public static void copy(JTable table, TableWriter writer, boolean writeHeaderRow, boolean selectedOnly) throws Exception {
 		JTableReader reader = new JTableReader(table, selectedOnly);
 		copy(reader, writer, writeHeaderRow);

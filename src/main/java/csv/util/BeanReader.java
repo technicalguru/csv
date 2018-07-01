@@ -181,7 +181,7 @@ public class BeanReader<T> implements Iterator<T> {
 		// Create new bean
 		String attribute = null;
 		try {
-			T rc = beanClass.newInstance();
+			T rc = beanClass.getConstructor().newInstance();
 			for (int i=0; i<columns.length; i++) {
 				attribute = getAttributeName(i);
 				// Ignore attribute if not known
@@ -193,6 +193,8 @@ public class BeanReader<T> implements Iterator<T> {
 			}
 			
 			return rc;
+		} catch (NoSuchMethodException e) {
+			throw new CsvException("Cannot find constructor for bean", e);
 		} catch (InvocationTargetException e) {
 			throw new CsvException("Cannot set attribute: "+attribute, e);
 		} catch (InstantiationException e) {

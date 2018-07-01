@@ -36,6 +36,7 @@ public abstract class AbstractColumnFilter implements TableReader {
 	
 	/**
 	 * Constructor.
+	 * @param reader the reader this filter shall process
 	 */
 	public AbstractColumnFilter(TableReader reader) {
 		this.reader = reader;
