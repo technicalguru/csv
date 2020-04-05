@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>eu.ralph-schuster</groupId>
 		<artifactId>pom-oss</artifactId>
-		<version>1.5.1</version>
+		<version>2.0.0</version>
 	</parent>
 
 	<artifactId>csv</artifactId>
@@ -28,7 +28,7 @@
 
 	<issueManagement>
 		<system>Jira</system>
-		<url>http://jira.ralph-schuster.eu/browse/CSV</url>
+		<url>https://jira.ralph-schuster.eu/browse/CSV</url>
 	</issueManagement>
 
 	<ciManagement>
