@@ -160,6 +160,7 @@ public class CSVWriterReaderTest {
 	 * Checks that master and copy are equal
 	 * @param master master data array
 	 * @param copy copy data array to be compared
+	 * @param lineNo the line number for reporting
 	 */
 	protected void testRow(Object master[], Object copy[], int lineNo) {
 		// compare size of columns

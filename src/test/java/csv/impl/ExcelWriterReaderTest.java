@@ -184,6 +184,8 @@ public class ExcelWriterReaderTest {
 
 	/**
 	 * This method checks that a blank sheet with no rows and a row range from 0 to 1 can be read.
+	 * 
+	 * @throws IOException - when the file cannot be opened/read
 	 */
 	@Test
 	public void testBlankTab_DoesNotNPEInhasNext() throws IOException {
@@ -194,6 +196,8 @@ public class ExcelWriterReaderTest {
 
 	/**
 	 * This method checks that a sheet with blank lines can be read.
+	 * 
+	 * @throws IOException - when the file cannot be opened/read
 	 */
 	@Test
 	public void testBlankLines_DoesNotNPEAndDummiesUpLinesWhenAsked() throws IOException {
@@ -215,6 +219,8 @@ public class ExcelWriterReaderTest {
 	/**
 	 * This method checks that when we have external sheet references in our formulas, for example,
 	 * we can avoid formula evaluation and just use the cached value.
+	 * 
+	 * @throws IOException - when the file cannot be opened/read
 	 */
 	@Test
 	public void testEvaluateFormulasFalse() throws IOException {

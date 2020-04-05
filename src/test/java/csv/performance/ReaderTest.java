@@ -64,6 +64,8 @@ public class ReaderTest {
 	
 	/**
 	 * Setup tests
+	 * 
+	 * @throws Exception - when the test file cannot be opened/read
 	 */
 	@BeforeClass
 	public static void setup() throws Exception {
@@ -75,7 +77,8 @@ public class ReaderTest {
 	/**
 	 * Instantiate test classes
 	 * @return the test classes for tests
-	 * @throws Exception
+	 * 
+	 * @throws Exception - when the test file cannot be opened/read
 	 */
 	@SuppressWarnings("unchecked")
 	@Parameters
@@ -83,7 +86,7 @@ public class ReaderTest {
 		Collection<Object[]> data = new ArrayList<Object[]>();
 		for (String className : testClasses) {
 			Class<? extends IReader> clazz = (Class<? extends IReader>) Class.forName(className);
-			data.add(new Object[] { clazz.newInstance() });
+			data.add(new Object[] { clazz.getConstructor().newInstance() });
 		}
 		return data;
 	}
