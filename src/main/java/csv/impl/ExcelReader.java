@@ -203,6 +203,18 @@ public class ExcelReader extends AbstractStreamTableReader {
 	}
 
 	/**
+	 * Returns the number of rows in the current sheet.
+	 * @return number of rows in sheet or {@code -1} if no sheet is selected
+	 * @since 2.9.1
+	 */
+	public int getNumRows() {
+		if (this.sheet != null) {
+			return lastRow+1;
+		}
+		return -1;
+	}
+	
+	/**
 	 * Select the given sheet to be read from.
 	 * @param index index of sheet
 	 * @return sheet selected
@@ -471,7 +483,7 @@ public class ExcelReader extends AbstractStreamTableReader {
 	protected boolean rowHasOnlyBlankCells(Row row) {
 		boolean blank = true;
 		for (Cell cell: row) {
-			if (cell.getCellType() == CellType.BLANK) {
+			if (cell.getCellType() != CellType.BLANK) {
 				blank = false;
 				break;
 			}
