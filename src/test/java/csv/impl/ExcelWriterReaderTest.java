@@ -28,7 +28,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 
-import org.apache.poi.ss.usermodel.Row.MissingCellPolicy;
+import org.apache.poi.ss.usermodel.Row;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -112,7 +112,7 @@ public class ExcelWriterReaderTest {
 				out.printRow(TEST_VALUES[row]);
 			}
 			out.close();
-			assertTrue("Test file was not written", fFile.exists());
+			assertTrue(fFile.exists());
 		} catch (Exception e) {
 			fail("Exception: " + e.getMessage());
 		}
@@ -145,7 +145,7 @@ public class ExcelWriterReaderTest {
 			}
 
 			// compare size of rows
-			assertEquals("Not the right number of rows in test file", TEST_VALUES.length, row);
+			assertTrue(row == TEST_VALUES.length);
 
 		} catch (FileNotFoundException e) {
 			fail("May be a previous test has failed: " + e.getMessage());
@@ -169,7 +169,7 @@ public class ExcelWriterReaderTest {
 			if ((copy[col] != null)) {
 				assertNotNull(master[col]);
 			}
-			assertEquals("Column "+col+" was not written/read correct", master[col], copy[col]);
+			assertEquals(master[col], copy[col]);
 		}
 	}
 
@@ -203,17 +203,17 @@ public class ExcelWriterReaderTest {
 	public void testBlankLines_DoesNotNPEAndDummiesUpLinesWhenAsked() throws IOException {
 		ExcelReader in = new ExcelReader(skippedLinesUrl.openStream());
 
-		in.getWorkbook().setMissingCellPolicy(MissingCellPolicy.CREATE_NULL_AS_BLANK);
+		in.getWorkbook().setMissingCellPolicy(Row.CREATE_NULL_AS_BLANK);
 		in.setSkipBlankRows(false);
 		in.setMinimumColumnCount(in.computeMaxColumnCount());
-		assertEquals("The minimum column count is invalid", in.getMinimumColumnCount(), 2);
+		assertEquals(in.getMinimumColumnCount(), 2);
 
-		assertTrue("Cannot find header row", in.hasNext()); testRow(new String[]{"header", "header2"}, in.next());
-		assertTrue("Cannot find row 0", in.hasNext()); testRow(new String[]{null,      null    }, in.next());
-		assertTrue("Cannot find row 1", in.hasNext()); testRow(new String[]{null,      null    }, in.next());
-		assertTrue("Cannot find row 2", in.hasNext()); testRow(new String[]{"val1",    null    }, in.next());
-		assertTrue("Cannot find row 3", in.hasNext()); testRow(new String[]{"val2",    "val2-2"}, in.next());
-		assertFalse("More rows available than expected", in.hasNext());
+		assertTrue(in.hasNext()); testRow(new String[]{"header", "header2"}, in.next());
+		assertTrue(in.hasNext()); testRow(new String[]{null,      null    }, in.next());
+		assertTrue(in.hasNext()); testRow(new String[]{null,      null    }, in.next());
+		assertTrue(in.hasNext()); testRow(new String[]{"val1",    null    }, in.next());
+		assertTrue(in.hasNext()); testRow(new String[]{"val2",    "val2-2"}, in.next());
+		assertFalse(in.hasNext());
 	}
 
 	/**
@@ -227,8 +227,8 @@ public class ExcelWriterReaderTest {
 		ExcelReader in = new ExcelReader(externalSheetRefUrl.openStream());
 		in.setEvaluateFormulas(false);
 
-		assertTrue("No row found", in.hasNext()); 
+		assertTrue(in.hasNext()); 
 		testRow(new Double[]{99945.0}, in.next());
-		assertFalse("More rows available than expected", in.hasNext());
+		assertFalse(in.hasNext());
 	}
 }

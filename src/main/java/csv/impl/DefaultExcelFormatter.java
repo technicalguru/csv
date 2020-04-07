@@ -21,14 +21,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.DataFormat;
-import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Hyperlink;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -74,7 +71,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	private Map<String, Short> realFormat;
 	private Map<StyleDescription, CellStyle> styles;
 	private Short borderColor;
-	private BorderStyle borderThickness;
+	private Short borderThickness;
 	
 	/**
 	 * Default constructor.
@@ -228,7 +225,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	 * @param value value in cell
 	 * @return alignment index for Excel or null if no alignment is required
 	 */
-	public HorizontalAlignment getAlign(ExcelWriter writer, int row, int column, Object value) {
+	public Short getAlign(ExcelWriter writer, int row, int column, Object value) {
 		return null;
 	}
 
@@ -369,8 +366,8 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	 * @param value value in cell
 	 * @return the fill pattern or null if default pattern shall be applied.
 	 */
-	public FillPatternType getFillPattern(ExcelWriter writer, int row, int column, Object value) {
-		if (getForegroundColor(writer, row, column, value) != null) return FillPatternType.SOLID_FOREGROUND;
+	public Short getFillPattern(ExcelWriter writer, int row, int column, Object value) {
+		if (getForegroundColor(writer, row, column, value) != null) return CellStyle.SOLID_FOREGROUND;
 		return null;
 	}
 
@@ -493,7 +490,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	public Font getDefaultBoldFont(Workbook workbook) {
 		if (defaultBoldFont == null) {
 			defaultBoldFont = workbook.createFont();
-			defaultBoldFont.setBold(true);
+			defaultBoldFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
 			defaultBoldFont.setColor(getDefaultFontColor());
 			defaultBoldFont.setFontHeightInPoints(getDefaultFontSize());
 			defaultBoldFont.setFontName(getDefaultFontName());
@@ -525,7 +522,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	public Font getDefaultPlainFont(Workbook workbook) {
 		if (defaultPlainFont == null) {
 			defaultPlainFont = workbook.createFont();
-			defaultPlainFont.setBold(false);
+			defaultPlainFont.setBoldweight(Font.BOLDWEIGHT_NORMAL);
 			defaultPlainFont.setColor(getDefaultFontColor());
 			defaultPlainFont.setFontHeightInPoints(getDefaultFontSize());
 			defaultPlainFont.setFontName(getDefaultFontName());
@@ -558,7 +555,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	public Font getDefaultHyperlinkFont(Workbook workbook) {
 		if (defaultHyperlinkFont == null) {
 			defaultHyperlinkFont = workbook.createFont();
-			defaultHyperlinkFont.setBold(false);
+			defaultHyperlinkFont.setBoldweight(Font.BOLDWEIGHT_NORMAL);
 			defaultHyperlinkFont.setColor(getDefaultHyperlinkColor());
 			defaultHyperlinkFont.setFontHeightInPoints(getDefaultFontSize());
 			defaultHyperlinkFont.setFontName(getDefaultFontName());
@@ -583,19 +580,19 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		return borderColor;
 	}
 	
-	public BorderStyle getTopBorderThickness(ExcelWriter writer, int row, int column, Object value) {
+	public Short getTopBorderThickness(ExcelWriter writer, int row, int column, Object value) {
 		return borderThickness;
 	}
 	
-	public BorderStyle getLeftBorderThickness(ExcelWriter writer, int row, int column, Object value) {
+	public Short getLeftBorderThickness(ExcelWriter writer, int row, int column, Object value) {
 		return borderThickness;
 	}
 	
-	public BorderStyle getRightBorderThickness(ExcelWriter writer, int row, int column, Object value) {
+	public Short getRightBorderThickness(ExcelWriter writer, int row, int column, Object value) {
 		return borderThickness;
 	}
 	
-	public BorderStyle getBottomBorderThickness(ExcelWriter writer, int row, int column, Object value) {
+	public Short getBottomBorderThickness(ExcelWriter writer, int row, int column, Object value) {
 		return borderThickness;
 	}
 	
@@ -609,7 +606,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	/**
 	 * @param borderThickness the borderThickness to set
 	 */
-	public void setDefaultBorderThickness(BorderStyle borderThickness) {
+	public void setDefaultBorderThickness(Short borderThickness) {
 		this.borderThickness = borderThickness;
 	}
 
@@ -622,18 +619,18 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		
 		private Short format;
 		private Short fgColor;
-		private FillPatternType fillPattern;
+		private Short fillPattern;
 		private Short bgColor;
 		private Font font;
-		private HorizontalAlignment alignment;
+		private Short alignment;
 		private Short topBorderColor;
-		private BorderStyle topBorderThickness;
+		private Short topBorderThickness;
 		private Short leftBorderColor;
-		private BorderStyle leftBorderThickness;
+		private Short leftBorderThickness;
 		private Short rightBorderColor;
-		private BorderStyle rightBorderThickness;
+		private Short rightBorderThickness;
 		private Short bottomBorderColor;
-		private BorderStyle bottomBorderThickness;
+		private Short bottomBorderThickness;
 		private boolean textWrap;
 		
 		/**
@@ -661,12 +658,12 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		 * @param bottomBorderThickness - ID of thickness for bottom border
 		 * @param textWrap - ID of wrapping style
 		 */
-		public StyleDescription(Short format, Short fgColor, FillPatternType fillPattern,
-				Short bgColor, Font font, HorizontalAlignment alignment,
-				Short topBorderColor, BorderStyle topBorderThickness,
-				Short leftBorderColor, BorderStyle leftBorderThickness,
-				Short rightBorderColor, BorderStyle rightBorderThickness,
-				Short bottomBorderColor, BorderStyle bottomBorderThickness,
+		public StyleDescription(Short format, Short fgColor, Short fillPattern,
+				Short bgColor, Font font, Short alignment,
+				Short topBorderColor, Short topBorderThickness,
+				Short leftBorderColor, Short leftBorderThickness,
+				Short rightBorderColor, Short rightBorderThickness,
+				Short bottomBorderColor, Short bottomBorderThickness,
 				boolean textWrap) {
 			super();
 			this.format = format;
@@ -722,7 +719,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		 * Returns the fill pattern.
 		 * @return the fillPattern
 		 */
-		public FillPatternType getFillPattern() {
+		public Short getFillPattern() {
 			return fillPattern;
 		}
 
@@ -730,7 +727,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		 * Sets the fill pattern.
 		 * @param fillPattern the fillPattern to set
 		 */
-		public void setFillPattern(FillPatternType fillPattern) {
+		public void setFillPattern(Short fillPattern) {
 			this.fillPattern = fillPattern;
 		}
 
@@ -770,7 +767,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		 * Returns the alignment.
 		 * @return the alignment
 		 */
-		public HorizontalAlignment getAlignment() {
+		public Short getAlignment() {
 			return alignment;
 		}
 
@@ -778,7 +775,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		 * Sets the alignment.
 		 * @param alignment the alignment to set
 		 */
-		public void setAlignment(HorizontalAlignment alignment) {
+		public void setAlignment(Short alignment) {
 			this.alignment = alignment;
 		}
 
@@ -802,7 +799,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		 * Returns the thickness of the top border.
 		 * @return the topBorderThickness
 		 */
-		public BorderStyle getTopBorderThickness() {
+		public Short getTopBorderThickness() {
 			return topBorderThickness;
 		}
 
@@ -810,7 +807,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		 * Sets the thickness of the top border.
 		 * @param topBorderThickness the topBorderThickness to set
 		 */
-		public void setTopBorderThickness(BorderStyle topBorderThickness) {
+		public void setTopBorderThickness(Short topBorderThickness) {
 			this.topBorderThickness = topBorderThickness;
 		}
 
@@ -834,7 +831,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		 * Returns the thickness of the left border.
 		 * @return the leftBorderThickness
 		 */
-		public BorderStyle getLeftBorderThickness() {
+		public Short getLeftBorderThickness() {
 			return leftBorderThickness;
 		}
 
@@ -842,7 +839,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		 * Sets the thickness of the left border.
 		 * @param leftBorderThickness the leftBorderThickness to set
 		 */
-		public void setLeftBorderThickness(BorderStyle leftBorderThickness) {
+		public void setLeftBorderThickness(Short leftBorderThickness) {
 			this.leftBorderThickness = leftBorderThickness;
 		}
 
@@ -866,7 +863,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		 * Returns the thickness of the right border.
 		 * @return the rightBorderThickness
 		 */
-		public BorderStyle getRightBorderThickness() {
+		public Short getRightBorderThickness() {
 			return rightBorderThickness;
 		}
 
@@ -874,7 +871,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		 * Sets the thickness of the right border.
 		 * @param rightBorderThickness the rightBorderThickness to set
 		 */
-		public void setRightBorderThickness(BorderStyle rightBorderThickness) {
+		public void setRightBorderThickness(Short rightBorderThickness) {
 			this.rightBorderThickness = rightBorderThickness;
 		}
 
@@ -898,7 +895,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		 * Returns the thickness of the bottom border.
 		 * @return the bottomBorderThickness
 		 */
-		public BorderStyle getBottomBorderThickness() {
+		public Short getBottomBorderThickness() {
 			return bottomBorderThickness;
 		}
 
@@ -906,7 +903,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		 * Sets the thickness of the bottom border.
 		 * @param bottomBorderThickness the bottomBorderThickness to set
 		 */
-		public void setBottomBorderThickness(BorderStyle bottomBorderThickness) {
+		public void setBottomBorderThickness(Short bottomBorderThickness) {
 			this.bottomBorderThickness = bottomBorderThickness;
 		}
 
