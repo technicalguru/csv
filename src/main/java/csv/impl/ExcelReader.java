@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
@@ -342,30 +343,31 @@ public class ExcelReader extends AbstractStreamTableReader {
 	 * @param cell cell object
 	 * @return value of cell
 	 */
+	@SuppressWarnings("incomplete-switch")
 	public Object getValue(Cell cell) {
 		if (cell == null) return null;
 
-		int cellType = cell.getCellType();
-		if (cellType == Cell.CELL_TYPE_FORMULA && !isEvaluateFormulas()) {
+		CellType cellType = cell.getCellType();
+		if (cellType == CellType.FORMULA && !isEvaluateFormulas()) {
 			cellType = cell.getCachedFormulaResultType();
 		}
 		
 		switch (cellType) {
-		case Cell.CELL_TYPE_STRING:
+		case STRING:
 			return cell.getStringCellValue();
-		case Cell.CELL_TYPE_NUMERIC:
+		case NUMERIC:
 			if(DateUtil.isCellDateFormatted(cell)) {
 				return cell.getDateCellValue();
 			} else {
 				return cell.getNumericCellValue();
 			}
-		case Cell.CELL_TYPE_BLANK:
+		case BLANK:
 			return null;
-		case Cell.CELL_TYPE_BOOLEAN:
+		case BOOLEAN:
 			return cell.getBooleanCellValue();
-		case Cell.CELL_TYPE_FORMULA:
+		case FORMULA:
 			return evaluateCellValue(cell);
-		case Cell.CELL_TYPE_ERROR:
+		case ERROR:
 			return cell.getErrorCellValue();
 		}
 		return null;
@@ -382,22 +384,22 @@ public class ExcelReader extends AbstractStreamTableReader {
 		CellValue value = evaluator.evaluate(cell);
 		if (value == null) return null;
 		switch (value.getCellType()) {
-		case Cell.CELL_TYPE_STRING:
+		case STRING:
 			return value.getStringValue();
-		case Cell.CELL_TYPE_NUMERIC:
+		case NUMERIC:
 			if(DateUtil.isCellDateFormatted(cell)) {
 				return DateUtil.getJavaDate(value.getNumberValue());
 			} else {
 				return value.getNumberValue();
 			}
-		case Cell.CELL_TYPE_BLANK:
+		case BLANK:
 			return null;
-		case Cell.CELL_TYPE_BOOLEAN:
+		case BOOLEAN:
 			return value.getBooleanValue();
-		case Cell.CELL_TYPE_ERROR:
+		case ERROR:
 			return value.getErrorValue();
 		default:
-			System.out.println("type="+cell.getCellType());
+			System.out.println("type="+cell.getCellType().name());
 		}
 		return cell.getCellFormula();
 	}
@@ -469,7 +471,7 @@ public class ExcelReader extends AbstractStreamTableReader {
 	protected boolean rowHasOnlyBlankCells(Row row) {
 		boolean blank = true;
 		for (Cell cell: row) {
-			if (cell.getCellType() != Cell.CELL_TYPE_BLANK) {
+			if (cell.getCellType() == CellType.BLANK) {
 				blank = false;
 				break;
 			}
