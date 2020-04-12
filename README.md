@@ -1,4 +1,4 @@
-## Synopsis
+## Overview
 
 Unfortunately, Java does not offer any methods to simply read CSV files or produce such, not mentioning Excel. 
 I for myself found it quite easy to work with such files; especially when you need to deal with data from and 
