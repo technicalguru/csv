@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>eu.ralph-schuster</groupId>
 		<artifactId>pom-oss</artifactId>
-		<version>2.0.0</version>
+		<version>2.0.1</version>
 	</parent>
 
 	<artifactId>csv</artifactId>
@@ -17,7 +17,7 @@
 		<connection>scm:git:https://github.com/technicalguru/csv.git</connection>
 		<developerConnection>scm:git:https://github.com/technicalguru/csv.git</developerConnection>
 		<url>https://github.com/technicalguru/csv</url>
-	  <tag>HEAD</tag>
+	  <tag>v3.0.1</tag>
   </scm>
 
 	<distributionManagement>
@@ -29,12 +29,12 @@
 
 	<issueManagement>
 		<system>Jira</system>
-		<url>https://jira.ralph-schuster.eu/browse/CSV</url>
+		<url>https://jira.ralph-schuster.eu:8443/browse/CSV</url>
 	</issueManagement>
 
 	<ciManagement>
 		<system>bamboo</system>
-		<url>https://bamboo.ralph-schuster.eu/browse/CSV</url>
+		<url>https://bamboo.ralph-schuster.eu:8443/browse/CSV</url>
 	</ciManagement>
 
 	<developers>
@@ -63,7 +63,7 @@
 		<dependency>
 			<groupId>eu.ralph-schuster</groupId>
 			<artifactId>baselib</artifactId>
-			<version>1.4.0</version>
+			<version>1.4.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -108,7 +108,7 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-csv</artifactId>
-			<version>1.5</version>
+			<version>1.8</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -151,6 +151,7 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<configuration>
 					<header><![CDATA[<a href="${project.url}" target="_new">Visit the ${project.name} Homepage</a>]]></header>
+					<detectJavaApiLink>false</detectJavaApiLink>
 				</configuration>
 			</plugin>
 		</plugins>
