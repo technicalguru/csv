@@ -3,12 +3,12 @@
 	<parent>
 		<groupId>eu.ralph-schuster</groupId>
 		<artifactId>pom-oss</artifactId>
-		<version>2.0.0</version>
+		<version>2.0.2</version>
 	</parent>
 
 	<artifactId>csv</artifactId>
-	<version>3.0.1-SNAPSHOT</version>
-	<packaging>bundle</packaging>
+	<version>3.0.1</version>
+	<packaging>jar</packaging>
 	<url>https://techblog.ralph-schuster.eu/csv-utility-package-for-java/</url>
 	<name>CSV/Excel Utility Package</name>
 	<description>A library for easily accessing CSV, Excel and and other table-like data from Java</description>
@@ -17,25 +17,13 @@
 		<connection>scm:git:https://github.com/technicalguru/csv.git</connection>
 		<developerConnection>scm:git:https://github.com/technicalguru/csv.git</developerConnection>
 		<url>https://github.com/technicalguru/csv</url>
-	  <tag>HEAD</tag>
-  </scm>
-
-	<distributionManagement>
-		<site>
-			<id>strato-server</id>
-			<url>scp://download.ralph-schuster.eu/var/www/ralph-schuster.eu/download/${project.groupId}.${project.artifactId}/${project.version}</url>
-		</site>
-	</distributionManagement>
+	  <tag>csv-3.0.1</tag>
+	</scm>
 
 	<issueManagement>
-		<system>Jira</system>
-		<url>https://jira.ralph-schuster.eu/browse/CSV</url>
+		<system>GitHub</system>
+		<url>https://github.com/technicalguru/csv/issues</url>
 	</issueManagement>
-
-	<ciManagement>
-		<system>bamboo</system>
-		<url>https://bamboo.ralph-schuster.eu/browse/CSV</url>
-	</ciManagement>
 
 	<developers>
 		<developer>
@@ -63,17 +51,17 @@
 		<dependency>
 			<groupId>eu.ralph-schuster</groupId>
 			<artifactId>baselib</artifactId>
-			<version>1.4.0</version>
+			<version>1.4.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
-			<version>3.16</version>
+			<version>4.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
-			<version>3.16</version>
+			<version>4.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
@@ -108,7 +96,7 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-csv</artifactId>
-			<version>1.5</version>
+			<version>1.8</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -132,27 +120,4 @@
 		</repository>
 	</repositories>
 
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.felix</groupId>
-				<artifactId>maven-bundle-plugin</artifactId>
-				<version>3.5.1</version>
-				<extensions>true</extensions>
-				<configuration>
-					<instructions>
-						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-					</instructions>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<configuration>
-					<header><![CDATA[<a href="${project.url}" target="_new">Visit the ${project.name} Homepage</a>]]></header>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 </project>
