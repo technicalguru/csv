@@ -21,7 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 
 /**
  * Writer implementation for XML streams.
@@ -276,7 +276,7 @@ public class XmlWriter extends AbstractStreamTableWriter {
 	 * @return XML encoded string
 	 */
 	protected String encode(Object s) {
-		return StringEscapeUtils.escapeXml(s.toString());
+		return StringEscapeUtils.escapeXml11(s.toString());
 	}
 	
 	/**

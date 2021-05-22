@@ -21,7 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 
 /**
  * Provides implementation for writing HTML table.
@@ -522,7 +522,7 @@ public class HtmlWriter extends AbstractStreamTableWriter {
 	 */
 	public static String encodeHtml(String s) {
 		if (s == null) return null;
-		return StringEscapeUtils.escapeHtml(s);
+		return StringEscapeUtils.escapeHtml4(s);
 	}
 	
 	/**
