@@ -36,6 +36,16 @@ Excel functionality is available since version 2.0.
  * [Writing a CSV file](https://www.javadoc.io/doc/eu.ralph-schuster/csv/latest//csv/impl/CSVWriter.html)
  * [Writing an Excel file](https://www.javadoc.io/doc/eu.ralph-schuster/csv/latest//csv/impl/ExcelWriter.html)
 
+## Maven Coordinates
+
+```
+<dependency>
+	<groupId>eu.ralph-schuster</groupId>
+	<artifactId>csv</artifactId>
+	<version>3.0.2</version>
+</dependency>
+```
+
 ## API Reference
 
 Javadoc API for latest stable version can be accessed [here](https://www.javadoc.io/doc/eu.ralph-schuster/csv/latest//index.html).
