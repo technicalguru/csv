@@ -4,8 +4,7 @@ Unfortunately, Java does not offer any methods to simply read CSV files or produ
 I for myself found it quite easy to work with such files; especially when you need to deal with data from and 
 to Microsoft Excel.
 
-My CSV/Excel Utility Package, published under the <a href="http://www.gnu.org/licenses/lgpl-3.0.html">GNU 
-Lesser General Public License</a>, allows you to easily 
+My CSV/Excel Utility Package, published under the [GNU Lesser General Public License](LICENSE.md), allows you to easily 
 integrate CSV and Excel functionality into your application, just by using Iterator-like classes for reading, 
 and PrintStream-like classes for writing. The CSV tools can be configured to use different column delimiter 
 and separator characters in case you need to adopt some other versions of CSV. The default configuration 
@@ -32,19 +31,19 @@ Excel functionality is available since version 2.0.
 
 ## Code Examples
 
- * <a href="https://www.javadoc.io/doc/eu.ralph-schuster/csv/latest//csv/impl/CSVReader.html">Reading a CSV file</a>
- * <a href="https://www.javadoc.io/doc/eu.ralph-schuster/csv/latest//csv/impl/ExcelReader.html">Reading an Excel file</a>
- * <a href="https://www.javadoc.io/doc/eu.ralph-schuster/csv/latest//csv/impl/CSVWriter.html">Writing a CSV file</a>
- * <a href="https://www.javadoc.io/doc/eu.ralph-schuster/csv/latest//csv/impl/ExcelWriter.html">Writing an Excel file</a>
+ * [Reading a CSV file](https://www.javadoc.io/doc/eu.ralph-schuster/csv/latest//csv/impl/CSVReader.html)
+ * [Reading an Excel file](https://www.javadoc.io/doc/eu.ralph-schuster/csv/latest//csv/impl/ExcelReader.html)
+ * [Writing a CSV file](https://www.javadoc.io/doc/eu.ralph-schuster/csv/latest//csv/impl/CSVWriter.html)
+ * [Writing an Excel file](https://www.javadoc.io/doc/eu.ralph-schuster/csv/latest//csv/impl/ExcelWriter.html)
 
 ## API Reference
 
 Javadoc API for latest stable version can be accessed [here](https://www.javadoc.io/doc/eu.ralph-schuster/csv/latest//index.html).
 
-## Contributions
+## Contribution
 
- * [Project Homepage](https://techblog.ralph-schuster.eu/csv-utility-package-for-java/)
- * [Issue Tracker](http://jira.ralph-schuster.eu/)
+ * [Project Homepage](https://github.com/technicalguru/csv)
+ * [Issue Tracker](https://github.com/technicalguru/csv/issues)
   
 ## License
 
