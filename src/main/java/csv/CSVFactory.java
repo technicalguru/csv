@@ -24,10 +24,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.activation.MimetypesFileTypeMap;
-
 import csv.impl.AbstractStreamTableReader;
 import csv.impl.AbstractStreamTableWriter;
+import jakarta.activation.MimetypesFileTypeMap;
 
 /**
  * This factory returns correct reader and writer implementations
