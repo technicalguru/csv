@@ -270,8 +270,8 @@ public class ExcelWriter extends AbstractStreamTableWriter {
 		if (value != null) {
 			if (value instanceof Date) {
 				cell.setCellValue((Date)value);
-			} else if (value instanceof Double) {
-				cell.setCellValue((Double)value);
+			} else if (value instanceof Number) {
+				cell.setCellValue(((Number) value).doubleValue());
 			} else if (value instanceof Boolean) {
 				cell.setCellValue((Boolean)value);
 			} else {
