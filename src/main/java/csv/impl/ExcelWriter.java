@@ -31,7 +31,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
 /**
- * Provides ability to write Excel files.
+ * Provides ability to write classic Excel files.
  * <p>
  * The Excel will be written with a call to {@link #close()} only!
  * Please notice that this implementation does not support writing formulas into
@@ -51,7 +51,7 @@ out.close();
  */
 public class ExcelWriter extends AbstractStreamTableWriter {
 
-	private Workbook workbook;
+	protected Workbook workbook;
 	private Sheet sheet;
 	private int rowNum;
 	private int maxColumns;
@@ -270,8 +270,8 @@ public class ExcelWriter extends AbstractStreamTableWriter {
 		if (value != null) {
 			if (value instanceof Date) {
 				cell.setCellValue((Date)value);
-			} else if (value instanceof Double) {
-				cell.setCellValue((Double)value);
+			} else if (value instanceof Number) {
+				cell.setCellValue(((Number) value).doubleValue());
 			} else if (value instanceof Boolean) {
 				cell.setCellValue((Boolean)value);
 			} else {
