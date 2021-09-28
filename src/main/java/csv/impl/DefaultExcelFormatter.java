@@ -75,7 +75,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	private Map<StyleDescription, CellStyle> styles;
 	private Short borderColor;
 	private BorderStyle borderThickness;
-	
+
 	/**
 	 * Default constructor.
 	 * This is without any formatting.
@@ -122,7 +122,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		styles = new HashMap<StyleDescription, CellStyle>();
 
 	}
-	
+
 	/**
 	 * Sets the cell style.
 	 * This implementations calls various other methods to define
@@ -142,20 +142,20 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	public void setStyle(ExcelWriter writer, Cell cell, Object value) {
 		int row = cell.getRowIndex();
 		int column = cell.getColumnIndex();
-		
+
 		StyleDescription desc = new StyleDescription();
-		
+
 		// Collect cell style and check if we already had it before
-		
+
 		// data format
 		desc.setFormat(getFormat(writer, row, column, value));
 		desc.setFgColor(getForegroundColor(writer, row, column, value));
 		desc.setFillPattern(getFillPattern(writer, row, column, value));
 		desc.setBgColor(getBackgroundColor(writer, row, column, value));
-		
+
 		// Font
 		desc.setFont(getFont(writer, row, column, value));
-		
+
 		// Borders
 		desc.setTopBorderColor(getTopBorderColor(writer, row, column, value));
 		desc.setLeftBorderColor(getLeftBorderColor(writer, row, column, value));
@@ -166,10 +166,10 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		desc.setRightBorderThickness(getRightBorderThickness(writer, row, column, value));
 		desc.setBottomBorderThickness(getBottomBorderThickness(writer, row, column, value));
 		desc.setTextWrap(isTextWrap(writer, row, column, value));
-		
+
 		// Alignment
 		desc.setAlignment(getAlign(writer, row, column, value));
-		
+
 		if (!desc.isDefault()) {
 			CellStyle style = styles.get(desc);
 			if (style == null) {
@@ -183,13 +183,13 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 			// set style
 			cell.setCellStyle(style);
 		}
-		
+
 		// Set a hyperlink
 		Hyperlink link = getHyperlink(writer, row, column, value);
 		if (link != null) cell.setHyperlink(link);
 
 	}
-	
+
 	/**
 	 * Returns a hyperlink object when the given cell shall be linked.
 	 * Notice that you should return a blue underlined font in {@link #getFont(ExcelWriter, int, int, Object)}
@@ -229,7 +229,10 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	 * @return alignment index for Excel or null if no alignment is required
 	 */
 	public HorizontalAlignment getAlign(ExcelWriter writer, int row, int column, Object value) {
-		return null;
+		if ((value instanceof Number)) {
+			return HorizontalAlignment.RIGHT;
+		}
+		return null;	
 	}
 
 	/**
@@ -254,8 +257,8 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		if ((value instanceof Double) || (value instanceof Float)) {
 			return getRealFormat(writer, getRealFormat(row, column, value));
 		}
-		
-	    return null;
+
+		return null;
 	}
 
 	/**
@@ -289,7 +292,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 		return rc;
 	}
-	
+
 	/**
 	 * Returns the ID of the format or creates a new one if required.
 	 * @param writer writer that provides the workbook
@@ -305,7 +308,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 		return rc;
 	}
-	
+
 	/**
 	 * Returns the default format for dates.
 	 * This implementation returns {@link #DEFAULT_DATE_FORMAT}.
@@ -318,7 +321,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	public String getDateFormat(int row, int column, Object value) {
 		return DEFAULT_DATE_FORMAT;
 	}
-	
+
 	/**
 	 * Returns the default format for shorts, integers and longs.
 	 * This implementation returns {@link #DEFAULT_INTEGER_FORMAT}.
@@ -331,7 +334,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	public String getIntegerFormat(int row, int column, Object value) {
 		return DEFAULT_INTEGER_FORMAT;
 	}
-	
+
 	/**
 	 * Returns the default format for real and float numbers.
 	 * This implementation returns {@link #DEFAULT_REAL_FORMAT}.
@@ -417,7 +420,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 		return getPlainFont(writer.getWorkbook(), row, column, value);
 	}
-	
+
 	/**
 	 * Returns the font size to be used.
 	 * @return the default font size
@@ -426,7 +429,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	public short getDefaultFontSize() {
 		return defaultFontSize;
 	}
-	
+
 	/**
 	 * Returns the font color to be used in non-hyperlink cells.
 	 * @return the font color
@@ -435,7 +438,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	public short getDefaultFontColor() {
 		return defaultFontColor;
 	}
-	
+
 	/**
 	 * Returns the font color to be used for hyperlinks.
 	 * @return the hyperlink color
@@ -443,7 +446,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	public short getDefaultHyperlinkColor() {
 		return defaultHyperlinkColor;
 	}
-	
+
 	/**
 	 * Returns the font name to be used.
 	 * @return the font name
@@ -451,7 +454,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	public String getDefaultFontName() {
 		return defaultFontName;
 	}
-	
+
 	/**
 	 * Returns the setting of emphasizing the header row.
 	 * @return the emphasizeFirstRow
@@ -500,7 +503,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 		return defaultBoldFont;
 	}
-	
+
 	/**
 	 * Returns the default font used for normal cells.
 	 * This implementation returns the font defined by ,
@@ -532,7 +535,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 		return defaultPlainFont;
 	}
-	
+
 	/**
 	 * Returns the font to be used for hyperlinks.
 	 * This implementation returns the font defined by 
@@ -546,7 +549,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	public Font getHyperlinkFont(Workbook workbook, int row, int column, Object value) {
 		return getDefaultHyperlinkFont(workbook);
 	}
-	
+
 	/**
 	 * Returns the font to be used for hyperlinks.
 	 * This implementation returns the font defined by {@link #getDefaultFontName()},
@@ -566,39 +569,39 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		}
 		return defaultHyperlinkFont;
 	}
-	
+
 	public Short getTopBorderColor(ExcelWriter writer, int row, int column, Object value) {
 		return borderColor;
 	}
-	
+
 	public Short getLeftBorderColor(ExcelWriter writer, int row, int column, Object value) {
 		return borderColor;
 	}
-	
+
 	public Short getRightBorderColor(ExcelWriter writer, int row, int column, Object value) {
 		return borderColor;
 	}
-	
+
 	public Short getBottomBorderColor(ExcelWriter writer, int row, int column, Object value) {
 		return borderColor;
 	}
-	
+
 	public BorderStyle getTopBorderThickness(ExcelWriter writer, int row, int column, Object value) {
 		return borderThickness;
 	}
-	
+
 	public BorderStyle getLeftBorderThickness(ExcelWriter writer, int row, int column, Object value) {
 		return borderThickness;
 	}
-	
+
 	public BorderStyle getRightBorderThickness(ExcelWriter writer, int row, int column, Object value) {
 		return borderThickness;
 	}
-	
+
 	public BorderStyle getBottomBorderThickness(ExcelWriter writer, int row, int column, Object value) {
 		return borderThickness;
 	}
-	
+
 	/**
 	 * @param borderColor the borderColor to set
 	 */
@@ -616,10 +619,10 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	public boolean isTextWrap(ExcelWriter writer, int row, int column, Object value) {
 		return value instanceof String;
 	}
-	
+
 	/** Describes a style for a cell. */
 	protected static class StyleDescription {
-		
+
 		private Short format;
 		private Short fgColor;
 		private FillPatternType fillPattern;
@@ -635,7 +638,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		private Short bottomBorderColor;
 		private BorderStyle bottomBorderThickness;
 		private boolean textWrap;
-		
+
 		/**
 		 * Constructor.
 		 */
@@ -910,7 +913,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 			this.bottomBorderThickness = bottomBorderThickness;
 		}
 
-		
+
 		/**
 		 * Returns whether text is wrapped in cell.
 		 * @return the textWrap
@@ -952,7 +955,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 			if (bottomBorderThickness != null) style.setBorderBottom(bottomBorderThickness);
 			style.setWrapText(isTextWrap());
 		}
-		
+
 
 		/**
 		 * {@inheritDoc}
@@ -999,12 +1002,12 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 			rc.append(isTextWrap());
 			return rc.toString();
 		}
-		
+
 		protected static final String DEFAULT_DESC = "null:null:null:null:null:null:null:null:null:null:null:null:null:false";
-		
+
 		public boolean isDefault() {
 			return toString().equalsIgnoreCase(DEFAULT_DESC);
-				
+
 		}
 	}
 }
