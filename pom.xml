@@ -7,7 +7,7 @@
 	</parent>
 
 	<artifactId>csv</artifactId>
-	<version>3.1.0</version>
+	<version>3.1.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<url>https://github.com/technicalguru/csv</url>
 	<name>CSV/Excel Utility Package</name>
@@ -17,7 +17,7 @@
 		<connection>scm:git:https://github.com/technicalguru/csv.git</connection>
 		<developerConnection>scm:git:https://github.com/technicalguru/csv.git</developerConnection>
 		<url>https://github.com/technicalguru/csv</url>
-		<tag>csv-3.1.0</tag>
+		<tag>v3.0.1</tag>
 	</scm>
 
 	<issueManagement>
