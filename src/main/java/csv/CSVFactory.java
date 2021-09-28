@@ -67,6 +67,7 @@ public class CSVFactory {
 		initWriterMap();
 		register(MimeTypeInfo.CSV_INFO);
 		register(MimeTypeInfo.EXCEL_INFO);
+		register(MimeTypeInfo.X_EXCEL_INFO);
 		register(MimeTypeInfo.XML_INFO);
 	}
 	
@@ -188,6 +189,11 @@ public class CSVFactory {
 	 * @return MIME type of file
 	 */
 	public String getMimeType(File file) {
+		String filename = file.getName().toLowerCase();
+		if (filename.endsWith(".xlsx")) return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+		if (filename.endsWith(".xls"))  return "application/vnd.ms-excel";
+		if (filename.endsWith(".csv"))  return "text/csv";
+		// Return any other
 		return new MimetypesFileTypeMap().getContentType(file);
 	}
 }

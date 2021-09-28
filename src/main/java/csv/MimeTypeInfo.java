@@ -23,6 +23,7 @@ import csv.impl.CSVReader;
 import csv.impl.CSVWriter;
 import csv.impl.ExcelReader;
 import csv.impl.ExcelWriter;
+import csv.impl.XExcelWriter;
 import csv.impl.XmlReader;
 import csv.impl.XmlWriter;
 
@@ -47,17 +48,27 @@ public class MimeTypeInfo {
 			CSVWriter.class
 	);
 	/**
-	 * The default information for Excel files.
+	 * The default information for classic Excel files.
 	 */
 	public static final MimeTypeInfo EXCEL_INFO = new MimeTypeInfo(
 			new String[] {
 					"application/excel",
+					"application/vnd.ms-excel",
 					"application/x-excel",
 					"application/x-msexcel",
-					"application/vnd.ms-excel"
 			}, 
 			ExcelReader.class, 
 			ExcelWriter.class
+	);
+	/**
+	 * The default information for classic Excel files.
+	 */
+	public static final MimeTypeInfo X_EXCEL_INFO = new MimeTypeInfo(
+			new String[] {
+					"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+			}, 
+			ExcelReader.class, 
+			XExcelWriter.class
 	);
 	/**
 	 * The default information for Excel files.

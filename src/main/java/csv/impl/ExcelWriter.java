@@ -51,7 +51,7 @@ out.close();
  */
 public class ExcelWriter extends AbstractStreamTableWriter {
 
-	private Workbook workbook;
+	protected Workbook workbook;
 	private Sheet sheet;
 	private int rowNum;
 	private int maxColumns;
