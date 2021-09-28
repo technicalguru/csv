@@ -25,21 +25,42 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
- * Creates an XML based Excel file.
- * @author ralph
+ * Provides ability to write XML-based Excel files.
+ * <p>
+ * The Excel will be written with a call to {@link #close()} only!
+ * Please notice that this implementation does not support writing formulas into
+ * cells, yet.
+ * Example:
+ * </p>
+<pre>
+java.io.File f = new java.io.File("excel-test.xlsx");
+ExcelWriter out = new XExcelWriter(f);
+out.printRow(new Object[] { "0:0", new Integer(3), new Date() });
+out.printRow(new Object[] { "1:0", new Double(), "another String value" });
+out.close();
+</pre>
+ * @see #close()
+ * @author RalphSchuster
  *
  */
 public class XExcelWriter extends ExcelWriter {
 
 	/**
-	 * Constructor.
+	 * Default constructor.
+	 * Please, notice that you are required to set the output stream
+	 * before closing the writer.
+	 * @see #setOutputStream(OutputStream)
 	 */
 	public XExcelWriter() {
 	}
 
 	/**
-	 * Constructor.
-	 * @param workbook
+	 * Constructor with existing workbook.
+	 * You can use this constructor if you wanna write to an existing workbook.
+	 * Please, notice that you are required to set the output stream
+	 * before closing the writer.
+	 * @see #setOutputStream(OutputStream)
+	 * @param workbook the workbook to be used
 	 */
 	public XExcelWriter(Workbook workbook) {
 		super(workbook);
@@ -47,8 +68,9 @@ public class XExcelWriter extends ExcelWriter {
 	}
 
 	/**
-	 * Constructor.
-	 * @param out
+	 * Constructor with defined output stream.
+	 * A new workbook will be created.
+	 * @param out output stream to be used.
 	 */
 	public XExcelWriter(OutputStream out) {
 		super(out);
@@ -56,9 +78,9 @@ public class XExcelWriter extends ExcelWriter {
 	}
 
 	/**
-	 * Constructor.
-	 * @param workbook
-	 * @param out
+	 * Constructor with existing workbook and defined output stream.
+	 * @param workbook the workbook to be used
+	 * @param out output stream to be used
 	 */
 	public XExcelWriter(Workbook workbook, OutputStream out) {
 		super(workbook, out);
@@ -66,9 +88,10 @@ public class XExcelWriter extends ExcelWriter {
 	}
 
 	/**
-	 * Constructor.
-	 * @param file
-	 * @throws IOException
+	 * Constructor for writing into a file.
+	 * A new workbook will be created.
+	 * @param file output file to be used
+	 * @throws IOException when the file cannot be written to
 	 */
 	public XExcelWriter(File file) throws IOException {
 		super(file);
@@ -76,10 +99,10 @@ public class XExcelWriter extends ExcelWriter {
 	}
 
 	/**
-	 * Constructor.
-	 * @param workbook
-	 * @param file
-	 * @throws IOException
+	 * Constructor with existing workbook that needs to be written to a file.
+	 * @param workbook the workbook to be used
+	 * @param file output file to be used
+	 * @throws IOException when the file cannot be written to
 	 */
 	public XExcelWriter(Workbook workbook, File file) throws IOException {
 		super(workbook, file);
@@ -87,9 +110,10 @@ public class XExcelWriter extends ExcelWriter {
 	}
 
 	/**
-	 * Constructor.
-	 * @param file
-	 * @throws IOException
+	 * Constructor for writing into a file.
+	 * A new workbook will be created.
+	 * @param file output file to be used
+	 * @throws IOException when the file cannot be written to
 	 */
 	public XExcelWriter(String file) throws IOException {
 		super(file);
@@ -97,10 +121,10 @@ public class XExcelWriter extends ExcelWriter {
 	}
 
 	/**
-	 * Constructor.
-	 * @param workbook
-	 * @param file
-	 * @throws IOException
+	 * Constructor with existing workbook that needs to be written to a file.
+	 * @param workbook the workbook to be used
+	 * @param file output file to be used
+	 * @throws IOException when the file cannot be written to
 	 */
 	public XExcelWriter(Workbook workbook, String file) throws IOException {
 		super(workbook, file);

@@ -31,6 +31,29 @@ import jakarta.activation.MimetypesFileTypeMap;
 /**
  * This factory returns correct reader and writer implementations
  * for given files.
+<pre>
+java.io.File f1 = new java.io.File("csv-test.csv");
+java.io.File f2 = new java.io.File("excel-test.xls");
+java.io.File f3 = new java.io.File("excel-test.xlsx");
+java.io.File f4 = new java.io.File("xml-test.xml");
+
+// Returns implementation for CSV file
+TableReader in1  = CSVFactory.getFactory().getReader(f1);
+TableWriter out1 = CSVFactory.getFactory().getWriter(f1);
+
+// Returns implementation for classic Excel files
+TableReader in2  = CSVFactory.getFactory().getReader(f2);
+TableWriter out2 = CSVFactory.getFactory().getWriter(f2);
+
+// Returns implementation for XML-based Excel files
+TableReader in3  = CSVFactory.getFactory().getReader(f3);
+TableWriter out3 = CSVFactory.getFactory().getWriter(f3);
+
+// Returns implementation for XML files
+TableReader in4  = CSVFactory.getFactory().getReader(f4);
+TableWriter out4 = CSVFactory.getFactory().getWriter(f4);
+
+</pre>
  * @author RalphSchuster
  *
  */

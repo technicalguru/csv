@@ -985,7 +985,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 			rc.append(getBgColor()); rc.append(':');
 			Font font = getFont();
 			if (font != null) {
-				rc.append(font.getIndexAsInt());
+				rc.append(font.getIndex());
 			} else {
 				rc.append("null");
 			}

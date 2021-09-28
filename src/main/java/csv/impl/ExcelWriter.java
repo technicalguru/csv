@@ -31,7 +31,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
 /**
- * Provides ability to write Excel files.
+ * Provides ability to write classic Excel files.
  * <p>
  * The Excel will be written with a call to {@link #close()} only!
  * Please notice that this implementation does not support writing formulas into
