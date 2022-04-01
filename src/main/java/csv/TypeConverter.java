@@ -23,25 +23,25 @@ package csv;
  * @author ralph
  *
  */
-public interface TypeConversionHandler {
+public interface TypeConverter {
 
 	/**
 	 * Returns the types that this handler is responsible for.
 	 * @return type strings
 	 */
-	public String[] getTypes();
+	public Class<?>[] getTypes();
 	
 	/**
 	 * Converts the string (from stream) into corresponding object.
-	 * @param s string representation.
-	 * @return object
+	 * @param streamObject object from stream.
+	 * @return object object to passed to client
 	 */
-	public Object toObject(String s);
+	public Object fromStream(Object streamObject);
 	
 	/**
-	 * Converts an object into its string representation.
+	 * Converts an object into its stream representation.
 	 * @param o Object to convert
-	 * @return string representation.
+	 * @return stream representation.
 	 */
-	public String toString(Object o);
+	public Object toStream(Object o);
 }

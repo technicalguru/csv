@@ -169,7 +169,7 @@ public class ExcelWriter extends AbstractStreamTableWriter {
 		// Get or create the row
 		Row row = getOrCreateRow(rowNum);
 		for (int i=0; i<columns.length; i++) {
-			setValue(row, i, columns[i]);
+			setValue(row, i, convert(columns[i]));
 		}
 	}
 	

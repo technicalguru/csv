@@ -25,16 +25,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import csv.TableWriter;
-import csv.TypeConversionHandler;
-import csv.impl.type.BooleanConversionHandler;
-import csv.impl.type.ByteConversionHandler;
-import csv.impl.type.CharConversionHandler;
-import csv.impl.type.DateConversionHandler;
-import csv.impl.type.DoubleConversionHandler;
-import csv.impl.type.FloatConversionHandler;
-import csv.impl.type.IntegerConversionHandler;
-import csv.impl.type.LongConversionHandler;
-import csv.impl.type.ShortConversionHandler;
+import csv.TypeConverter;
 
 /**
  * Abstract implementation of writer interface.
@@ -46,7 +37,7 @@ import csv.impl.type.ShortConversionHandler;
 public abstract class AbstractTableWriter implements TableWriter {
 
     private int rowCount;
-	private Map<String,TypeConversionHandler> typeConversionHandlers = new HashMap<String, TypeConversionHandler>();
+	private Map<Class<?>,TypeConverter> typeConverters = new HashMap<>();
     
 	/**
 	 * General initialization.
@@ -54,15 +45,6 @@ public abstract class AbstractTableWriter implements TableWriter {
 	 */
 	protected void init() {
 		rowCount = 0;
-		registerTypeConversionHandler(BooleanConversionHandler.INSTANCE);
-		registerTypeConversionHandler(ByteConversionHandler.INSTANCE);
-		registerTypeConversionHandler(CharConversionHandler.INSTANCE);
-		registerTypeConversionHandler(DoubleConversionHandler.INSTANCE);
-		registerTypeConversionHandler(FloatConversionHandler.INSTANCE);
-		registerTypeConversionHandler(IntegerConversionHandler.INSTANCE);
-		registerTypeConversionHandler(LongConversionHandler.INSTANCE);
-		registerTypeConversionHandler(ShortConversionHandler.INSTANCE);
-		registerTypeConversionHandler(DateConversionHandler.INSTANCE);
 	}
 	
 	/**
@@ -113,9 +95,9 @@ public abstract class AbstractTableWriter implements TableWriter {
      * Registers a type conversion handler.
      * @param handler handler to register
      */
-    public void registerTypeConversionHandler(TypeConversionHandler handler) {
-    	for (String type : handler.getTypes()) {
-    		typeConversionHandlers.put(type, handler);
+    public void registerTypeConverter(TypeConverter handler) {
+    	for (Class<?> type : handler.getTypes()) {
+    		typeConverters.put(type, handler);
     	}
     }
     
@@ -123,9 +105,9 @@ public abstract class AbstractTableWriter implements TableWriter {
      * Unregisters a type conversion handler.
      * @param handler handler to unregister
      */
-    public void unregisterTypeConversionHandler(TypeConversionHandler handler) {
-    	for (String type : handler.getTypes()) {
-    		typeConversionHandlers.remove(type);
+    public void unregisterTypeConverter(TypeConverter handler) {
+    	for (Class<?> type : handler.getTypes()) {
+    		typeConverters.remove(type);
     	}
     }
     
@@ -134,33 +116,33 @@ public abstract class AbstractTableWriter implements TableWriter {
      * @param type type to get a handler for
      * @return conversion handler
      */
-    protected TypeConversionHandler getTypeConversionHandler(String type) {
-    	return typeConversionHandlers.get(type);
+    protected TypeConverter getTypeConverter(Class<?> type) {
+    	return typeConverters.get(type);
     }
     
     /**
-     * Converts the value to its string representation.
+     * Converts the value to its stream representation.
      * @param value object
-     * @return string representation
+     * @return stream representation
      */
-    protected String convert(Object value) {
+    protected Object convert(Object value) {
     	if (value == null) return null;
-    	return convert(value.getClass().getName(), value);
+    	return convert(value.getClass(), value);
     }
     
     /**
-     * Converts the value to its string representation.
+     * Converts the value to its stream representation.
      * @param type type of object being returned
      * @param value object
-     * @return string representation
+     * @return stream representation
      */
-    protected String convert(String type, Object value) {
+    protected Object convert(Class<?> type, Object value) {
     	if (value == null) return null;
     	
-    	TypeConversionHandler handler = getTypeConversionHandler(type);
-    	if (handler != null) return handler.toString(value);
+    	TypeConverter handler = getTypeConverter(type);
+    	if (handler != null) return handler.toStream(value);
     	
-    	return value.toString();
+    	return value;
     }
     
     /**

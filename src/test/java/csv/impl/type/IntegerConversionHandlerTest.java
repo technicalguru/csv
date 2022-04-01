@@ -21,6 +21,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import csv.impl.csv.type.IntegerConversionHandler;
+
 /**
  * @author ralph
  *
@@ -28,25 +30,25 @@ import org.junit.Test;
 public class IntegerConversionHandlerTest {
 
 	/**
-	 * Test method for {@link csv.impl.type.IntegerConversionHandler#toObject(java.lang.String)}.
+	 * Test method for {@link csv.impl.csv.type.IntegerConversionHandler#fromStream(java.lang.String)}.
 	 */
 	@Test
 	public void testToObject() {
 		IntegerConversionHandler handler = new IntegerConversionHandler();
-		assertEquals(2, handler.toObject("2"));
-		assertEquals(20, handler.toObject("20"));
-		assertEquals(-2, handler.toObject("-2"));
+		assertEquals(2, handler.fromStream("2"));
+		assertEquals(20, handler.fromStream("20"));
+		assertEquals(-2, handler.fromStream("-2"));
 	}
 
 	/**
-	 * Test method for {@link csv.impl.type.IntegerConversionHandler#toString(java.lang.Object)}.
+	 * Test method for {@link csv.impl.csv.type.IntegerConversionHandler#toStream(java.lang.Object)}.
 	 */
 	@Test
 	public void testToStringObject() {
 		IntegerConversionHandler handler = new IntegerConversionHandler();
-		assertEquals("2", handler.toString(2));
-		assertEquals("20", handler.toString(20));
-		assertEquals("-2", handler.toString(-2));
+		assertEquals("2", handler.toStream(2));
+		assertEquals("20", handler.toStream(20));
+		assertEquals("-2", handler.toStream(-2));
 	}
 
 }

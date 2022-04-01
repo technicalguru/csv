@@ -15,7 +15,7 @@
  *  License along with CSV.  If not, see 
  *  <http://www.gnu.org/licenses/lgpl-3.0.html>.
  */
-package csv.impl.type;
+package csv.impl.csv.type;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-import csv.TypeConversionHandler;
+import csv.TypeConverter;
 
 /**
  * A conversion handler for dates. The default implementation
@@ -35,7 +35,7 @@ import csv.TypeConversionHandler;
  * @author ralph
  *
  */
-public class DateConversionHandler implements TypeConversionHandler {
+public class DateConversionHandler implements TypeConverter {
 
 	public static final DateConversionHandler INSTANCE = new DateConversionHandler();
 	
@@ -61,12 +61,11 @@ public class DateConversionHandler implements TypeConversionHandler {
 	}
 
 	/**
-	 * Returns th type java.util.Date.
-	 * @see csv.TypeConversionHandler#getTypes()
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String[] getTypes() {
-		return new String[] { "java.util.Date" };
+	public Class<?>[] getTypes() {
+		return new Class<?>[] { Date.class };
 	}
 
 	/**
@@ -76,12 +75,12 @@ public class DateConversionHandler implements TypeConversionHandler {
 	 * string will be returned
 	 * @param s string to be parsed
 	 * @return date 
-	 * @see csv.TypeConversionHandler#toObject(java.lang.String)
+	 * @see csv.TypeConverter#fromStream(java.lang.String)
 	 */
 	@Override
-	public Object toObject(String s) {
-		if (s == null) return null;
-		s = s.trim();
+	public Object fromStream(Object o) {
+		if (o == null) return null;
+		String s = o.toString().trim();
 		
 		// We need to select the right format
 		DateFormat formats[] = getParsingFormatters(s);
@@ -105,10 +104,10 @@ public class DateConversionHandler implements TypeConversionHandler {
 	 * Converts the date to its string representation.
 	 * @param o date to be converted
 	 * @return string representation of date
-	 * @see csv.TypeConversionHandler#toString(java.lang.Object)
+	 * @see csv.TypeConverter#toStream(java.lang.Object)
 	 */
 	@Override
-	public String toString(Object o) {
+	public Object toStream(Object o) {
 		if (o == null) return null;
 		
 		// Assuming this is a date

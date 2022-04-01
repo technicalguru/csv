@@ -23,6 +23,16 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Writer;
 
+import csv.impl.csv.type.BooleanConversionHandler;
+import csv.impl.csv.type.ByteConversionHandler;
+import csv.impl.csv.type.CharConversionHandler;
+import csv.impl.csv.type.DateConversionHandler;
+import csv.impl.csv.type.DoubleConversionHandler;
+import csv.impl.csv.type.FloatConversionHandler;
+import csv.impl.csv.type.IntegerConversionHandler;
+import csv.impl.csv.type.LongConversionHandler;
+import csv.impl.csv.type.ShortConversionHandler;
+
 /**
  * Implements functionality for writing CSV streams.
  * <p>
@@ -114,6 +124,15 @@ public class CSVWriter extends AbstractStreamTableWriter {
 	protected void init() {
 		super.init();
 		columnCount = 0;
+		registerTypeConverter(BooleanConversionHandler.INSTANCE);
+		registerTypeConverter(ByteConversionHandler.INSTANCE);
+		registerTypeConverter(CharConversionHandler.INSTANCE);
+		registerTypeConverter(DoubleConversionHandler.INSTANCE);
+		registerTypeConverter(FloatConversionHandler.INSTANCE);
+		registerTypeConverter(IntegerConversionHandler.INSTANCE);
+		registerTypeConverter(LongConversionHandler.INSTANCE);
+		registerTypeConverter(ShortConversionHandler.INSTANCE);
+		registerTypeConverter(DateConversionHandler.INSTANCE);
 	}
 
 
@@ -316,7 +335,7 @@ public class CSVWriter extends AbstractStreamTableWriter {
     private String prepareColumn(Object o) {
         String rc = "";
         if (o == null) return rc;
-        String s = convert(o);
+        String s = convert(o).toString();
         if ((columnDelimiter != null) && columnNeedsDelimiting(s)) {
             rc = columnDelimiter;
             rc += prepareColumnValue(s);

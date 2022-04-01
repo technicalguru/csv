@@ -21,6 +21,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import csv.impl.csv.type.CharConversionHandler;
+
 /**
  * @author ralph
  *
@@ -28,23 +30,23 @@ import org.junit.Test;
 public class CharConversionHandlerTest {
 
 	/**
-	 * Test method for {@link csv.impl.type.CharConversionHandler#toObject(java.lang.String)}.
+	 * Test method for {@link csv.impl.csv.type.CharConversionHandler#fromStream(java.lang.String)}.
 	 */
 	@Test
 	public void testToObject() {
 		CharConversionHandler handler = new CharConversionHandler();
-		assertEquals(' ', handler.toObject(" "));
-		assertEquals('A', handler.toObject("A"));
+		assertEquals(' ', handler.fromStream(" "));
+		assertEquals('A', handler.fromStream("A"));
 	}
 
 	/**
-	 * Test method for {@link csv.impl.type.CharConversionHandler#toString(java.lang.Object)}.
+	 * Test method for {@link csv.impl.csv.type.CharConversionHandler#toStream(java.lang.Object)}.
 	 */
 	@Test
 	public void testToStringObject() {
 		CharConversionHandler handler = new CharConversionHandler();
-		assertEquals(" ", handler.toString(' '));
-		assertEquals("A", handler.toString('A'));
+		assertEquals(" ", handler.toStream(' '));
+		assertEquals("A", handler.toStream('A'));
 	}
 
 }

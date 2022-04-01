@@ -194,7 +194,8 @@ public class HtmlWriter extends AbstractStreamTableWriter {
 	 * @param columnIndex index of column
 	 */
 	public void printColumnContent(Object o, int rowIndex, int columnIndex) {
-		String s = convert(o);
+		if (o == null) o = "";
+		String s = convert(o).toString();
 		
 		// HTML cleanup of content
 		s = encodeHtml(s);

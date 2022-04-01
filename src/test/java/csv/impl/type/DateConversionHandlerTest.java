@@ -24,6 +24,8 @@ import java.util.TimeZone;
 
 import org.junit.Test;
 
+import csv.impl.csv.type.DateConversionHandler;
+
 /**
  * @author ralph
  *
@@ -41,7 +43,7 @@ public class DateConversionHandlerTest {
 	private static final Date TARGET_DATE = new Date(1296432000000L);
 	
 	/**
-	 * Test method for {@link csv.impl.type.DateConversionHandler#toObject(java.lang.String)}.
+	 * Test method for {@link csv.impl.csv.type.DateConversionHandler#fromStream(java.lang.String)}.
 	 */
 	@Test
 	public void testToObject() {
@@ -49,18 +51,18 @@ public class DateConversionHandlerTest {
 		handler.setTimezone(TimeZone.getTimeZone("UTC"));
 		System.out.println(TARGET_DATE);
 		for (String date : DATES) {
-			assertEquals(date, TARGET_DATE, handler.toObject(date));
+			assertEquals(date, TARGET_DATE, handler.fromStream(date));
 		}
 	}
 
 	/**
-	 * Test method for {@link csv.impl.type.DateConversionHandler#toString(java.lang.Object)}.
+	 * Test method for {@link csv.impl.csv.type.DateConversionHandler#toStream(java.lang.Object)}.
 	 */
 	@Test
 	public void testToStringObject() {
 		DateConversionHandler handler = new DateConversionHandler();
 		handler.setTimezone(TimeZone.getTimeZone("UTC"));
-		assertEquals(DATES[0], handler.toString(TARGET_DATE));
+		assertEquals(DATES[0], handler.toStream(TARGET_DATE));
 	}
 
 }

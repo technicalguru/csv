@@ -21,6 +21,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import csv.impl.csv.type.BooleanConversionHandler;
+
 /**
  * @author ralph
  *
@@ -28,24 +30,24 @@ import org.junit.Test;
 public class BooleanConversionHandlerTest {
 
 	/**
-	 * Test method for {@link csv.impl.type.BooleanConversionHandler#toObject(java.lang.String)}.
+	 * Test method for {@link csv.impl.csv.type.BooleanConversionHandler#fromStream(java.lang.String)}.
 	 */
 	@Test
 	public void testToObject() {
 		BooleanConversionHandler handler = new BooleanConversionHandler();
-		assertEquals(true, handler.toObject("true"));
-		assertEquals(false, handler.toObject("yes"));
-		assertEquals(false, handler.toObject("false"));
+		assertEquals(true, handler.fromStream("true"));
+		assertEquals(false, handler.fromStream("yes"));
+		assertEquals(false, handler.fromStream("false"));
 	}
 
 	/**
-	 * Test method for {@link csv.impl.type.BooleanConversionHandler#toString(java.lang.Object)}.
+	 * Test method for {@link csv.impl.csv.type.BooleanConversionHandler#toStream(java.lang.Object)}.
 	 */
 	@Test
 	public void testToStringObject() {
 		BooleanConversionHandler handler = new BooleanConversionHandler();
-		assertEquals("true", handler.toString(Boolean.TRUE));
-		assertEquals("false", handler.toString(Boolean.FALSE));
+		assertEquals("true", handler.toStream(Boolean.TRUE));
+		assertEquals("false", handler.toStream(Boolean.FALSE));
 		
 	}
 
