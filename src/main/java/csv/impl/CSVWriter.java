@@ -23,6 +23,9 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Writer;
 
+import csv.mapper.StreamMapper;
+import csv.mapper.StringMappings;
+
 /**
  * Implements functionality for writing CSV streams.
  * <p>
@@ -114,6 +117,7 @@ public class CSVWriter extends AbstractStreamTableWriter {
 	protected void init() {
 		super.init();
 		columnCount = 0;
+		setMapper(new StreamMapper(new StringMappings()));
 	}
 
 
@@ -316,7 +320,7 @@ public class CSVWriter extends AbstractStreamTableWriter {
     private String prepareColumn(Object o) {
         String rc = "";
         if (o == null) return rc;
-        String s = convert(o);
+        String s = convert(o).toString();
         if ((columnDelimiter != null) && columnNeedsDelimiting(s)) {
             rc = columnDelimiter;
             rc += prepareColumnValue(s);

@@ -26,16 +26,7 @@ import java.util.Map;
 import csv.CommentCallback;
 import csv.CsvException;
 import csv.TableReader;
-import csv.TypeConversionHandler;
-import csv.impl.type.BooleanConversionHandler;
-import csv.impl.type.ByteConversionHandler;
-import csv.impl.type.CharConversionHandler;
-import csv.impl.type.DateConversionHandler;
-import csv.impl.type.DoubleConversionHandler;
-import csv.impl.type.FloatConversionHandler;
-import csv.impl.type.IntegerConversionHandler;
-import csv.impl.type.LongConversionHandler;
-import csv.impl.type.ShortConversionHandler;
+import csv.mapper.StreamMapper;
 
 /**
  * Abstract implementation that shall be suitable for most implementations.
@@ -44,31 +35,37 @@ import csv.impl.type.ShortConversionHandler;
  */
 public abstract class AbstractTableReader implements TableReader {
 
-	private List<CommentCallback> commentCallbacks = new ArrayList<CommentCallback>();
+	private List<CommentCallback> commentCallbacks = new ArrayList<>();
     private int rowCount = 0;
     private int lineCount = 0;
 	private boolean hasHeaderRow = false;
 	private Object headerRow[] = null;
 	private boolean headerRowRead = false;
 	private int minimumColumnCount = 0;
-	private Map<String,TypeConversionHandler> typeConversionHandlers = new HashMap<String, TypeConversionHandler>();
-	private Map<Integer,String> columnTypes = new HashMap<Integer,String>();
+	private StreamMapper mapper = null;
+	private Map<Integer,Class<?>> columnTypes = new HashMap<>();
 	
 	/**
 	 * Default Constructor.
 	 */
 	public AbstractTableReader() {
-		registerTypeConversionHandler(BooleanConversionHandler.INSTANCE);
-		registerTypeConversionHandler(ByteConversionHandler.INSTANCE);
-		registerTypeConversionHandler(CharConversionHandler.INSTANCE);
-		registerTypeConversionHandler(DoubleConversionHandler.INSTANCE);
-		registerTypeConversionHandler(FloatConversionHandler.INSTANCE);
-		registerTypeConversionHandler(IntegerConversionHandler.INSTANCE);
-		registerTypeConversionHandler(LongConversionHandler.INSTANCE);
-		registerTypeConversionHandler(ShortConversionHandler.INSTANCE);
-		registerTypeConversionHandler(DateConversionHandler.INSTANCE);
 	}
 
+	/**
+	 * Returns the mapper.
+	 * @return the mapper
+	 */
+	public StreamMapper getMapper() {
+		return mapper;
+	}
+
+	/**
+	 * Sets the mapper.
+	 * @param mapper the mapper to set
+	 */
+	public void setMapper(StreamMapper mapper) {
+		this.mapper = mapper;
+	}
 
 	/**
      * Opens the CSV reader.
@@ -167,7 +164,7 @@ public abstract class AbstractTableReader implements TableReader {
 	 * @see #convert(int, String)
 	 */
 	public void setColumnType(int columnIndex, Class<?> type) {
-		columnTypes.put(columnIndex, type.getName());
+		columnTypes.put(columnIndex, type);
 	}
 	
 	/**
@@ -178,9 +175,9 @@ public abstract class AbstractTableReader implements TableReader {
 	 * @see #getTypeConversionHandler(String)
 	 * @see #convert(int, String)
 	 */
-	public String getColumnType(int columnIndex) {
-		String rc = columnTypes.get(columnIndex);
-		if (rc == null) rc = "java.lang.String";
+	public Class<?> getColumnType(int columnIndex) {
+		Class<?> rc = columnTypes.get(columnIndex);
+		if (rc == null) rc = Object.class;
 		return rc;
 	}
 	
@@ -262,65 +259,29 @@ public abstract class AbstractTableReader implements TableReader {
     }
 
     /**
-     * Registers a type conversion handler.
-     * @param handler handler to register
-     */
-    public void registerTypeConversionHandler(TypeConversionHandler handler) {
-    	for (String type : handler.getTypes()) {
-    		typeConversionHandlers.put(type, handler);
-    	}
-    }
-    
-    /**
-     * Unregisters a type conversion handler.
-     * @param handler handler to unregister
-     */
-    public void unregisterTypeConversionHandler(TypeConversionHandler handler) {
-    	for (String type : handler.getTypes()) {
-    		typeConversionHandlers.remove(type);
-    	}
-    }
-    
-    /**
      * Converts the string back to correct object.
      * This method will retrieve the column type from {@link #getColumnType(int)} and then
-     * then forward the transformation to {@link #convert(String, String)}.
+     * then forward the transformation to {@link #mapper} object.
      * @param columnIndex index of column of this value
      * @param value string representation of object
      * @return object the converted object
-     * @see #convert(String, String)
-     * @see #registerTypeConversionHandler(TypeConversionHandler)
      * @see #getColumnType(int)
      */
-    protected Object convert(int columnIndex, String value) {
-    	String columnType = getColumnType(columnIndex);
-    	if (columnType == null) columnType = "java.lang.String";
-    	
-    	return convert(columnType, value);
+    protected Object convert(int columnIndex, Object value) {
+    	if (mapper == null) return value;
+    	return mapper.fromStream(getColumnType(columnIndex), value);
     }
     
     /**
      * Converts the string back to correct object.
-     * @param type type of object being returned
-     * @param value string representation of object
-     * @return object
+     * This method will forward the transformation to {@link #mapper} object.
+     * @param type the target type of the return value
+     * @param value stream representation of object
+     * @return object the converted object
      */
-    protected Object convert(String type, String value) {
-    	if (value == null) return null;
-    	
-    	TypeConversionHandler handler = getTypeConversionHandler(type);
-    	if (handler != null) return handler.toObject(value);
-    	
-    	return value;
-    }
-    
-    /**
-     * Returns a type conversion handler for the given type.
-     * @param type type to get a handler for
-     * @return conversion handler
-     */
-    protected TypeConversionHandler getTypeConversionHandler(String type) {
-    	return typeConversionHandlers.get(type);
+    protected Object convert(Class<?> type, Object value) {
+    	if (mapper == null) return value;
+    	return mapper.fromStream(type, value);
     }
     
     /**

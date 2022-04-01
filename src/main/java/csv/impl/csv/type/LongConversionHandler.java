@@ -15,18 +15,18 @@
  *  License along with CSV.  If not, see 
  *  <http://www.gnu.org/licenses/lgpl-3.0.html>.
  */
-package csv.impl.type;
+package csv.impl.csv.type;
 
-import csv.TypeConversionHandler;
+import csv.mapper.TypeConverter;
 
 /**
  * Conversion Handler for long.
  * @author ralph
  *
  */
-public class LongConversionHandler implements TypeConversionHandler {
+public class LongConversionHandler implements TypeConverter {
 
-	public static final TypeConversionHandler INSTANCE = new LongConversionHandler();
+	public static final TypeConverter INSTANCE = new LongConversionHandler();
 	
 	/**
 	 * Constructor.
@@ -35,26 +35,26 @@ public class LongConversionHandler implements TypeConversionHandler {
 	}
 
 	/**
-	 * @see csv.TypeConversionHandler#getTypes()
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String[] getTypes() {
-		return new String[] { "long", "java.lang.Long" };
+	public Class<?>[] getTypes() {
+		return new Class<?>[] { Long.TYPE, Long.class };
 	}
 
 	/**
-	 * @see csv.TypeConversionHandler#toObject(java.lang.String)
+	 * {@inheritDoc}
 	 */
 	@Override
-	public Object toObject(String s) {
-		return Long.parseLong(s);
+	public Object fromStream(Object s) {
+		return Long.parseLong(s.toString());
 	}
 
 	/**
-	 * @see csv.TypeConversionHandler#toString(java.lang.Object)
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString(Object o) {
+	public Object toStream(Object o) {
 		return o.toString();
 	}
 

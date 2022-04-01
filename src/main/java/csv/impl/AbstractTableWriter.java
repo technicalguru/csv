@@ -20,21 +20,10 @@ package csv.impl;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 import csv.TableWriter;
-import csv.TypeConversionHandler;
-import csv.impl.type.BooleanConversionHandler;
-import csv.impl.type.ByteConversionHandler;
-import csv.impl.type.CharConversionHandler;
-import csv.impl.type.DateConversionHandler;
-import csv.impl.type.DoubleConversionHandler;
-import csv.impl.type.FloatConversionHandler;
-import csv.impl.type.IntegerConversionHandler;
-import csv.impl.type.LongConversionHandler;
-import csv.impl.type.ShortConversionHandler;
+import csv.mapper.StreamMapper;
 
 /**
  * Abstract implementation of writer interface.
@@ -46,7 +35,7 @@ import csv.impl.type.ShortConversionHandler;
 public abstract class AbstractTableWriter implements TableWriter {
 
     private int rowCount;
-	private Map<String,TypeConversionHandler> typeConversionHandlers = new HashMap<String, TypeConversionHandler>();
+	private StreamMapper mapper = null;
     
 	/**
 	 * General initialization.
@@ -54,17 +43,24 @@ public abstract class AbstractTableWriter implements TableWriter {
 	 */
 	protected void init() {
 		rowCount = 0;
-		registerTypeConversionHandler(BooleanConversionHandler.INSTANCE);
-		registerTypeConversionHandler(ByteConversionHandler.INSTANCE);
-		registerTypeConversionHandler(CharConversionHandler.INSTANCE);
-		registerTypeConversionHandler(DoubleConversionHandler.INSTANCE);
-		registerTypeConversionHandler(FloatConversionHandler.INSTANCE);
-		registerTypeConversionHandler(IntegerConversionHandler.INSTANCE);
-		registerTypeConversionHandler(LongConversionHandler.INSTANCE);
-		registerTypeConversionHandler(ShortConversionHandler.INSTANCE);
-		registerTypeConversionHandler(DateConversionHandler.INSTANCE);
 	}
 	
+	/**
+	 * Returns the mapper.
+	 * @return the mapper
+	 */
+	public StreamMapper getMapper() {
+		return mapper;
+	}
+
+	/**
+	 * Sets the mapper.
+	 * @param mapper the mapper to set
+	 */
+	public void setMapper(StreamMapper mapper) {
+		this.mapper = mapper;
+	}
+
 	/**
 	 * Prints a comment into the output stream.
 	 * This implementation does nothing by default.
@@ -110,57 +106,13 @@ public abstract class AbstractTableWriter implements TableWriter {
 	}
 	
     /**
-     * Registers a type conversion handler.
-     * @param handler handler to register
-     */
-    public void registerTypeConversionHandler(TypeConversionHandler handler) {
-    	for (String type : handler.getTypes()) {
-    		typeConversionHandlers.put(type, handler);
-    	}
-    }
-    
-    /**
-     * Unregisters a type conversion handler.
-     * @param handler handler to unregister
-     */
-    public void unregisterTypeConversionHandler(TypeConversionHandler handler) {
-    	for (String type : handler.getTypes()) {
-    		typeConversionHandlers.remove(type);
-    	}
-    }
-    
-    /**
-     * Returns a type conversion handler for the given type.
-     * @param type type to get a handler for
-     * @return conversion handler
-     */
-    protected TypeConversionHandler getTypeConversionHandler(String type) {
-    	return typeConversionHandlers.get(type);
-    }
-    
-    /**
-     * Converts the value to its string representation.
+     * Converts the value to its stream representation.
      * @param value object
-     * @return string representation
+     * @return stream representation
      */
-    protected String convert(Object value) {
-    	if (value == null) return null;
-    	return convert(value.getClass().getName(), value);
-    }
-    
-    /**
-     * Converts the value to its string representation.
-     * @param type type of object being returned
-     * @param value object
-     * @return string representation
-     */
-    protected String convert(String type, Object value) {
-    	if (value == null) return null;
-    	
-    	TypeConversionHandler handler = getTypeConversionHandler(type);
-    	if (handler != null) return handler.toString(value);
-    	
-    	return value.toString();
+    protected Object convert(Object value) {
+    	if (mapper == null) return value;
+    	return mapper.toStream(value);
     }
     
     /**

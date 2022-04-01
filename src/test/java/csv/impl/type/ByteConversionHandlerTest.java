@@ -21,6 +21,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import csv.impl.csv.type.ByteConversionHandler;
+
 /**
  * @author ralph
  *
@@ -28,23 +30,23 @@ import org.junit.Test;
 public class ByteConversionHandlerTest {
 
 	/**
-	 * Test method for {@link csv.impl.type.ByteConversionHandler#toObject(java.lang.String)}.
+	 * Test method for {@link csv.impl.csv.type.ByteConversionHandler#fromStream(java.lang.String)}.
 	 */
 	@Test
 	public void testToObject() {
 		ByteConversionHandler handler = new ByteConversionHandler();
-		assertEquals((byte)'\u0020', handler.toObject("32"));
-		assertEquals((byte)'A', handler.toObject("65"));
+		assertEquals((byte)'\u0020', handler.fromStream("32"));
+		assertEquals((byte)'A', handler.fromStream("65"));
 	}
 
 	/**
-	 * Test method for {@link csv.impl.type.ByteConversionHandler#toString(java.lang.Object)}.
+	 * Test method for {@link csv.impl.csv.type.ByteConversionHandler#toStream(java.lang.Object)}.
 	 */
 	@Test
 	public void testToStringObject() {
 		ByteConversionHandler handler = new ByteConversionHandler();
-		assertEquals("65", handler.toString((byte)'A'));
-		assertEquals("32", handler.toString((byte)'\u0020'));
+		assertEquals("65", handler.toStream((byte)'A'));
+		assertEquals("32", handler.toStream((byte)'\u0020'));
 	}
 
 }

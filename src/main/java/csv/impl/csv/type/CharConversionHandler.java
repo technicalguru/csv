@@ -15,46 +15,46 @@
  *  License along with CSV.  If not, see 
  *  <http://www.gnu.org/licenses/lgpl-3.0.html>.
  */
-package csv.impl.type;
+package csv.impl.csv.type;
 
-import csv.TypeConversionHandler;
+import csv.mapper.TypeConverter;
 
 /**
- * Conversion Handler for short.
+ * Conversion Handler for char.
  * @author ralph
  *
  */
-public class ShortConversionHandler implements TypeConversionHandler {
+public class CharConversionHandler implements TypeConverter {
 
-	public static final TypeConversionHandler INSTANCE = new ShortConversionHandler();
+	public static final TypeConverter INSTANCE = new CharConversionHandler();
 	
 	/**
 	 * Constructor.
 	 */
-	public ShortConversionHandler() {
+	public CharConversionHandler() {
 	}
 
 	/**
-	 * @see csv.TypeConversionHandler#getTypes()
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String[] getTypes() {
-		return new String[] { "short", "java.lang.Short" };
+	public Class<?>[] getTypes() {
+		return new Class<?>[] { Character.TYPE, Character.class };
 	}
 
 	/**
-	 * @see csv.TypeConversionHandler#toObject(java.lang.String)
+	 * {@inheritDoc}
 	 */
 	@Override
-	public Object toObject(String s) {
-		return Short.parseShort(s);
+	public Object fromStream(Object s) {
+		return s.toString().charAt(0);
 	}
 
 	/**
-	 * @see csv.TypeConversionHandler#toString(java.lang.Object)
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString(Object o) {
+	public Object toStream(Object o) {
 		return o.toString();
 	}
 

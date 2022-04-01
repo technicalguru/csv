@@ -28,6 +28,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import csv.CsvException;
+import csv.mapper.StreamMapper;
+import csv.mapper.StringMappings;
 import csv.util.CSVUtils;
 
 /**
@@ -70,6 +72,7 @@ public class CSVReader extends AbstractStreamTableReader {
 	 * Default constructor.
 	 */
 	public CSVReader() {
+		init();
 	}
 
 	/** 
@@ -79,6 +82,7 @@ public class CSVReader extends AbstractStreamTableReader {
 	 */
 	public CSVReader(InputStream in) {
 		super(in);
+		init();
 	}
 
 	/** 
@@ -94,6 +98,7 @@ public class CSVReader extends AbstractStreamTableReader {
 		} else {
 			argReader = new BufferedReader(in);
 		}
+		init();
 	}
 
 	/** 
@@ -104,6 +109,7 @@ public class CSVReader extends AbstractStreamTableReader {
 	 */
 	public CSVReader(File file) throws FileNotFoundException {
 		super(file);
+		init();
 	}
 
 	/** 
@@ -114,9 +120,16 @@ public class CSVReader extends AbstractStreamTableReader {
 	 */
 	public CSVReader(String file) throws FileNotFoundException {
 		super(file);
+		init();
 	}
 
-
+	/** 
+	 * Initializes converters.
+	 */
+	protected void init() {
+		setMapper(new StreamMapper(new StringMappings()));
+	}
+	
 	/**
 	 * Closes the underlying stream.
 	 * @see csv.impl.AbstractStreamTableReader#close()

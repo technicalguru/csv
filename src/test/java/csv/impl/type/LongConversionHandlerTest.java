@@ -21,6 +21,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import csv.impl.csv.type.LongConversionHandler;
+
 /**
  * @author ralph
  *
@@ -28,25 +30,25 @@ import org.junit.Test;
 public class LongConversionHandlerTest {
 
 	/**
-	 * Test method for {@link csv.impl.type.LongConversionHandler#toObject(java.lang.String)}.
+	 * Test method for {@link csv.impl.csv.type.LongConversionHandler#fromStream(java.lang.String)}.
 	 */
 	@Test
 	public void testToObject() {
 		LongConversionHandler handler = new LongConversionHandler();
-		assertEquals(2L, handler.toObject("2"));
-		assertEquals(20L, handler.toObject("20"));
-		assertEquals(-2L, handler.toObject("-2"));
+		assertEquals(2L, handler.fromStream("2"));
+		assertEquals(20L, handler.fromStream("20"));
+		assertEquals(-2L, handler.fromStream("-2"));
 	}
 
 	/**
-	 * Test method for {@link csv.impl.type.LongConversionHandler#toString(java.lang.Object)}.
+	 * Test method for {@link csv.impl.csv.type.LongConversionHandler#toStream(java.lang.Object)}.
 	 */
 	@Test
 	public void testToStringObject() {
 		LongConversionHandler handler = new LongConversionHandler();
-		assertEquals("2", handler.toString(2L));
-		assertEquals("20", handler.toString(20L));
-		assertEquals("-2", handler.toString(-2L));
+		assertEquals("2", handler.toStream(2L));
+		assertEquals("20", handler.toStream(20L));
+		assertEquals("-2", handler.toStream(-2L));
 	}
 
 }

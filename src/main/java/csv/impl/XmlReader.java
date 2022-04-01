@@ -33,6 +33,9 @@ import org.xml.sax.SAXException;
 import org.xml.sax.ext.DefaultHandler2;
 
 import csv.CsvException;
+import csv.mapper.StreamMapper;
+import csv.mapper.StringMappings;
+import rs.baselib.util.CommonUtils;
 
 /**
  * Reads from a XML file.
@@ -55,7 +58,7 @@ public class XmlReader extends AbstractStreamTableReader {
 	 * Constructor.
 	 */
 	public XmlReader() {
-		setHasHeaderRow(true);
+		init();
 	}
 
 	/**
@@ -64,7 +67,7 @@ public class XmlReader extends AbstractStreamTableReader {
 	 */
 	public XmlReader(InputStream in) {
 		super(in);
-		setHasHeaderRow(true);
+		init();
 	}
 
 	/**
@@ -74,7 +77,7 @@ public class XmlReader extends AbstractStreamTableReader {
 	 */
 	public XmlReader(File file) throws FileNotFoundException {
 		super(file);
-		setHasHeaderRow(true);
+		init();
 	}
 
 	/**
@@ -84,9 +87,17 @@ public class XmlReader extends AbstractStreamTableReader {
 	 */
 	public XmlReader(String file) throws FileNotFoundException {
 		super(file);
-		setHasHeaderRow(true);
+		init();
 	}
 
+	/**
+	 * Initializes reader.
+	 */
+	protected void init() {
+		setHasHeaderRow(true);
+		setMapper(new StreamMapper(new StringMappings()));
+	}
+	
 	/**
 	 * Closes the stream.
 	 * @see csv.impl.AbstractStreamTableReader#close()
@@ -450,7 +461,7 @@ public class XmlReader extends AbstractStreamTableReader {
 		private boolean isCollectingChars = false;
 		private StringBuilder charBuf = new StringBuilder();
 		private String columnName = null;
-		private String columnType = null;
+		private Class<?> columnType = null;
 		private List<String> columnNames;
 		private Map<String, Object> columnValues;
 		private int rowCount;
@@ -505,8 +516,14 @@ public class XmlReader extends AbstractStreamTableReader {
 		 * @param attr attributes being evaluated
 		 * @return correct column type
 		 */
-		protected String getColumnType(Attributes attr) {
-			return attr.getValue(getColumnTypeAttribute());
+		protected Class<?> getColumnType(Attributes attr) throws SAXException {
+			try {
+				String name = attr.getValue(getColumnTypeAttribute());
+				if (CommonUtils.isEmpty(name)) name = "java.lang.String";
+				return Class.forName(name);
+			} catch (ClassNotFoundException e) {
+				throw new SAXException("Cannot find target class", e);
+			}
 		}
 		
 		/**
@@ -556,7 +573,7 @@ public class XmlReader extends AbstractStreamTableReader {
 		 * @param columnName name of column
 		 * @param value value in column
 		 */
-		protected void addColumnValue(String columnName, String columnType, String value) {
+		protected void addColumnValue(String columnName, Class<?> columnType, String value) {
 			Object v = null;
 			
 			// add the column name to list of known columns

@@ -15,46 +15,46 @@
  *  License along with CSV.  If not, see 
  *  <http://www.gnu.org/licenses/lgpl-3.0.html>.
  */
-package csv.impl.type;
+package csv.impl.csv.type;
 
-import csv.TypeConversionHandler;
+import csv.mapper.TypeConverter;
 
 /**
- * Conversion Handler for boolean.
+ * Conversion Handler for int.
  * @author ralph
  *
  */
-public class BooleanConversionHandler implements TypeConversionHandler {
+public class IntegerConversionHandler implements TypeConverter {
 
-	public static final TypeConversionHandler INSTANCE = new BooleanConversionHandler();
+	public static final TypeConverter INSTANCE = new IntegerConversionHandler();
 	
 	/**
 	 * Constructor.
 	 */
-	public BooleanConversionHandler() {
+	public IntegerConversionHandler() {
 	}
 
 	/**
-	 * @see csv.TypeConversionHandler#getTypes()
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String[] getTypes() {
-		return new String[] { "boolean", "java.lang.Boolean" };
+	public Class<?>[] getTypes() {
+		return new Class<?>[] { Integer.TYPE, Integer.class };
 	}
 
 	/**
-	 * @see csv.TypeConversionHandler#toObject(java.lang.String)
+	 * {@inheritDoc}
 	 */
 	@Override
-	public Object toObject(String s) {
-		return Boolean.parseBoolean(s);
+	public Object fromStream(Object s) {
+		return Integer.parseInt(s.toString());
 	}
 
 	/**
-	 * @see csv.TypeConversionHandler#toString(java.lang.Object)
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString(Object o) {
+	public Object toStream(Object o) {
 		return o.toString();
 	}
 

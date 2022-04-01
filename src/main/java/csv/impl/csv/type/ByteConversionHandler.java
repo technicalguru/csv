@@ -15,18 +15,18 @@
  *  License along with CSV.  If not, see 
  *  <http://www.gnu.org/licenses/lgpl-3.0.html>.
  */
-package csv.impl.type;
+package csv.impl.csv.type;
 
-import csv.TypeConversionHandler;
+import csv.mapper.TypeConverter;
 
 /**
  * Conversion Handler for byte.
  * @author ralph
  *
  */
-public class ByteConversionHandler implements TypeConversionHandler {
+public class ByteConversionHandler implements TypeConverter {
 
-	public static final TypeConversionHandler INSTANCE = new ByteConversionHandler();
+	public static final TypeConverter INSTANCE = new ByteConversionHandler();
 	
 	/**
 	 * Constructor.
@@ -35,26 +35,26 @@ public class ByteConversionHandler implements TypeConversionHandler {
 	}
 
 	/**
-	 * @see csv.TypeConversionHandler#getTypes()
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String[] getTypes() {
-		return new String[] { "byte", "java.lang.Byte" };
+	public Class<?>[] getTypes() {
+		return new Class<?>[] { Byte.TYPE, Byte.class };
 	}
 
 	/**
-	 * @see csv.TypeConversionHandler#toObject(java.lang.String)
+	 * {@inheritDoc}
 	 */
 	@Override
-	public Object toObject(String s) {
-		return Byte.parseByte(s);
+	public Object fromStream(Object s) {
+		return Byte.parseByte(s.toString());
 	}
 
 	/**
-	 * @see csv.TypeConversionHandler#toString(java.lang.Object)
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString(Object o) {
+	public Object toStream(Object o) {
 		return o.toString();
 	}
 

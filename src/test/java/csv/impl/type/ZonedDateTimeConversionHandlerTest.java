@@ -17,41 +17,41 @@
  */
 package csv.impl.type;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import java.util.Date;
-import java.util.TimeZone;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import org.junit.Test;
 
-import csv.impl.csv.type.DateConversionHandler;
+import csv.impl.csv.type.ZonedDateTimeConversionHandler;
 
 /**
  * @author ralph
  *
  */
-public class DateConversionHandlerTest {
+public class ZonedDateTimeConversionHandlerTest {
 
 	private static final String DATES[] = new String[] {
-		"31/01/2011",
-		"31.01.2011",
-		"31/01/11",
-		"31.01.11",
-		"2011/01/31",
-		"2011.01.31"
+		"31/01/2011 00:00",
+		"31.01.2011 00:00:00",
+		"31/01/11 00:00:00.0",
+		"31.01.11 00:00",
+		"2011/01/31 00:00:00",
+		"2011.01.31 00:00:00.0",
+		"2011-01-31T00:00:00+00:00",
 	};
-	private static final Date TARGET_DATE = new Date(1296432000000L);
+	private static final ZonedDateTime TARGET_DATE = ZonedDateTime.of(2011, 1, 31, 0, 0, 0, 0, ZoneId.of("UTC"));
 	
 	/**
 	 * Test method for {@link csv.impl.csv.type.DateConversionHandler#fromStream(java.lang.String)}.
 	 */
 	@Test
 	public void testToObject() {
-		DateConversionHandler handler = new DateConversionHandler();
-		handler.setTimezone(TimeZone.getTimeZone("UTC"));
+		ZonedDateTimeConversionHandler handler = getHandler();
 		System.out.println(TARGET_DATE);
 		for (String date : DATES) {
-			assertEquals(date, TARGET_DATE, handler.fromStream(date));
+			assertEquals("Cannot parse date: "+date, TARGET_DATE.toInstant().toEpochMilli(), ((ZonedDateTime)handler.fromStream(date)).toInstant().toEpochMilli());
 		}
 	}
 
@@ -60,9 +60,14 @@ public class DateConversionHandlerTest {
 	 */
 	@Test
 	public void testToStringObject() {
-		DateConversionHandler handler = new DateConversionHandler();
-		handler.setTimezone(TimeZone.getTimeZone("UTC"));
-		assertEquals(DATES[0], handler.toStream(TARGET_DATE));
+		ZonedDateTimeConversionHandler handler = getHandler();
+		assertEquals("31.01.2011 00:00:00", handler.toStream(TARGET_DATE));
 	}
 
+	protected ZonedDateTimeConversionHandler getHandler() {
+		ZonedDateTimeConversionHandler handler = new ZonedDateTimeConversionHandler();
+		handler.setPrintFormat("dd.MM.yyyy HH:mm:ss");
+		handler.setZoneId(ZoneId.of("UTC"));
+		return handler;
+	}
 }

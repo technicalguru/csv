@@ -23,6 +23,9 @@ import java.io.OutputStream;
 
 import org.apache.commons.text.StringEscapeUtils;
 
+import csv.mapper.StreamMapper;
+import csv.mapper.StringMappings;
+
 /**
  * Writer implementation for XML streams.
  * @author ralph
@@ -124,6 +127,7 @@ public class XmlWriter extends AbstractStreamTableWriter {
 		super.init();
 		headerWritten = false;
 		headerColumns = null;
+		setMapper(new StreamMapper(new StringMappings()));
 	}
 
 	/**
