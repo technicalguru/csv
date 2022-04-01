@@ -22,7 +22,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -82,22 +81,6 @@ public class CSVReader extends AbstractStreamTableReader {
 	 */
 	public CSVReader(InputStream in) {
 		super(in);
-		init();
-	}
-
-	/** 
-	 * Creates a new instance of CSVReader.
-	 * @param in the reader object delivering the CSV stream.
-	 * @deprecated Use {@link #CSVReader(InputStream)} instead.
-	 */
-	@Deprecated
-	public CSVReader(Reader in) {
-		super();
-		if (in instanceof BufferedReader) {
-			argReader = (BufferedReader)in;
-		} else {
-			argReader = new BufferedReader(in);
-		}
 		init();
 	}
 

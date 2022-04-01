@@ -73,32 +73,6 @@ public class CSVWriter extends AbstractStreamTableWriter {
 		super(out);
 	}
 
-	/**
-	 * For backwards compatibility only.
-	 * @param out out writer
-	 * @deprecated Use {@link #CSVWriter(OutputStream)} instead.
-	 */
-	@Deprecated
-	public CSVWriter(Writer out) {
-		super();
-		if (out instanceof PrintWriter) {
-			argWriter = (PrintWriter)out;
-		} else {
-			argWriter = new PrintWriter(out);
-		}
-	}
-
-	/**
-	 * For backwards compatibility only.
-	 * @param out out writer
-	 * @param flush has no influence and is for compatibility reasons only
-	 * @deprecated
-	 */
-	@Deprecated
-	public CSVWriter(Writer out, boolean flush) {
-		this(out);
-	}
-
     /**
      * Constructor for writing into a file.
      * @param file file
