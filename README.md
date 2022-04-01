@@ -42,7 +42,7 @@ Excel functionality is available since version 2.0.
 <dependency>
 	<groupId>eu.ralph-schuster</groupId>
 	<artifactId>csv</artifactId>
-	<version>3.1.0</version>
+	<version>4.0.0</version>
 </dependency>
 ```
 
