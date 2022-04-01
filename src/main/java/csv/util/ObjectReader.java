@@ -23,7 +23,26 @@ import csv.TableReader;
 
 /**
  * Reads objects from a table.
- * This class is different to {@link BeanReader} as it asks a converter to convert the row.
+ * <p>This class is different to {@link BeanReader} as it asks a converter to convert the row.</p>
+ * <pre>
+ * // Create an instance of your table reader 
+ * TableReader tableReader = ...; 
+ * 
+ * // Get an instance of your row converter
+ * RowConverter&lt;MyClass&gt; converter = new MyClassConverter();
+ * 
+ * // Now read from the table stream
+ * ObjectReader&lt;MyClass&gt; reader = new ObjectReader(tableReader, converter, true);
+ * Object tableHeader[] = reader.getTableHeader();
+ * while (reader.hasNext()) {
+ *    MyClass myObject = reader.next();
+ *    
+ *    // do something...
+ * }
+ * 
+ * // Close the reader
+ * reader.close();
+ * </pre>
  * @author ralph
  *
  */
@@ -33,7 +52,7 @@ public class ObjectReader<T> implements Iterator<T>, Iterable<T> {
 	protected Iterator<Object[]> iterator;
 	protected RowConverter<T>    converter;
 	private   boolean            hasHeaderRow;
-	protected Object             headerRow[];
+	protected Object             tableHeader[];
 	
 	/**
 	 * Constructor.
@@ -45,7 +64,7 @@ public class ObjectReader<T> implements Iterator<T>, Iterable<T> {
 		this.reader       = reader;
 		this.converter    = converter;
 		this.hasHeaderRow = hasHeaderRow;
-		this.headerRow    = null;
+		this.tableHeader  = null;
 		this.iterator     = reader.iterator();
 		readHeaderRow();
 	}
@@ -54,8 +73,8 @@ public class ObjectReader<T> implements Iterator<T>, Iterable<T> {
 	 * Reads the header row if required.
 	 */
 	private void readHeaderRow() {
-		if (hasHeaderRow && (headerRow == null) ) {
-			if (reader.hasNext()) headerRow = reader.next();
+		if (hasHeaderRow && (tableHeader == null) ) {
+			if (reader.hasNext()) tableHeader = reader.next();
 		}
 	}
 	
@@ -63,8 +82,8 @@ public class ObjectReader<T> implements Iterator<T>, Iterable<T> {
 	 * Returns the header row that was read.
 	 * @return the header row or null if no such row was read.
 	 */
-	public Object[] getHeaderRow() {
-		return headerRow;
+	public Object[] getTableHeader() {
+		return tableHeader;
 	}
 
 	/**

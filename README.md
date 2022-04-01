@@ -31,11 +31,13 @@ Excel functionality is available since version 2.0.
 
 ## Code Examples
 
- * [Reading a CSV file](https://www.javadoc.io/doc/eu.ralph-schuster/csv/latest//csv/impl/CSVReader.html)
- * [Reading an Excel file](https://www.javadoc.io/doc/eu.ralph-schuster/csv/latest//csv/impl/ExcelReader.html)
- * [Writing a CSV file](https://www.javadoc.io/doc/eu.ralph-schuster/csv/latest//csv/impl/CSVWriter.html)
- * [Writing an Excel file](https://www.javadoc.io/doc/eu.ralph-schuster/csv/latest//csv/impl/ExcelWriter.html)
-
+ * [Reading a CSV file](https://www.javadoc.io/doc/eu.ralph-schuster/csv/latest/csv/impl/CSVReader.html)
+ * [Reading an Excel file](https://www.javadoc.io/doc/eu.ralph-schuster/csv/latest/csv/impl/ExcelReader.html)
+ * [Writing a CSV file](https://www.javadoc.io/doc/eu.ralph-schuster/csv/latest/csv/impl/CSVWriter.html)
+ * [Writing an Excel file](https://www.javadoc.io/doc/eu.ralph-schuster/csv/latest/csv/impl/ExcelWriter.html)
+ * [Using StreamMapper to convert between table stream data and Java objects](https://www.javadoc.io/doc/eu.ralph-schuster/csv/latest/csv/mapper/StreamMapper.html)
+ * [Reading objects from a table stream](https://www.javadoc.io/doc/eu.ralph-schuster/csv/latest/csv/util/ObjectReader.html)
+ * [Writing objects to a table stream](https://www.javadoc.io/doc/eu.ralph-schuster/csv/latest/csv/util/ObjectWriter.html)
 ## Maven Coordinates
 
 ```

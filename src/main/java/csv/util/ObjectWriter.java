@@ -24,7 +24,27 @@ import csv.TableWriter;
 
 /**
  * Writes Objects into a table.
- * This class is different to {@link BeanWriter} as it asks a converter to convert the object to a row first.
+ * <p>This class is different to {@link BeanWriter} as it asks a converter to convert the object to a row first.</p>
+ * <pre>
+ * // Create an instance of your table writer 
+ * TableWriter tableWriter = ...; 
+ * 
+ * // Get an instance of your object converter
+ * ObjectConverter&lt;MyClass&gt; converter = new MyClassConverter();
+ * 
+ * // Get an instance of your table header provider (if you need it)
+ * TableHeaderProvider headerProvider = new MyTableHeaderProvider();
+ * 
+ * // Now write to the table stream
+ * ObjectWriter&lt;MyClass&gt; writer = new ObjectWriter(tableWriter, converter, headerProvider);
+ * writer.write(object1);
+ * writer.write(object2);
+ * writer.write(new MyClass[] { object1, object2, object 3 });
+ * 
+ * // Close the writer
+ * writer.close();
+ * </pre>
+ * 
  * @author ralph
  *
  */

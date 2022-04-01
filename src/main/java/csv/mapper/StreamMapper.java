@@ -22,7 +22,28 @@ import java.util.Map;
 
 /**
  * The stream mapper is the central place to convert column objects from or into a table stream.
- * It has a register of type converters that can be used with a table reader or writer.
+ * <p>
+ * It has a register of type converters that can be used with a table reader or writer. Text-based
+ * table readers/writers use the {@link StringMappings} converters by default. But you can change
+ * or replace them by your own mappings:
+ * </p>
+ * <pre>
+ *   ExcelReader in = new ExcelReader(file);
+ *   StreamMapper mapper = new StreamMapper(myMappings);
+ *   mapper.add(otherMappings);
+ *   mapper.remove(anyConverter);
+ *   in.setMapper(myMapper);
+ *   
+ *   // start using the reader now...
+ *   
+ *   ExcelWriter out = new ExcelWriter(file);
+ *   StreamMapper mapper = new StreamMapper(myMappings);
+ *   mapper.add(otherMappings);
+ *   mapper.remove(anyConverter);
+ *   out.setMapper(myMapper);
+ *   
+ *   // start using the writer now...
+ * </pre>
  * @author ralph
  *
  */
@@ -94,6 +115,14 @@ public class StreamMapper {
 		for (Class<?> type : converter.getTypes()) {
 			this.converters.remove(type);
 		}
+	}
+	
+	/**
+	 * Remove a converter from this collection.
+	 * @param type type to be removed
+	 */
+	public void remove(Class<?> type) {
+		this.converters.remove(type);
 	}
 	
     /**
