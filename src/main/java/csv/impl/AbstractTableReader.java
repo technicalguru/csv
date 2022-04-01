@@ -26,7 +26,7 @@ import java.util.Map;
 import csv.CommentCallback;
 import csv.CsvException;
 import csv.TableReader;
-import csv.TypeConverter;
+import csv.mapper.StreamMapper;
 
 /**
  * Abstract implementation that shall be suitable for most implementations.
@@ -42,7 +42,7 @@ public abstract class AbstractTableReader implements TableReader {
 	private Object headerRow[] = null;
 	private boolean headerRowRead = false;
 	private int minimumColumnCount = 0;
-	private Map<Class<?>,TypeConverter> typeConverters = new HashMap<>();
+	private StreamMapper mapper = null;
 	private Map<Integer,Class<?>> columnTypes = new HashMap<>();
 	
 	/**
@@ -51,6 +51,21 @@ public abstract class AbstractTableReader implements TableReader {
 	public AbstractTableReader() {
 	}
 
+	/**
+	 * Returns the mapper.
+	 * @return the mapper
+	 */
+	public StreamMapper getMapper() {
+		return mapper;
+	}
+
+	/**
+	 * Sets the mapper.
+	 * @param mapper the mapper to set
+	 */
+	public void setMapper(StreamMapper mapper) {
+		this.mapper = mapper;
+	}
 
 	/**
      * Opens the CSV reader.
@@ -244,65 +259,29 @@ public abstract class AbstractTableReader implements TableReader {
     }
 
     /**
-     * Registers a type conversion handler.
-     * @param handler handler to register
-     */
-    public void registerTypeConverter(TypeConverter handler) {
-    	for (Class<?> type : handler.getTypes()) {
-    		typeConverters.put(type, handler);
-    	}
-    }
-    
-    /**
-     * Unregisters a type conversion handler.
-     * @param handler handler to unregister
-     */
-    public void unregisterTypeConverter(TypeConverter handler) {
-    	for (Class<?> type : handler.getTypes()) {
-    		typeConverters.remove(type);
-    	}
-    }
-    
-    /**
      * Converts the string back to correct object.
      * This method will retrieve the column type from {@link #getColumnType(int)} and then
-     * then forward the transformation to {@link #convert(String, String)}.
+     * then forward the transformation to {@link #mapper} object.
      * @param columnIndex index of column of this value
      * @param value string representation of object
      * @return object the converted object
-     * @see #convert(String, String)
-     * @see #registerTypeConverter(TypeConverter)
      * @see #getColumnType(int)
      */
     protected Object convert(int columnIndex, Object value) {
-    	Class<?> columnType = getColumnType(columnIndex);
-    	if (columnType == null) return value;
-    	
-    	return convert(columnType, value);
+    	if (mapper == null) return value;
+    	return mapper.fromStream(getColumnType(columnIndex), value);
     }
     
     /**
      * Converts the string back to correct object.
-     * @param type type of object being returned
-     * @param value string representation of object
-     * @return object
+     * This method will forward the transformation to {@link #mapper} object.
+     * @param type the target type of the return value
+     * @param value stream representation of object
+     * @return object the converted object
      */
     protected Object convert(Class<?> type, Object value) {
-    	if (value == null) return null;
-    	
-    	TypeConverter handler = getTypeConversionHandler(type);
-    	if (handler != null) return handler.fromStream(value);
-    	
-    	return value;
-    }
-    
-    /**
-     * Returns a type conversion handler for the given type.
-     * @param type type to get a handler for
-     * @return conversion handler
-     */
-    protected TypeConverter getTypeConversionHandler(Class<?> type) {
-    	return typeConverters.get(type);
+    	if (mapper == null) return value;
+    	return mapper.fromStream(type, value);
     }
     
     /**

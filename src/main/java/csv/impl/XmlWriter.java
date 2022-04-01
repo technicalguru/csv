@@ -23,15 +23,8 @@ import java.io.OutputStream;
 
 import org.apache.commons.text.StringEscapeUtils;
 
-import csv.impl.csv.type.BooleanConversionHandler;
-import csv.impl.csv.type.ByteConversionHandler;
-import csv.impl.csv.type.CharConversionHandler;
-import csv.impl.csv.type.DateConversionHandler;
-import csv.impl.csv.type.DoubleConversionHandler;
-import csv.impl.csv.type.FloatConversionHandler;
-import csv.impl.csv.type.IntegerConversionHandler;
-import csv.impl.csv.type.LongConversionHandler;
-import csv.impl.csv.type.ShortConversionHandler;
+import csv.mapper.StreamMapper;
+import csv.mapper.StringMappings;
 
 /**
  * Writer implementation for XML streams.
@@ -134,15 +127,7 @@ public class XmlWriter extends AbstractStreamTableWriter {
 		super.init();
 		headerWritten = false;
 		headerColumns = null;
-		registerTypeConverter(BooleanConversionHandler.INSTANCE);
-		registerTypeConverter(ByteConversionHandler.INSTANCE);
-		registerTypeConverter(CharConversionHandler.INSTANCE);
-		registerTypeConverter(DoubleConversionHandler.INSTANCE);
-		registerTypeConverter(FloatConversionHandler.INSTANCE);
-		registerTypeConverter(IntegerConversionHandler.INSTANCE);
-		registerTypeConverter(LongConversionHandler.INSTANCE);
-		registerTypeConverter(ShortConversionHandler.INSTANCE);
-		registerTypeConverter(DateConversionHandler.INSTANCE);		
+		setMapper(new StreamMapper(new StringMappings()));
 	}
 
 	/**

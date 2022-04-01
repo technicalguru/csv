@@ -17,7 +17,7 @@
  */
 package csv.impl.csv.type;
 
-import csv.TypeConverter;
+import csv.mapper.TypeConverter;
 
 /**
  * Conversion Handler for long.

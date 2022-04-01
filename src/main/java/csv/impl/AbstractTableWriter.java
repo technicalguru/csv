@@ -20,12 +20,10 @@ package csv.impl;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 import csv.TableWriter;
-import csv.TypeConverter;
+import csv.mapper.StreamMapper;
 
 /**
  * Abstract implementation of writer interface.
@@ -37,7 +35,7 @@ import csv.TypeConverter;
 public abstract class AbstractTableWriter implements TableWriter {
 
     private int rowCount;
-	private Map<Class<?>,TypeConverter> typeConverters = new HashMap<>();
+	private StreamMapper mapper = null;
     
 	/**
 	 * General initialization.
@@ -47,6 +45,22 @@ public abstract class AbstractTableWriter implements TableWriter {
 		rowCount = 0;
 	}
 	
+	/**
+	 * Returns the mapper.
+	 * @return the mapper
+	 */
+	public StreamMapper getMapper() {
+		return mapper;
+	}
+
+	/**
+	 * Sets the mapper.
+	 * @param mapper the mapper to set
+	 */
+	public void setMapper(StreamMapper mapper) {
+		this.mapper = mapper;
+	}
+
 	/**
 	 * Prints a comment into the output stream.
 	 * This implementation does nothing by default.
@@ -92,57 +106,13 @@ public abstract class AbstractTableWriter implements TableWriter {
 	}
 	
     /**
-     * Registers a type conversion handler.
-     * @param handler handler to register
-     */
-    public void registerTypeConverter(TypeConverter handler) {
-    	for (Class<?> type : handler.getTypes()) {
-    		typeConverters.put(type, handler);
-    	}
-    }
-    
-    /**
-     * Unregisters a type conversion handler.
-     * @param handler handler to unregister
-     */
-    public void unregisterTypeConverter(TypeConverter handler) {
-    	for (Class<?> type : handler.getTypes()) {
-    		typeConverters.remove(type);
-    	}
-    }
-    
-    /**
-     * Returns a type conversion handler for the given type.
-     * @param type type to get a handler for
-     * @return conversion handler
-     */
-    protected TypeConverter getTypeConverter(Class<?> type) {
-    	return typeConverters.get(type);
-    }
-    
-    /**
      * Converts the value to its stream representation.
      * @param value object
      * @return stream representation
      */
     protected Object convert(Object value) {
-    	if (value == null) return null;
-    	return convert(value.getClass(), value);
-    }
-    
-    /**
-     * Converts the value to its stream representation.
-     * @param type type of object being returned
-     * @param value object
-     * @return stream representation
-     */
-    protected Object convert(Class<?> type, Object value) {
-    	if (value == null) return null;
-    	
-    	TypeConverter handler = getTypeConverter(type);
-    	if (handler != null) return handler.toStream(value);
-    	
-    	return value;
+    	if (mapper == null) return value;
+    	return mapper.toStream(value);
     }
     
     /**

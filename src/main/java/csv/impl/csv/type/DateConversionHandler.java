@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-import csv.TypeConverter;
+import csv.mapper.TypeConverter;
 
 /**
  * A conversion handler for dates. The default implementation
@@ -75,7 +75,7 @@ public class DateConversionHandler implements TypeConverter {
 	 * string will be returned
 	 * @param s string to be parsed
 	 * @return date 
-	 * @see csv.TypeConverter#fromStream(java.lang.String)
+	 * @see csv.mapper.TypeConverter#fromStream(java.lang.String)
 	 */
 	@Override
 	public Object fromStream(Object o) {
@@ -104,7 +104,7 @@ public class DateConversionHandler implements TypeConverter {
 	 * Converts the date to its string representation.
 	 * @param o date to be converted
 	 * @return string representation of date
-	 * @see csv.TypeConverter#toStream(java.lang.Object)
+	 * @see csv.mapper.TypeConverter#toStream(java.lang.Object)
 	 */
 	@Override
 	public Object toStream(Object o) {

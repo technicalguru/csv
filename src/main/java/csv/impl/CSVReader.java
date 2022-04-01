@@ -28,15 +28,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import csv.CsvException;
-import csv.impl.csv.type.BooleanConversionHandler;
-import csv.impl.csv.type.ByteConversionHandler;
-import csv.impl.csv.type.CharConversionHandler;
-import csv.impl.csv.type.DateConversionHandler;
-import csv.impl.csv.type.DoubleConversionHandler;
-import csv.impl.csv.type.FloatConversionHandler;
-import csv.impl.csv.type.IntegerConversionHandler;
-import csv.impl.csv.type.LongConversionHandler;
-import csv.impl.csv.type.ShortConversionHandler;
+import csv.mapper.StreamMapper;
+import csv.mapper.StringMappings;
 import csv.util.CSVUtils;
 
 /**
@@ -134,15 +127,7 @@ public class CSVReader extends AbstractStreamTableReader {
 	 * Initializes converters.
 	 */
 	protected void init() {
-		registerTypeConverter(BooleanConversionHandler.INSTANCE);
-		registerTypeConverter(ByteConversionHandler.INSTANCE);
-		registerTypeConverter(CharConversionHandler.INSTANCE);
-		registerTypeConverter(DoubleConversionHandler.INSTANCE);
-		registerTypeConverter(FloatConversionHandler.INSTANCE);
-		registerTypeConverter(IntegerConversionHandler.INSTANCE);
-		registerTypeConverter(LongConversionHandler.INSTANCE);
-		registerTypeConverter(ShortConversionHandler.INSTANCE);
-		registerTypeConverter(DateConversionHandler.INSTANCE);
+		setMapper(new StreamMapper(new StringMappings()));
 	}
 	
 	/**

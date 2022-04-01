@@ -33,15 +33,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.ext.DefaultHandler2;
 
 import csv.CsvException;
-import csv.impl.csv.type.BooleanConversionHandler;
-import csv.impl.csv.type.ByteConversionHandler;
-import csv.impl.csv.type.CharConversionHandler;
-import csv.impl.csv.type.DateConversionHandler;
-import csv.impl.csv.type.DoubleConversionHandler;
-import csv.impl.csv.type.FloatConversionHandler;
-import csv.impl.csv.type.IntegerConversionHandler;
-import csv.impl.csv.type.LongConversionHandler;
-import csv.impl.csv.type.ShortConversionHandler;
+import csv.mapper.StreamMapper;
+import csv.mapper.StringMappings;
 import rs.baselib.util.CommonUtils;
 
 /**
@@ -102,15 +95,7 @@ public class XmlReader extends AbstractStreamTableReader {
 	 */
 	protected void init() {
 		setHasHeaderRow(true);
-		registerTypeConverter(BooleanConversionHandler.INSTANCE);
-		registerTypeConverter(ByteConversionHandler.INSTANCE);
-		registerTypeConverter(CharConversionHandler.INSTANCE);
-		registerTypeConverter(DoubleConversionHandler.INSTANCE);
-		registerTypeConverter(FloatConversionHandler.INSTANCE);
-		registerTypeConverter(IntegerConversionHandler.INSTANCE);
-		registerTypeConverter(LongConversionHandler.INSTANCE);
-		registerTypeConverter(ShortConversionHandler.INSTANCE);
-		registerTypeConverter(DateConversionHandler.INSTANCE);
+		setMapper(new StreamMapper(new StringMappings()));
 	}
 	
 	/**

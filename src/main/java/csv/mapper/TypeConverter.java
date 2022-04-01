@@ -15,7 +15,7 @@
  *  License along with CSV.  If not, see 
  *  <http://www.gnu.org/licenses/lgpl-3.0.html>.
  */
-package csv;
+package csv.mapper;
 
 /**
  * A type conversion handler can take any string and convert it to an appropriate
