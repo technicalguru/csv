@@ -26,6 +26,7 @@ import csv.impl.csv.type.FloatConversionHandler;
 import csv.impl.csv.type.IntegerConversionHandler;
 import csv.impl.csv.type.LongConversionHandler;
 import csv.impl.csv.type.ShortConversionHandler;
+import csv.impl.csv.type.ZonedDateTimeConversionHandler;
 
 /**
  * Mappings required for string-based streams.
@@ -48,6 +49,7 @@ public class StringMappings extends AbstractMappingCollection {
 		add(LongConversionHandler.INSTANCE);
 		add(ShortConversionHandler.INSTANCE);
 		add(DateConversionHandler.INSTANCE);
+		add(ZonedDateTimeConversionHandler.INSTANCE);
 	}
 
 }
