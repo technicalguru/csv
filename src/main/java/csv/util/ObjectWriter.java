@@ -24,14 +24,14 @@ import csv.TableWriter;
 
 /**
  * Writes Objects into a table.
- * This method is different to BeanWriter as it asks a converter to convert the object to a row first.
+ * This class is different to {@link BeanWriter} as it asks a converter to convert the object to a row first.
  * @author ralph
  *
  */
 public class ObjectWriter<T> {
 
 	protected TableWriter writer;
-	protected RowConverter<T> converter;
+	protected ObjectConverter<T> converter;
 	protected TableHeaderProvider headerProvider;
 	protected boolean rowsWritten;
 	
@@ -40,7 +40,7 @@ public class ObjectWriter<T> {
 	 * @param writer - the writer to write to
 	 * @param converter - the converter to be used
 	 */
-	public ObjectWriter(TableWriter writer, RowConverter<T> converter) {
+	public ObjectWriter(TableWriter writer, ObjectConverter<T> converter) {
 		this(writer, converter, null);
 	}
 	
@@ -50,7 +50,7 @@ public class ObjectWriter<T> {
 	 * @param converter - the converter to be used
 	 * @param headerProvider - the header provider (can be null)
 	 */
-	public ObjectWriter(TableWriter writer, RowConverter<T> converter, TableHeaderProvider headerProvider) {
+	public ObjectWriter(TableWriter writer, ObjectConverter<T> converter, TableHeaderProvider headerProvider) {
 		this.writer    = writer;
 		this.converter = converter;
 		if ((headerProvider == null) && (converter instanceof TableHeaderProvider)) {
@@ -63,7 +63,7 @@ public class ObjectWriter<T> {
 	 * Returns the row converter.
 	 * @return the row converter
 	 */
-	public RowConverter<T> getConverter() {
+	public ObjectConverter<T> getConverter() {
 		return converter;
 	}
 
@@ -71,7 +71,7 @@ public class ObjectWriter<T> {
 	 * Sets the row converter.
 	 * @param converter the row converter to be used
 	 */
-	public void setConverter(RowConverter<T> converter) {
+	public void setConverter(ObjectConverter<T> converter) {
 		this.converter = converter;
 		if ((headerProvider == null) && (converter instanceof TableHeaderProvider)) {
 			headerProvider = (TableHeaderProvider) converter;
