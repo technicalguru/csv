@@ -25,15 +25,12 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 
 import csv.CommentCallback;
 import csv.TableReader;
 import csv.TableWriter;
-import csv.impl.JTableReader;
-import csv.impl.JdbcReader;
 
 /**
  * Various methods for working with TableReader and TableWriter.
@@ -88,20 +85,6 @@ public class CSVUtils {
 	}
 	
 	/**
-	 * Copies the JDBC result set into the table writer.
-	 * @param resultSet result set to copy
-	 * @param writer table writer to write to 
-	 * @param writeHeaderRow whether header row shall be written
-	 * @throws Exception if an exception occurs
-	 * @deprecated Use {@link JdbcReader} and {@link #copy(TableReader, TableWriter, boolean)}
-	 */
-	@Deprecated
-	public static void copy(ResultSet resultSet, TableWriter writer, boolean writeHeaderRow) throws Exception {
-		JdbcReader reader = new JdbcReader(resultSet);
-		copy(reader, writer, writeHeaderRow);
-	}
-	
-	/**
 	 * Copies the table header into the table writer.
 	 * @param tableHeader table header to get content from
 	 * @param writer table writer
@@ -117,21 +100,6 @@ public class CSVUtils {
 			else row[i] = null;
 		}
 		writer.printRow(row);
-	}
-	
-	/**
-	 * Copies the table content into the table writer.
-	 * @param table table to get content from
-	 * @param writer table writer
-	 * @param writeHeaderRow whether header row shall be written
-	 * @param selectedOnly whether selected rows shall be written only
-	 * @throws Exception when an exception occurs
-	 * @deprecated Use {@link JTableReader} and {@link #copy(TableReader, TableWriter, boolean)}
-	 */
-	@Deprecated
-	public static void copy(JTable table, TableWriter writer, boolean writeHeaderRow, boolean selectedOnly) throws Exception {
-		JTableReader reader = new JTableReader(table, selectedOnly);
-		copy(reader, writer, writeHeaderRow);
 	}
 	
 	/**

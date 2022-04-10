@@ -203,32 +203,11 @@ public abstract class AbstractTableReader implements TableReader {
     /**
      * Adds a comment callback.
      * @param callback the callback
-     * @deprecated Use {@link TableReader#registerCommentCallBack(CommentCallback)} instead.
-     */
-	@Deprecated
-    public void addCommentCallBack(CommentCallback callback) {
-    	commentCallbacks.add(callback);
-    }
-    
-    /**
-     * Adds a comment callback.
-     * @param callback the callback
      */
     public void registerCommentCallBack(CommentCallback callback) {
     	commentCallbacks.add(callback);
     }
-    
-    
-    /**
-     * Removes a comment callback.
-     * @param callback the callback
-     * @deprecated Use {@link TableReader#unregisterCommentCallBack(CommentCallback)} instead
-     */
-    @Deprecated
-    public void removeCommentCallBack(CommentCallback callback) {
-    	commentCallbacks.remove(callback);
-    }
-    
+        
     /**
      * Removes a comment callback.
      * @param callback the callback
