@@ -21,7 +21,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.io.Writer;
 
 import csv.mapper.StreamMapper;
 import csv.mapper.StringMappings;
