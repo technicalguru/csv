@@ -19,6 +19,7 @@ package csv.impl;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.poi.ss.usermodel.BorderStyle;
@@ -31,6 +32,7 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Hyperlink;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
@@ -212,13 +214,76 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	 * @param writer the calling writer
 	 * @param rowCount the number of rows in the selected sheet
 	 * @param columnCount the number of columns modified in the selected sheet
+	 * @deprecated Use {@link #finalize(ExcelWriter)} instead.
 	 */
 	@Override
+	@Deprecated
 	public void finalize(ExcelWriter writer, int rowCount, int columnCount) {
-		Sheet sheet = writer.getSheet();
-		for (int i=0; i<=columnCount; i++) sheet.autoSizeColumn(i);
+		finalize(writer);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @see #finalizeSheet(ExcelWriter, Workbook, Sheet, int)
+	 * @see #finalizeFirstRow(ExcelWriter, Workbook, Sheet, int, Row, Cell, int)
+	 * 
+	 */
+	@Override
+	public void finalize(ExcelWriter writer) {
+		Workbook workbook = writer.getWorkbook();
+		Iterator<Sheet> i = workbook.sheetIterator();
+		int index = 0;
+		while (i.hasNext()) {
+			Sheet sheet = i.next();
+			finalizeSheet(writer, workbook, sheet, index);
+			index++;
+		}
+	}
+
+	/**
+	 * Finalizes the given sheet in the workbook.
+	 * The method is automatically called by {@link #finalize(ExcelWriter)} and takes care
+	 * of finalizing the first row in a sheet by calling {@link #finalizeFirstRow(ExcelWriter, Workbook, Sheet, int, Row, Cell, int)}.
+	 * @param writer - writer the calling writer
+	 * @param workbook - the workbook to be finalized
+	 * @param sheet - the sheet to be finalized
+	 * @param sheetIndex - the index of the sheet
+	 * @see #finalize(ExcelWriter)
+	 * @see #finalizeFirstRow(ExcelWriter, Workbook, Sheet, int, Row, Cell, int)
+	 * @since 4.1
+	 */
+	public void finalizeSheet(ExcelWriter writer, Workbook workbook, Sheet sheet, int sheetIndex) {
+		workbook.setActiveSheet(sheetIndex);
+		
+		// Set Autosize column
+		Row row = sheet.getRow(0);
+		row.getFirstCellNum();
+		row.getLastCellNum();
+		for (int i=row.getFirstCellNum(); i<=row.getLastCellNum(); i++) {
+			Cell cell = row.getCell(i);
+			if (cell != null) {
+				finalizeFirstRow(writer, workbook, sheet, sheetIndex, row, cell, i);
+			}
+		}
+	}
+	
+	/**
+	 * Finalized the first row of the given sheet by setting the autosize of the column.
+	 * @param writer - writer the calling writer
+	 * @param workbook - the workbook to be finalized
+	 * @param sheet - the sheet to be finalized
+	 * @param sheetIndex - the index of the sheet
+	 * @param row - the first row
+	 * @param cell - the cell in first row to finalize
+	 * @param cellIndex - the cell index
+	 * @see #finalize(ExcelWriter)
+	 * @see #finalizeSheet(ExcelWriter, Workbook, Sheet, int)
+	 * @since 4.1
+	 */
+	public void finalizeFirstRow(ExcelWriter writer, Workbook workbook, Sheet sheet, int sheetIndex, Row row, Cell cell, int cellIndex) {
+		sheet.autoSizeColumn(cellIndex);
+	}
+	
 	/**
 	 * Returns the alignment to be used.
 	 * This implementation returns null.
