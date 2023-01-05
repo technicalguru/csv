@@ -54,6 +54,7 @@ public class JavaCsvReader implements IReader {
 		CsvReader reader = new CsvReader(new InputStreamReader(new FileInputStream(file), charset));
 		int count = 0;
 		while (reader.readRecord()) {
+			reader.getValues();
 			count++;
 		}
 		reader.close();

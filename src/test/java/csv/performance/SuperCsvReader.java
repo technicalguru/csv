@@ -63,11 +63,13 @@ public class SuperCsvReader implements IReader {
 		final CellProcessor[] processors = getProcessors();
 
 		int count = 0;
-		while (listReader.read(processors) != null) {
-			count++;
+		try {
+			while (listReader.read(processors) != null) {
+				count++;
+			}
+		} finally {
+			listReader.close();
 		}
-
-		listReader.close();
 		return count;
 	}
 
