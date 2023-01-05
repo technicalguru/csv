@@ -18,7 +18,7 @@
 package csv.performance;
 
 import java.io.File;
-import java.net.URI;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -72,9 +72,9 @@ public class ReaderTest {
 	@BeforeClass
 	public static void setup() throws Exception {
 		testResults = new HashMap<String, Long>();
-		URI uri = FileFinder.find(ReaderTest.class, READER_TEST_FILE).toURI();
-		if (uri != null) {
-			file = new File(uri);
+		URL url = FileFinder.find(ReaderTest.class, READER_TEST_FILE);
+		if (url != null) {
+			file = new File(url.toURI());
 		} else {
 			log.info("Performance test will be skipped. Test CSV file not available ("+READER_TEST_FILE+")");
 			file = null;
