@@ -19,15 +19,16 @@ package csv.impl;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
@@ -38,6 +39,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
+
+import rs.baselib.type.MonetaryValue;
 
 /**
  * Default implementation of an ExcelFormatter.
@@ -80,6 +83,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	private short defaultHyperlinkColor;
 	private Map<String, Short> dateFormat;
 	private Map<String, Short> intFormat;
+	private Map<String, Short> currencyFormat;
 	private Map<String, Short> realFormat;
 	private Map<StyleDescription, CellStyle> styles;
 	private Short borderColor;
@@ -149,13 +153,14 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	 * Initializes the formatter.
 	 */
 	public void init() {
-		defaultBoldFont = null;
-		defaultPlainFont = null;
+		defaultBoldFont      = null;
+		defaultPlainFont     = null;
 		defaultHyperlinkFont = null;
-		dateFormat = new HashMap<String, Short>();
-		intFormat = new HashMap<String, Short>();
-		realFormat = new HashMap<String, Short>();
-		styles = new HashMap<StyleDescription, CellStyle>();
+		dateFormat           = new HashMap<>();
+		intFormat            = new HashMap<>();
+		realFormat           = new HashMap<>();
+		currencyFormat       = new HashMap<>();
+		styles               = new HashMap<>();
 	}
 
 	/**
@@ -387,6 +392,9 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		if (value instanceof LocalDate) {
 			return getDateFormat(writer, getDateFormat(row, column, value));
 		}
+		if (value instanceof MonetaryValue) {
+			return getCurrencyFormat(writer, getCurrencyFormat(row, column, value));
+		}
 		if ((value instanceof Integer) || (value instanceof Long) || (value instanceof Short)) {
 			return getIntegerFormat(writer, getIntegerFormat(row, column, value));
 		}
@@ -406,9 +414,26 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	protected Short getDateFormat(ExcelWriter writer, String format) {
 		Short rc = dateFormat.get(format);
 		if (rc == null) {
-			CreationHelper createHelper = writer.getWorkbook().getCreationHelper();
-			rc = createHelper.createDataFormat().getFormat(format);
+			DataFormat formatHelper = writer.getWorkbook().createDataFormat();
+			rc = formatHelper.getFormat(format);
 			dateFormat.put(format, rc);
+		}
+		return rc;
+	}
+
+	/**
+	 * Returns the ID of the format or creates a new one if required.
+	 * @param writer writer that provides the workbook
+	 * @param format format to be used
+	 * @return ID of format
+	 */
+	protected Short getCurrencyFormat(ExcelWriter writer, String format) {
+		Short rc = currencyFormat.get(format);
+		if (rc == null) {
+			System.out.println(format);
+			DataFormat formatHelper = writer.getWorkbook().createDataFormat();
+			rc = formatHelper.getFormat(format);
+			currencyFormat.put(format, rc);
 		}
 		return rc;
 	}
@@ -458,6 +483,19 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		return DEFAULT_DATETIME_FORMAT;
 	}
 
+	/**
+	 * Returns the default format for currencies.
+	 * This implementation returns "#,##0.00\\ _" plus the symbol of the currency.
+	 * @param row the row that this format will be used for
+	 * @param column the column that this format will be used for
+	 * @param value the value that this format will be used for
+	 * @return currency formats
+	 */
+	public String getCurrencyFormat(int row, int column, Object value) {
+		Currency currency = (value instanceof MonetaryValue) ? ((MonetaryValue)value).getCurrency() : Currency.getInstance(Locale.getDefault());
+		return "#,##0.00\\ \""+currency.getSymbol()+"\"_";
+	}
+	
 	/**
 	 * Returns the default format for dates.
 	 * This implementation returns {@link #DEFAULT_DATE_FORMAT}.
@@ -1129,6 +1167,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		@Override
 		public String toString() {
 			StringBuilder rc = new StringBuilder();
+			rc.append(getFormat()); ; rc.append(':');
 			rc.append(getFgColor()); rc.append(':');
 			rc.append(getFillPattern()); rc.append(':');
 			rc.append(getBgColor()); rc.append(':');
@@ -1152,7 +1191,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 			return rc.toString();
 		}
 
-		protected static final String DEFAULT_DESC = "null:null:null:null:null:null:null:null:null:null:null:null:null:false";
+		protected static final String DEFAULT_DESC = "null:null:null:null:null:null:null:null:null:null:null:null:null:null:false";
 
 		public boolean isDefault() {
 			return toString().equalsIgnoreCase(DEFAULT_DESC);
