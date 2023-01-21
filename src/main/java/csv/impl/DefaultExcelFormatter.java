@@ -17,6 +17,8 @@
  */
 package csv.impl;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,6 +37,7 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 
 /**
  * Default implementation of an ExcelFormatter.
@@ -56,14 +59,18 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	public static final short HYPERLINK_FONT_COLOR = IndexedColors.BLUE.getIndex();
 	/** Font Size 10 */
 	public static final short DEFAULT_FONT_SIZE = 10;
-	/** date format "dd.mm.yyyy hh:mm" */
-	public static final String DEFAULT_DATE_FORMAT = "dd.mm.yyyy hh:mm";
+	/** datetime format "dd.mm.yyyy hh:mm" */
+	public static final String DEFAULT_DATE_FORMAT = "dd.mm.yyyy";
+	/** datetime format "dd.mm.yyyy hh:mm" */
+	public static final String DEFAULT_DATETIME_FORMAT = "dd.mm.yyyy hh:mm";
 	/** integer format "0" */
 	public static final String DEFAULT_INTEGER_FORMAT = "0";
 	/** real format "0.00" */
 	public static final String DEFAULT_REAL_FORMAT = "0.00";
 
 	private boolean emphasizeFirstRow;
+	private boolean autofilter;
+	
 	private Font defaultBoldFont;
 	private Font defaultPlainFont;
 	private Font defaultHyperlinkFont;
@@ -83,7 +90,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	 * This is without any formatting.
 	 */
 	public DefaultExcelFormatter() {
-		this(false);
+		this(false, false);
 	}
 
 	/**
@@ -92,9 +99,18 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	 * @see #getFont(ExcelWriter, int, int, Object)
 	 */
 	public DefaultExcelFormatter(boolean emphasizeFirstRow) {
-		this(emphasizeFirstRow, null, null, null, null);
+		this(emphasizeFirstRow, false);
 	}
-
+	
+	/**
+	 * Constructor for defining the emphasizing of header rows.
+	 * @param emphasizeFirstRow whether row 0 shall be set in bold font
+	 * @param autofilter whether row 0 shall have autofilter activated
+	 * @see #getFont(ExcelWriter, int, int, Object)
+	 */
+	public DefaultExcelFormatter(boolean emphasizeFirstRow, boolean autofilter) {
+		this(emphasizeFirstRow, autofilter, null, null, null, null);
+	}
 
 	/**
 	 * Constructor for defining the various properties.
@@ -106,14 +122,32 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	 * @see #getFont(ExcelWriter, int, int, Object)
 	 */
 	public DefaultExcelFormatter(boolean emphasizeFirstRow, String defaultFontName, Short defaultFontSize, Short defaultFontColor, Short defaultHyperlinkColor) {
-		this.emphasizeFirstRow = emphasizeFirstRow;
-		this.defaultFontName = defaultFontName != null ? defaultFontName : DEFAULT_FONT_NAME;
-		this.defaultFontSize = defaultFontSize != null ? defaultFontSize : DEFAULT_FONT_SIZE;
-		this.defaultFontColor = defaultFontColor != null ? defaultFontColor : DEFAULT_FONT_COLOR;
+		this(emphasizeFirstRow, false, defaultFontName, defaultFontSize, defaultFontColor, defaultHyperlinkColor);
+	}
+	
+	/**
+	 * Constructor for defining the various properties.
+	 * @param emphasizeFirstRow whether row 0 shall be set in bold font
+	 * @param autofilter whether row 0 shall have autofilter activated
+	 * @param defaultFontName font name of default font
+	 * @param defaultFontSize font size to be used
+	 * @param defaultFontColor color to be used for font
+	 * @param defaultHyperlinkColor color for hyperlinks to be used
+	 * @see #getFont(ExcelWriter, int, int, Object)
+	 */
+	public DefaultExcelFormatter(boolean emphasizeFirstRow, boolean autofilter, String defaultFontName, Short defaultFontSize, Short defaultFontColor, Short defaultHyperlinkColor) {
+		this.emphasizeFirstRow     = emphasizeFirstRow;
+		this.autofilter            = autofilter;
+		this.defaultFontName       = defaultFontName != null ? defaultFontName : DEFAULT_FONT_NAME;
+		this.defaultFontSize       = defaultFontSize != null ? defaultFontSize : DEFAULT_FONT_SIZE;
+		this.defaultFontColor      = defaultFontColor != null ? defaultFontColor : DEFAULT_FONT_COLOR;
 		this.defaultHyperlinkColor = defaultHyperlinkColor != null ? defaultHyperlinkColor : HYPERLINK_FONT_COLOR;
 		init();
 	}
 
+	/**
+	 * Initializes the formatter.
+	 */
 	public void init() {
 		defaultBoldFont = null;
 		defaultPlainFont = null;
@@ -122,7 +156,22 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		intFormat = new HashMap<String, Short>();
 		realFormat = new HashMap<String, Short>();
 		styles = new HashMap<StyleDescription, CellStyle>();
+	}
 
+	/**
+	 * Returns whether row 0 shall have autofilter activated.
+	 * @return whether row 0 shall have autofilter activated
+	 */
+	public boolean isAutofilter() {
+		return autofilter;
+	}
+
+	/**
+	 * Sets whether row 0 shall have autofilter activated.
+	 * @param autofilter whether row 0 shall have autofilter activated
+	 */
+	public void setAutofilter(boolean autofilter) {
+		this.autofilter = autofilter;
 	}
 
 	/**
@@ -257,14 +306,27 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 		
 		// Set Autosize column
 		Row row = sheet.getRow(0);
-		row.getFirstCellNum();
-		row.getLastCellNum();
-		for (int i=row.getFirstCellNum(); i<=row.getLastCellNum(); i++) {
-			Cell cell = row.getCell(i);
-			if (cell != null) {
-				finalizeFirstRow(writer, workbook, sheet, sheetIndex, row, cell, i);
+		if (row != null) {
+			row.getFirstCellNum();
+			row.getLastCellNum();
+			for (int i=row.getFirstCellNum(); i<=row.getLastCellNum(); i++) {
+				Cell cell = row.getCell(i);
+				if (cell != null) {
+					finalizeFirstRow(writer, workbook, sheet, sheetIndex, row, cell, i);
+				}
 			}
+			if (isAutofilter()) applyAutofilter(workbook, sheet, row);
 		}
+	}
+	
+	/**
+	 * Sets the autofilter property in this row.
+	 * @param workbook - the workbook to be finalized
+	 * @param sheet - the sheet to be finalized
+	 * @param row - the row
+	 */
+	public void applyAutofilter(Workbook workbook, Sheet sheet, Row row) {
+		sheet.setAutoFilter(new CellRangeAddress(0, sheet.getLastRowNum(), 0, row.getLastCellNum()));
 	}
 	
 	/**
@@ -282,6 +344,12 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	 */
 	public void finalizeFirstRow(ExcelWriter writer, Workbook workbook, Sheet sheet, int sheetIndex, Row row, Cell cell, int cellIndex) {
 		sheet.autoSizeColumn(cellIndex);
+		if (isAutofilter()) {
+			CellStyle style = workbook.createCellStyle();
+			style.setFont(getDefaultBoldFont(workbook));
+			style.setWrapText(false);
+			cell.setCellStyle(style);
+		}
 	}
 	
 	/**
@@ -313,7 +381,10 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	 * @see #getRealFormat(int, int, Object)
 	 */
 	public Short getFormat(ExcelWriter writer, int row, int column, Object value) {
-		if (value instanceof Date) {
+		if ((value instanceof Date) || (value instanceof LocalDateTime)) {
+			return getDateFormat(writer, getDateTimeFormat(row, column, value));
+		}
+		if (value instanceof LocalDate) {
 			return getDateFormat(writer, getDateFormat(row, column, value));
 		}
 		if ((value instanceof Integer) || (value instanceof Long) || (value instanceof Short)) {
@@ -372,6 +443,19 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 			realFormat.put(format, rc);
 		}
 		return rc;
+	}
+
+	/**
+	 * Returns the default format for dates.
+	 * This implementation returns {@link #DEFAULT_DATETIME_FORMAT}.
+	 * @param row the row that this format will be used for
+	 * @param column the column that this format will be used for
+	 * @param value the value that this format will be used for
+	 * @return date formats
+	 * @see #DEFAULT_DATETIME_FORMAT
+	 */
+	public String getDateTimeFormat(int row, int column, Object value) {
+		return DEFAULT_DATETIME_FORMAT;
 	}
 
 	/**
