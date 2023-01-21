@@ -68,6 +68,8 @@ public class ExcelReader extends AbstractStreamTableReader {
 	private FormulaEvaluator formulaEvaluator = null;
 	/** Whether formulas shall be evaluated or not (default is <code>true</code> = yes) */
 	private boolean evaluateFormulas = true;
+	/** Whether JavaTime objects shall be returned (default is <code>false</code> = no) */
+	private boolean javaTimeEnabled = false;
 	/** The sheet we are dealing with */
 	private Sheet sheet;
 	/** The current row we are reading */
@@ -369,7 +371,7 @@ public class ExcelReader extends AbstractStreamTableReader {
 			return cell.getStringCellValue();
 		case NUMERIC:
 			if(DateUtil.isCellDateFormatted(cell)) {
-				return cell.getDateCellValue();
+				return javaTimeEnabled ? cell.getLocalDateTimeCellValue() : cell.getDateCellValue();
 			} else {
 				return cell.getNumericCellValue();
 			}
@@ -443,6 +445,22 @@ public class ExcelReader extends AbstractStreamTableReader {
 	 */
 	public void setEvaluateFormulas(boolean evaluateFormulas) {
 		this.evaluateFormulas = evaluateFormulas;
+	}
+
+	/**
+	 * Returns whether date/time values shall be returns as LocalDateTime object or simple Dates.
+	 * @return whether date/time values shall be returns as LocalDateTime object or simple Dates
+	 */
+	public boolean isJavaTimeEnabled() {
+		return javaTimeEnabled;
+	}
+
+	/**
+	 * Sets whether date/time values shall be returns as LocalDateTime object or simple Dates.
+	 * @param javaTimeEnabled whether date/time values shall be returns as LocalDateTime object or simple Dates
+	 */
+	public void setJavaTimeEnabled(boolean javaTimeEnabled) {
+		this.javaTimeEnabled = javaTimeEnabled;
 	}
 
 	/**
