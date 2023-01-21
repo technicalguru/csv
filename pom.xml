@@ -20,7 +20,7 @@
 		<connection>scm:git:https://github.com/technicalguru/csv.git</connection>
 		<developerConnection>scm:git:https://github.com/technicalguru/csv.git</developerConnection>
 		<url>https://github.com/technicalguru/csv</url>
-		<tag>v4.1.0</tag>
+		<tag>v4.1.1</tag>
 	</scm>
 
 	<issueManagement>
@@ -54,7 +54,7 @@
 		<dependency>
 			<groupId>eu.ralph-schuster</groupId>
 			<artifactId>baselib</artifactId>
-			<version>4.0.1</version>
+			<version>4.0.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
