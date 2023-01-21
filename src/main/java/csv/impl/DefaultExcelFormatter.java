@@ -430,7 +430,6 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	protected Short getCurrencyFormat(ExcelWriter writer, String format) {
 		Short rc = currencyFormat.get(format);
 		if (rc == null) {
-			System.out.println(format);
 			DataFormat formatHelper = writer.getWorkbook().createDataFormat();
 			rc = formatHelper.getFormat(format);
 			currencyFormat.put(format, rc);
