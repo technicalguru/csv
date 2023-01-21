@@ -33,6 +33,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
+import rs.baselib.type.MonetaryValue;
+
 /**
  * Provides ability to write classic Excel files.
  * <p>
@@ -279,6 +281,8 @@ public class ExcelWriter extends AbstractStreamTableWriter {
 				cell.setCellValue((LocalDateTime)value);
 			} else if (value instanceof ZonedDateTime) {
 				cell.setCellValue(((ZonedDateTime)value).toLocalDateTime());
+			} else if (value instanceof MonetaryValue) {
+				cell.setCellValue(((MonetaryValue) value).getDouble());
 			} else if (value instanceof Number) {
 				cell.setCellValue(((Number) value).doubleValue());
 			} else if (value instanceof Boolean) {

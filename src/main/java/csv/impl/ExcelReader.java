@@ -401,7 +401,7 @@ public class ExcelReader extends AbstractStreamTableReader {
 		case STRING:
 			return value.getStringValue();
 		case NUMERIC:
-			if(DateUtil.isCellDateFormatted(cell)) {
+			if (DateUtil.isCellDateFormatted(cell)) {
 				return DateUtil.getJavaDate(value.getNumberValue());
 			} else {
 				return value.getNumberValue();
