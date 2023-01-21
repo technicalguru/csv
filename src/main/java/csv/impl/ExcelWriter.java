@@ -20,6 +20,9 @@ package csv.impl;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -270,6 +273,12 @@ public class ExcelWriter extends AbstractStreamTableWriter {
 		if (value != null) {
 			if (value instanceof Date) {
 				cell.setCellValue((Date)value);
+			} else if (value instanceof LocalDate) {
+				cell.setCellValue((LocalDate)value);
+			} else if (value instanceof LocalDateTime) {
+				cell.setCellValue((LocalDateTime)value);
+			} else if (value instanceof ZonedDateTime) {
+				cell.setCellValue(((ZonedDateTime)value).toLocalDateTime());
 			} else if (value instanceof Number) {
 				cell.setCellValue(((Number) value).doubleValue());
 			} else if (value instanceof Boolean) {
@@ -367,7 +376,7 @@ public class ExcelWriter extends AbstractStreamTableWriter {
 	@Override
 	public void close() {
 		try {
-			if (formatter != null) formatter.finalize(this, getSheet().getLastRowNum(), maxColumns);
+			if (formatter != null) formatter.finalize(this);
 			getWorkbook().write(getOutputStream());
 		} catch (IOException e) {
 			e.printStackTrace();
