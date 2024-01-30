@@ -7,20 +7,20 @@
 	</parent>
 
 	<artifactId>csv</artifactId>
-	<version>4.1.5</version>
+	<version>4.1.6</version>
 	<packaging>jar</packaging>
 	<url>https://github.com/technicalguru/csv</url>
 	<name>CSV/Excel Utility Package</name>
 	<description>A library for easily accessing CSV, Excel and and other table-like data from Java</description>
 
 	<properties>
-		<poi.version>5.2.3</poi.version>
+		<poi.version>5.2.5</poi.version>
  	</properties>
 	<scm>
 		<connection>scm:git:https://github.com/technicalguru/csv.git</connection>
 		<developerConnection>scm:git:https://github.com/technicalguru/csv.git</developerConnection>
 		<url>https://github.com/technicalguru/csv</url>
-		<tag>csv-4.1.5</tag>
+		<tag>csv-4.1.6</tag>
 	</scm>
 
 	<issueManagement>
@@ -49,12 +49,12 @@
 		<dependency>
 			<groupId>jakarta.activation</groupId>
 			<artifactId>jakarta.activation-api</artifactId>
-			<version>2.1.0</version>
+			<version>2.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>eu.ralph-schuster</groupId>
 			<artifactId>baselib</artifactId>
-			<version>4.1.0</version>
+			<version>4.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -69,12 +69,12 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.12.0</version>
+			<version>3.14.0</version>
 		</dependency>
         <dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-text</artifactId>
-			<version>1.10.0</version>
+			<version>1.11.0</version>
 		</dependency>
         <!-- Test dependencies -->
 		<dependency>
