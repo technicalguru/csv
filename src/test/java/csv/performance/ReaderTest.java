@@ -27,13 +27,13 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +44,6 @@ import rs.baselib.io.FileFinder;
  * @author ralph
  *
  */
-@RunWith(Parameterized.class)
 public class ReaderTest {
 
 	public static final String READER_TEST_FILE = "worldcitiespop.txt";
@@ -69,7 +68,7 @@ public class ReaderTest {
 	 * 
 	 * @throws Exception - when the test file cannot be opened/read
 	 */
-	@BeforeClass
+	@BeforeAll
 	public static void setup() throws Exception {
 		testResults = new HashMap<String, Long>();
 		URL url = FileFinder.find(ReaderTest.class, READER_TEST_FILE);
@@ -82,37 +81,11 @@ public class ReaderTest {
 	}
 
 	/**
-	 * Instantiate test classes
-	 * @return the test classes for tests
-	 * 
-	 * @throws Exception - when the test file cannot be opened/read
-	 */
-	@SuppressWarnings("unchecked")
-	@Parameters
-	public static Collection<Object[]> data() throws Exception {
-		Collection<Object[]> data = new ArrayList<Object[]>();
-		for (String className : testClasses) {
-			Class<? extends IReader> clazz = (Class<? extends IReader>) Class.forName(className);
-			data.add(new Object[] { clazz.getConstructor().newInstance() });
-		}
-		return data;
-	}
-
-	private IReader reader;
-	
-	/**
-	 * Constructor.
-	 * @param reader reader to be tested
-	 */
-	public ReaderTest(IReader reader) {
-		this.reader = reader;
-	}
-	
-	/**
 	 * Test the reader and save execution time.
 	 */
-	@Test
-	public void testPerformance() {
+	@ParameterizedTest
+	@MethodSource("provideReaders")
+	public void testPerformance(IReader reader) {
 		if (file != null) {
 			long startTime = 0;
 			long endTime = 0;
@@ -136,9 +109,25 @@ public class ReaderTest {
 	}
 
 	/**
+	 * Instantiate test classes
+	 * @return the test classes for tests
+	 * 
+	 * @throws Exception - when the test file cannot be opened/read
+	 */
+	@SuppressWarnings("unchecked")
+	private static Stream<Arguments> provideReaders() throws Exception {
+		Collection<Arguments> data = new ArrayList<>();
+		for (String className : testClasses) {
+			Class<? extends IReader> clazz = (Class<? extends IReader>) Class.forName(className);
+			data.add(Arguments.of(clazz.getConstructor().newInstance()));
+		}
+		return data.stream();
+	}
+
+	/**
 	 * Cleanup and report tests
 	 */
-	@AfterClass
+	@AfterAll
 	public static void cleanup() {
 		if (file != null) {
 			// compute medium and max run time

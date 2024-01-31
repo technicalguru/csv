@@ -17,16 +17,16 @@
  */
 package csv.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
 import java.io.IOException;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import csv.impl.XmlReader;
 import csv.impl.XmlWriter;
@@ -51,7 +51,7 @@ public class BeanWriterReaderTest {
 	/**
 	 * Initializes file.
 	 */
-	@Before
+	@BeforeEach
 	public void init() {
 		fFile= new File(FILE_NAME);
 	}
@@ -59,7 +59,7 @@ public class BeanWriterReaderTest {
 	/**
 	 * Removes the file.
 	 */
-	@After
+	@AfterEach
 	public void done() {
 		if ((fFile != null) && fFile.exists()) fFile.deleteOnExit();
 	}
