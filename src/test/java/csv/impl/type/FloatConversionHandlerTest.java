@@ -17,9 +17,9 @@
  */
 package csv.impl.type;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import csv.impl.csv.type.FloatConversionHandler;
 

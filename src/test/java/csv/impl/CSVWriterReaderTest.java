@@ -17,23 +17,23 @@
  */
 package csv.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-import rs.baselib.util.CommonUtils;
 import csv.CommentCallback;
 import csv.TableReader;
 import csv.util.CSVUtils;
+import rs.baselib.util.CommonUtils;
 
 /**
  * JUnit Test for CSV.
@@ -67,22 +67,22 @@ public class CSVWriterReaderTest {
 			"абвгдеёжзийклмно прстуфхцчшчьыъэюя АБВГДЕЁЖЗИЙ КЛМНОПРСТУФ ХЦЧШЩЬЫЪЭЮЯ", "Ў ў Є є Ґ ґ", "Ђ Љ Њ Ћ Џ ђ љ њ ћ џ"}
 	};
 
-	private File fFile;
+	protected static File fFile;
 
 	/**
 	 * Initializes file.
 	 */
-	@Before
-	public void init() {
-		fFile= new File(FILE_NAME);
+	@BeforeAll
+	public static void beforeAll() {
+		fFile = new File(FILE_NAME);
 		CSVUtils.setDefaultCharset(DEFAULT_CHARSET);
 	}
 
 	/**
 	 * Removes the file.
 	 */
-	@After
-	public void done() {
+	@AfterAll
+	public static void afterAll() {
 		if ((fFile != null) && fFile.exists()) fFile.deleteOnExit();
 	}
 	
@@ -165,15 +165,15 @@ public class CSVWriterReaderTest {
 	protected void testRow(Object master[], Object copy[], int lineNo) {
 		// compare size of columns
 		StringBuilder s = new StringBuilder(); CommonUtils.debugObject(s, copy);
-		assertEquals("Line "+lineNo+": array length check - "+s.toString(), master.length, copy.length);
+		assertEquals(master.length, copy.length, "Line "+lineNo+": array length check - "+s.toString());
 		for (int col=0; col<copy.length; col++) {
 			if ((master[col] != null)) {
-				assertNotNull("Line "+lineNo+", Column "+col+": null", copy[col]);
+				assertNotNull(copy[col], "Line "+lineNo+", Column "+col+": null");
 			}
 			if ((copy[col] != null)) {
-				assertNotNull("Line "+lineNo+", Column "+col+": null", master[col]);
+				assertNotNull(master[col], "Line "+lineNo+", Column "+col+": null");
 			}
-			assertEquals("Line "+lineNo+", Column "+col+": not equal", master[col], copy[col]);
+			assertEquals(master[col], copy[col], "Line "+lineNo+", Column "+col+": not equal");
 		}
 	}
 	
@@ -214,6 +214,7 @@ public class CSVWriterReaderTest {
 				in.next();
 			}
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 			fail("May be a previous test has failed: " + e.getMessage());
 		} finally {
 			in.close();

@@ -17,12 +17,12 @@
  */
 package csv.impl.type;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import csv.impl.csv.type.ZonedDateTimeConversionHandler;
 
@@ -51,7 +51,7 @@ public class ZonedDateTimeConversionHandlerTest {
 		ZonedDateTimeConversionHandler handler = getHandler();
 		System.out.println(TARGET_DATE);
 		for (String date : DATES) {
-			assertEquals("Cannot parse date: "+date, TARGET_DATE.toInstant().toEpochMilli(), ((ZonedDateTime)handler.fromStream(date)).toInstant().toEpochMilli());
+			assertEquals(TARGET_DATE.toInstant().toEpochMilli(), ((ZonedDateTime)handler.fromStream(date)).toInstant().toEpochMilli());
 		}
 	}
 

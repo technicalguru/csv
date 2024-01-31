@@ -17,12 +17,12 @@
  */
 package csv.impl.type;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Date;
 import java.util.TimeZone;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import csv.impl.csv.type.DateConversionHandler;
 
@@ -51,7 +51,7 @@ public class DateConversionHandlerTest {
 		handler.setTimezone(TimeZone.getTimeZone("UTC"));
 		System.out.println(TARGET_DATE);
 		for (String date : DATES) {
-			assertEquals(date, TARGET_DATE, handler.fromStream(date));
+			assertEquals(TARGET_DATE, handler.fromStream(date));
 		}
 	}
 

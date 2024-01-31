@@ -17,11 +17,11 @@
  */
 package csv.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -29,9 +29,9 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.apache.poi.ss.usermodel.Row.MissingCellPolicy;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import rs.baselib.io.FileFinder;
 
@@ -71,7 +71,7 @@ public class XExcelWriterReaderTest {
 	/**
 	 * Initializes file.
 	 */
-	@Before
+	@BeforeEach
 	public void init() {
 		fFile= new File(FILE_NAME);
 		multisheetUrl = FileFinder.find(FILE_MULTISHEET_XLS);
@@ -82,7 +82,7 @@ public class XExcelWriterReaderTest {
 	/**
 	 * Removes the file.
 	 */
-	@After
+	@AfterEach
 	public void done() {
 		if ((fFile != null) && fFile.exists()) fFile.deleteOnExit();
 	}
@@ -112,7 +112,7 @@ public class XExcelWriterReaderTest {
 				out.printRow(TEST_VALUES[row]);
 			}
 			out.close();
-			assertTrue("Test file was not written", fFile.exists());
+			assertTrue(fFile.exists());
 		} catch (Exception e) {
 			fail("Exception: " + e.getMessage());
 		}
@@ -145,7 +145,7 @@ public class XExcelWriterReaderTest {
 			}
 
 			// compare size of rows
-			assertEquals("Not the right number of rows in test file", TEST_VALUES.length, row);
+			assertEquals(TEST_VALUES.length, row);
 
 		} catch (FileNotFoundException e) {
 			fail("May be a previous test has failed: " + e.getMessage());
@@ -169,7 +169,7 @@ public class XExcelWriterReaderTest {
 			if ((copy[col] != null)) {
 				assertNotNull(master[col]);
 			}
-			assertEquals("Column "+col+" was not written/read correct", master[col], copy[col]);
+			assertEquals(master[col], copy[col]);
 		}
 	}
 
@@ -191,7 +191,7 @@ public class XExcelWriterReaderTest {
 	public void testBlankTab_DoesNotNPEInhasNext() throws IOException {
 		ExcelReader in = new ExcelReader(multisheetUrl.openStream());
 		in.selectSheet(2);
-		assertFalse("Sheet index 3 does not have a next row", in.hasNext());
+		assertFalse(in.hasNext());
 	}
 
 	/**
@@ -206,14 +206,14 @@ public class XExcelWriterReaderTest {
 		in.getWorkbook().setMissingCellPolicy(MissingCellPolicy.CREATE_NULL_AS_BLANK);
 		in.setSkipBlankRows(false);
 		in.setMinimumColumnCount(in.computeMaxColumnCount());
-		assertEquals("The minimum column count is invalid", in.getMinimumColumnCount(), 2);
+		assertEquals(in.getMinimumColumnCount(), 2);
 
-		assertTrue("Cannot find header row", in.hasNext()); testRow(new String[]{"header", "header2"}, in.next());
-		assertTrue("Cannot find row 0", in.hasNext()); testRow(new String[]{null,      null    }, in.next());
-		assertTrue("Cannot find row 1", in.hasNext()); testRow(new String[]{null,      null    }, in.next());
-		assertTrue("Cannot find row 2", in.hasNext()); testRow(new String[]{"val1",    null    }, in.next());
-		assertTrue("Cannot find row 3", in.hasNext()); testRow(new String[]{"val2",    "val2-2"}, in.next());
-		assertFalse("More rows available than expected", in.hasNext());
+		assertTrue(in.hasNext()); testRow(new String[]{"header", "header2"}, in.next());
+		assertTrue(in.hasNext()); testRow(new String[]{null,      null    }, in.next());
+		assertTrue(in.hasNext()); testRow(new String[]{null,      null    }, in.next());
+		assertTrue(in.hasNext()); testRow(new String[]{"val1",    null    }, in.next());
+		assertTrue(in.hasNext()); testRow(new String[]{"val2",    "val2-2"}, in.next());
+		assertFalse(in.hasNext());
 	}
 
 	/**
@@ -227,8 +227,8 @@ public class XExcelWriterReaderTest {
 		ExcelReader in = new ExcelReader(externalSheetRefUrl.openStream());
 		in.setEvaluateFormulas(false);
 
-		assertTrue("No row found", in.hasNext()); 
+		assertTrue(in.hasNext()); 
 		testRow(new Double[]{99945.0}, in.next());
-		assertFalse("More rows available than expected", in.hasNext());
+		assertFalse(in.hasNext());
 	}
 }
