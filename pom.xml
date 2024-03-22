@@ -3,24 +3,29 @@
 	<parent>
 		<groupId>eu.ralph-schuster</groupId>
 		<artifactId>pom-oss</artifactId>
-		<version>3.0.1</version>
+		<version>3.0.2</version>
 	</parent>
 
 	<artifactId>csv</artifactId>
-	<version>4.2.0</version>
+	<version>4.2.1</version>
 	<packaging>jar</packaging>
 	<url>https://github.com/technicalguru/csv</url>
 	<name>CSV/Excel Utility Package</name>
 	<description>A library for easily accessing CSV, Excel and and other table-like data from Java</description>
 
 	<properties>
+		<project.home>https://github.com/technicalguru/csv</project.home>
+		<java.version>17</java.version>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<poi.version>5.2.5</poi.version>
  	</properties>
 	<scm>
 		<connection>scm:git:https://github.com/technicalguru/csv.git</connection>
 		<developerConnection>scm:git:https://github.com/technicalguru/csv.git</developerConnection>
 		<url>https://github.com/technicalguru/csv</url>
-		<tag>csv-4.2.0</tag>
+		<tag>csv-4.2.1</tag>
 	</scm>
 
 	<issueManagement>
@@ -54,7 +59,7 @@
 		<dependency>
 			<groupId>eu.ralph-schuster</groupId>
 			<artifactId>baselib</artifactId>
-			<version>5.0.0</version>
+			<version>5.0.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -128,13 +133,4 @@
 		</repository>
 	</repositories>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.2.5</version>
-			</plugin>
-		</plugins>
-	</build>
 </project>
