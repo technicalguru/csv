@@ -44,7 +44,7 @@ Excel functionality is available since version 2.0.
 <dependency>
 	<groupId>eu.ralph-schuster</groupId>
 	<artifactId>csv</artifactId>
-	<version>4.2.1</version>
+	<version>4.2.2</version>
 </dependency>
 ```
 

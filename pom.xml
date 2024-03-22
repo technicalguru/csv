@@ -25,7 +25,7 @@
 		<connection>scm:git:https://github.com/technicalguru/csv.git</connection>
 		<developerConnection>scm:git:https://github.com/technicalguru/csv.git</developerConnection>
 		<url>https://github.com/technicalguru/csv</url>
-		<tag>v4.2.1</tag>
+		<tag>v4.2.2</tag>
 	</scm>
 
 	<issueManagement>
