@@ -44,12 +44,12 @@ Excel functionality is available since version 2.0.
 <dependency>
 	<groupId>eu.ralph-schuster</groupId>
 	<artifactId>csv</artifactId>
-	<version>4.3.0</version>
+	<version>4.3.2</version>
 </dependency>
 ```
 ## Version Notes
 
- * v4.3.0 requires Java 21
+ * Java 21 required since v4.3
  
 ## API Reference
 
