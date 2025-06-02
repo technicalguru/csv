@@ -49,7 +49,7 @@ Excel functionality is available since version 2.0.
 ```
 ## Version Notes
 
- * v4.3.0 requires Java 21
+ * Java 21 required since v4.3
  
 ## API Reference
 
