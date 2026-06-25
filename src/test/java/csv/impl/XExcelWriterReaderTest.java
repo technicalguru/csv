@@ -119,6 +119,26 @@ public class XExcelWriterReaderTest {
 	}
 
 	/**
+	 * Writes the test file.
+	 * @param withHeader whether header shall be written.
+	 */
+	protected void testWriteFileWithStreaming(boolean withHeader) {
+		XExcelWriter out = null;
+		try {
+			// Write the file
+			out = new XExcelWriter(fFile, true);
+			if (withHeader) out.printRow(TEST_HEADER);
+			for (int row= 0; row < TEST_VALUES.length; row++) {
+				out.printRow(TEST_VALUES[row]);
+			}
+			out.close();
+			assertTrue(fFile.exists());
+		} catch (Exception e) {
+			fail("Exception: " + e.getMessage());
+		}
+	}
+
+	/**
 	 * Checks whether written data is equal to test data.
 	 * @param withHeader whether header must be checked too
 	 */
@@ -179,6 +199,15 @@ public class XExcelWriterReaderTest {
 	@Test
 	public void testHeader() {
 		testWriteFile(true);
+		testWrittenValues(true);
+	}
+
+	/**
+	 * This method checks if a header can be written and read.
+	 */
+	@Test
+	public void testStreaming() {
+		testWriteFileWithStreaming(true);
 		testWrittenValues(true);
 	}
 
