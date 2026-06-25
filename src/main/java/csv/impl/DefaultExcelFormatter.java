@@ -19,6 +19,7 @@ package csv.impl;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Currency;
 import java.util.Date;
 import java.util.HashMap;
@@ -307,6 +308,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	 * @since 4.1
 	 */
 	public void finalizeSheet(ExcelWriter writer, Workbook workbook, Sheet sheet, int sheetIndex) {
+		int currentWorksheet = workbook.getActiveSheetIndex();
 		workbook.setActiveSheet(sheetIndex);
 		
 		// Set Autosize column
@@ -322,6 +324,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 			}
 			if (isAutofilter()) applyAutofilter(workbook, sheet, row);
 		}
+		workbook.setActiveSheet(currentWorksheet);
 	}
 	
 	/**
@@ -386,7 +389,7 @@ public class DefaultExcelFormatter implements ExcelFormatter {
 	 * @see #getRealFormat(int, int, Object)
 	 */
 	public Short getFormat(ExcelWriter writer, int row, int column, Object value) {
-		if ((value instanceof Date) || (value instanceof LocalDateTime)) {
+		if ((value instanceof Date) || (value instanceof LocalDateTime) || (value instanceof ZonedDateTime)) {
 			return getDateFormat(writer, getDateTimeFormat(row, column, value));
 		}
 		if (value instanceof LocalDate) {
