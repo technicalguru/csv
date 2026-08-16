@@ -3,11 +3,11 @@
 	<parent>
 		<groupId>eu.ralph-schuster</groupId>
 		<artifactId>pom-oss</artifactId>
-		<version>21.1.1</version>
+		<version>21.2.0</version>
 	</parent>
 
 	<artifactId>csv</artifactId>
-	<version>4.3.7-SNAPSHOT</version>
+	<version>4.3.9-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<url>https://github.com/technicalguru/csv</url>
 	<name>CSV/Excel Utility Package</name>
@@ -25,7 +25,7 @@
 		<connection>scm:git:https://github.com/technicalguru/csv.git</connection>
 		<developerConnection>scm:git:https://github.com/technicalguru/csv.git</developerConnection>
 		<url>https://github.com/technicalguru/csv</url>
-		<tag>v4.3.7</tag>
+		<tag>v4.3.9</tag>
 	</scm>
 
 	<issueManagement>
